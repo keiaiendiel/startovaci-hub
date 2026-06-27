@@ -36,7 +36,8 @@ investori-zamer.html    # podklady = věrný port „Záměr VPD1_5 - web.html" 
 struktura-webu.html     # mapa webu (strom se statusy: v provozu/ve výrobě/na heslo)
 src/input.css           # zdroj stylů (edituj tady, ne styles.css)
 assets/styles.css       # zkompilovaný Tailwind (commit-nutý, funguje bez buildu)
-assets/images/investori/ortofotomapa.jpg   # 1 obrázek do záměru (zmenšené JPG)
+assets/images/investori/zona-vse.jpg        # ortofoto-podklad interaktivní mapy záměru
+assets/images/investori/zona-{ctvrt,jadro,zazemi}.jpg  # 3 barevné zónové překryvy
 assets/{fonts,images,videos,brand-logo-white.svg}
 tailwind.config.js, package.json, README.md
 ```
