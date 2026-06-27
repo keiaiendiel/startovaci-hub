@@ -76,26 +76,44 @@
   .vz .ltext{flex:1;min-width:0;padding:12px 0;font-size:clamp(.9rem,1.5vw,1rem);line-height:1.45;text-wrap:pretty}
   .vz .ltext strong{font-weight:700;color:var(--ink)}
   .vz figure{margin:16px 0 0}
-  /* masterplan se zónami — výchozí stav ukazuje všechny zóny (zona-vse),
-     hover na vysvětlivku prolne do zvýrazněného stavu dané zóny */
+  /* Ovládání zón mapy: 3 barevná tlačítka hned nad mapou. Klik = zvýrazní zónu,
+     klik kamkoli mimo = zpět celý areál. Na desktopu navíc hover = náhled.
+     Investorský pod-web smí JS (brána), ovládání řídí pár řádků skriptu níže. */
+  .vz .zonebtns{display:flex;gap:8px;margin:18px 0 10px}
+  .vz .zonebtn{flex:1 1 0;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 14px;border:1.5px solid transparent;border-radius:9px;font:inherit;font-weight:700;font-size:.92rem;
+    line-height:1.15;text-align:center;color:#14142F;cursor:pointer;-webkit-tap-highlight-color:transparent;
+    transition:transform .22s cubic-bezier(.25,1,.5,1),box-shadow .22s cubic-bezier(.25,1,.5,1),border-color .15s}
+  .vz .zonebtn--ctvrt{background:#B6CDE9}
+  .vz .zonebtn--jadro{background:#ECE5A3}
+  .vz .zonebtn--zazemi{background:#C2DCAE}
+  .vz .zonebtn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(20,20,47,.16)}
+  .vz .zonebtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .vz .zonebtn[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 7px 18px rgba(20,20,47,.22)}
+  /* masterplan se zónami — výchozí stav ukazuje všechny zóny (zona-vse);
+     vybraná/náhledová zóna se prolne přes třídu .show-* na .zmap */
   .vz .zmap{position:relative;line-height:0}
   .vz .zmap img{width:100%;height:auto;display:block;border:1px solid var(--hair)}
   .vz .zmap .zone{position:absolute;inset:0;height:100%;opacity:0;object-fit:cover;
     transition:opacity .5s cubic-bezier(.25,1,.5,1)}
-  .vz .orto:has(.lrow--ctvrt:hover)  .zone--ctvrt {opacity:1}
-  .vz .orto:has(.lrow--jadro:hover)  .zone--jadro {opacity:1}
-  .vz .orto:has(.lrow--zazemi:hover) .zone--zazemi{opacity:1}
-  /* drobná mikro-interakce, ať je poznat, že vysvětlivka reaguje */
-  .vz .orto .lrow .badge{transition:transform .3s cubic-bezier(.25,1,.5,1),box-shadow .3s cubic-bezier(.25,1,.5,1)}
-  .vz .orto .lrow:hover .badge{transform:translateY(-1px);box-shadow:0 5px 16px rgba(20,20,47,.18)}
+  .vz .zmap.show-ctvrt  .zone--ctvrt {opacity:1}
+  .vz .zmap.show-jadro  .zone--jadro {opacity:1}
+  .vz .zmap.show-zazemi .zone--zazemi{opacity:1}
   @media (prefers-reduced-motion:reduce){.vz .zmap .zone{transition-duration:1ms}}
   /* mobile: stack label over value, keep tinted value block */
   @media (max-width:680px){
     .vz .wrap{padding:22px 0 44px}
-    .vz .row{grid-template-columns:1fr}
-    /* štítek nahoře, hodnota v tónované buňce s textem na střed (symetrický padding) */
-    .vz .lab{border-bottom:0;padding:12px 15px 4px;font-weight:600}
-    .vz .val{padding:11px 15px}
+    /* ZEBRA (jen mobil): sekce začíná tónovaným nadpisem, pak se dvojice
+       název+hodnota střídají — lichá bez podkladu, sudá s podkladem. Lépe
+       rozlišitelné, snadno čitelné po sobě → můžeme buňky mírně zúžit. */
+    .vz .row{grid-template-columns:1fr;padding:8px 14px}
+    .vz .row:nth-of-type(even){background:var(--tint)}
+    .vz .lab{border-bottom:0;padding:0 0 1px;font-weight:600;background:transparent;line-height:1.32}
+    .vz .val{padding:0;background:transparent;line-height:1.32}
+    .vz .val a{overflow-wrap:anywhere}
+    .vz .sechead{padding:10px 14px}
+    /* zónová tlačítka: tři vedle sebe i na úzkém displeji */
+    .vz .zonebtn{font-size:.8rem;padding:9px 7px;gap:5px;border-radius:8px}
     .vz .lrow{flex-direction:column;align-items:flex-start;gap:6px;padding:12px 0}
     .vz .ltext{padding:0}
     .vz .badge{align-self:flex-start;min-width:0}
@@ -200,6 +218,11 @@
           <span class="ltext"><strong>Startovací hub (zázemí)</strong> –stavby a pozemky spadající do původní administrativně-rezidenční části areálu, kde zvažujeme vybudovat komunitní zázemí a kultivovaný přístup k jednotkám vzniklým rekonstrukcí stávajících staveb</span>
         </li>
       </ul>
+      <div class="zonebtns" role="group" aria-label="Zvýraznit zónu v mapě">
+        <button type="button" class="zonebtn zonebtn--ctvrt"  data-zone="ctvrt"  aria-pressed="false">Městská čtvrť</button>
+        <button type="button" class="zonebtn zonebtn--jadro"  data-zone="jadro"  aria-pressed="false">Jádro</button>
+        <button type="button" class="zonebtn zonebtn--zazemi" data-zone="zazemi" aria-pressed="false">Zázemí</button>
+      </div>
       <figure class="zmap">
         <img src="assets/images/investori/zona-vse.jpg" width="1920" height="1007" decoding="async"
              alt="Masterplan areálu Horních kasáren se schématickým zákresem všech zón a budov 1. developerské fáze projektu Startovací hub" />
@@ -393,6 +416,37 @@
     btn.addEventListener('click', function () {
       try { localStorage.removeItem('vpd1-auth'); } catch (e) {}
       location.href = 'investori.html';
+    });
+  })();
+
+  /* Mapa zón: barevná tlačítka nad mapou. Klik = vybraná zóna (přepínací),
+     hover (desktop) = náhled, klik kamkoli mimo tlačítko = zpět celý areál. */
+  (function () {
+    var fig = document.querySelector('.zmap');
+    var btns = [].slice.call(document.querySelectorAll('.zonebtn'));
+    if (!fig || !btns.length) return;
+    var active = null, preview = null;
+    function render() {
+      var z = preview || active;
+      fig.className = 'zmap' + (z ? ' show-' + z : '');
+      btns.forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-zone') === active));
+      });
+    }
+    btns.forEach(function (b) {
+      var zone = b.getAttribute('data-zone');
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        active = (active === zone) ? null : zone;
+        preview = null;
+        render();
+      });
+      b.addEventListener('mouseenter', function () { preview = zone; render(); });
+      b.addEventListener('mouseleave', function () { preview = null; render(); });
+    });
+    /* klik kamkoli mimo tlačítka → zpět na celý areál */
+    document.addEventListener('click', function () {
+      if (active || preview) { active = null; preview = null; render(); }
     });
   })();
 </script>
