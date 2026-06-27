@@ -70,17 +70,17 @@
      klikatelné tlačítko přes celou šířku: 1. řádek = m² + název zóny, 2. řádek =
      popis. Klik zvýrazní zónu v mapě (přepínací), hover = náhled. Na telefonu se
      mapa ovládá třemi tlačítky níž (legenda tam zůstává a je rovněž klikatelná). */
-  .vz .legend{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .vz .legend{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+  .vz .legend li{margin:0;padding:0}
   .vz .lrow{display:block;width:100%;margin:0;font:inherit;text-align:left;color:#14142F;
-    background:var(--c);border:0;border-radius:10px;padding:12px 16px;cursor:pointer;
-    -webkit-tap-highlight-color:transparent;
-    transition:transform .2s cubic-bezier(.25,1,.5,1),box-shadow .2s cubic-bezier(.25,1,.5,1)}
-  .vz .lrow:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(20,20,47,.16)}
-  .vz .lrow:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-  .vz .lrow[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink),0 8px 18px rgba(20,20,47,.20)}
+    background:var(--c);border:0;border-radius:0;padding:9px 15px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;transition:filter .18s,box-shadow .18s}
+  .vz .lrow:hover{filter:brightness(.96)}
+  .vz .lrow:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .vz .lrow[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink)}
   .vz .lhead{display:block;font-weight:700;font-size:.95rem;line-height:1.3;color:#14142F}
   .vz .lhead .lval{font-variant-numeric:tabular-nums}
-  .vz .ldesc{display:block;margin-top:3px;font-weight:400;font-size:.85rem;line-height:1.4;color:#14142F}
+  .vz .ldesc{display:block;margin-top:2px;font-weight:400;font-size:.85rem;line-height:1.4;color:#14142F}
   .vz figure{margin:16px 0 0}
   /* Ovládání zón mapy: 3 barevná tlačítka hned nad mapou. Klik = zvýrazní zónu,
      klik kamkoli mimo = zpět celý areál. Na desktopu navíc hover = náhled.
@@ -90,9 +90,9 @@
     padding:11px 14px;border:1.5px solid transparent;border-radius:9px;font:inherit;font-weight:700;font-size:.92rem;
     line-height:1.15;text-align:center;color:#14142F;cursor:pointer;-webkit-tap-highlight-color:transparent;
     transition:transform .22s cubic-bezier(.25,1,.5,1),box-shadow .22s cubic-bezier(.25,1,.5,1),border-color .15s}
-  .vz .zonebtn--ctvrt{background:#B6CDE9}
-  .vz .zonebtn--jadro{background:#ECE5A3}
-  .vz .zonebtn--zazemi{background:#C2DCAE}
+  .vz .zonebtn--ctvrt{background:#7CBAF3}
+  .vz .zonebtn--jadro{background:#F1EA8C}
+  .vz .zonebtn--zazemi{background:#A3D697}
   .vz .zonebtn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(20,20,47,.16)}
   .vz .zonebtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .vz .zonebtn[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 7px 18px rgba(20,20,47,.22)}
@@ -112,16 +112,18 @@
     /* ZEBRA (jen mobil): sekce začíná tónovaným nadpisem, pak se dvojice
        název+hodnota střídají — lichá bez podkladu, sudá s podkladem. Lépe
        rozlišitelné, snadno čitelné po sobě → můžeme buňky mírně zúžit. */
-    .vz .row{grid-template-columns:1fr;padding:8px 14px}
+    /* hodnota hned vedle názvu, když se obojí vejde na řádek; jinak se zalomí
+       (dlouhé názvy → hodnota spadne pod ně). flex-wrap to řeší bez měření. */
+    .vz .row{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:7px;row-gap:1px;padding:8px 14px}
     .vz .row:nth-of-type(even){background:var(--tint)}
-    .vz .lab{border-bottom:0;padding:0 0 1px;font-weight:500;background:transparent;line-height:1.32}
+    .vz .lab{border-bottom:0;padding:0;font-weight:500;background:transparent;line-height:1.32}
     .vz .val{padding:0;background:transparent;line-height:1.32;border-bottom:0}
     .vz .val a{overflow-wrap:anywhere}
     .vz .sechead{padding:10px 14px}
     /* mapu na telefonu ovládají tři barevná tlačítka (legenda zůstává jako info) */
     .vz .zonebtns{display:flex}
     .vz .zonebtn{font-size:.8rem;padding:9px 7px;gap:5px;border-radius:8px}
-    .vz .lrow{padding:11px 14px}
+    .vz .lrow{padding:10px 14px}
   }
 </style>
 </head>
@@ -211,28 +213,28 @@
       <h2 class="sechead">Ortofotomapa areálu Horních kasáren se schématickým zákresem zvažované 1. developerské fáze investičně-realizačního scénáře S1</h2>
       <ul class="legend">
         <li>
-          <button type="button" class="lrow lrow--ctvrt" data-zone="ctvrt" aria-pressed="false" style="--c:#B6CDE9">
-            <span class="lhead"><span class="lval">83 327 m²</span> · Budoucí městská čtvrť</span>
-            <span class="ldesc">parcely tvořící areál určené ke zhodnocení za pomoci developerské činnosti – ihned lze uskutečnit rekonstrukci stávajících staveb – dle platného ÚP lze podmíněně realizovat nové stavby od roku 2030</span>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="lrow lrow--jadro" data-zone="jadro" aria-pressed="false" style="--c:#ECE5A3">
+          <button type="button" class="lrow lrow--jadro" data-zone="jadro" aria-pressed="false" style="--c:#F1EA8C">
             <span class="lhead"><span class="lval">16 496 m²</span> · Startovací hub (jádro)</span>
             <span class="ldesc">stavby a pozemky spadající do původní administrativně-rezidenční části areálu, kde zvažujeme rekonstrukcí 10 144 m² HPP stávajících staveb zprovoznit ≈ 331 jednotek 1+kk ≈ 6 730 m² ČPP</span>
           </button>
         </li>
         <li>
-          <button type="button" class="lrow lrow--zazemi" data-zone="zazemi" aria-pressed="false" style="--c:#C2DCAE">
+          <button type="button" class="lrow lrow--zazemi" data-zone="zazemi" aria-pressed="false" style="--c:#A3D697">
             <span class="lhead"><span class="lval">18 274 m²</span> · Startovací hub (zázemí)</span>
             <span class="ldesc">stavby a pozemky spadající do původní administrativně-rezidenční části areálu, kde zvažujeme vybudovat komunitní zázemí a kultivovaný přístup k jednotkám vzniklým rekonstrukcí stávajících staveb</span>
           </button>
         </li>
+        <li>
+          <button type="button" class="lrow lrow--ctvrt" data-zone="ctvrt" aria-pressed="false" style="--c:#7CBAF3">
+            <span class="lhead"><span class="lval">83 327 m²</span> · Budoucí městská čtvrť</span>
+            <span class="ldesc">parcely tvořící areál určené ke zhodnocení za pomoci developerské činnosti – ihned lze uskutečnit rekonstrukci stávajících staveb – dle platného ÚP lze podmíněně realizovat nové stavby od roku 2030</span>
+          </button>
+        </li>
       </ul>
       <div class="zonebtns" role="group" aria-label="Zvýraznit zónu v mapě">
-        <button type="button" class="zonebtn zonebtn--ctvrt"  data-zone="ctvrt"  aria-pressed="false">Městská čtvrť</button>
         <button type="button" class="zonebtn zonebtn--jadro"  data-zone="jadro"  aria-pressed="false">Jádro</button>
         <button type="button" class="zonebtn zonebtn--zazemi" data-zone="zazemi" aria-pressed="false">Zázemí</button>
+        <button type="button" class="zonebtn zonebtn--ctvrt"  data-zone="ctvrt"  aria-pressed="false">Městská čtvrť</button>
       </div>
       <figure class="zmap">
         <img src="assets/images/investori/zona-vse.jpg" width="1920" height="1007" decoding="async"
