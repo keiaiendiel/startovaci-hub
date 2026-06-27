@@ -168,6 +168,28 @@
   #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(2) { opacity: 0; }
   #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
+  /* ---- Lišta pod-stránek (Struktura webu): „stejná jako landing", ale bílá
+     „stuck" verze se spouští tím, jak tmavý banner (.sub-hero) odscrolluje pryč
+     — view-timeline na banneru, ne 100svh herem (banner má proměnnou výšku).
+     Logo je vidět hned (bílé na tmavém banneru) a po odscrollování se křížově
+     přebarví na tmavé na bílé liště (dvě SVG přes sebe). Sjednocená velikost
+     loga = velikost stuck loga na landingu. Bez JS; fallback bez podpory =
+     trvale průhledná lišta + bílé logo (stejně jako landing bez animation-timeline). */
+  .subhdr-logo { @apply inline-grid self-center; }
+  .subhdr-logo img { @apply block h-[clamp(18px,2.2vw,24px)] w-auto; grid-area: 1 / 1; }
+  .subhdr-logo .is-dark { opacity: 0; }
+  #navtoggle:checked ~ .hdr-bar .subhdr-logo { opacity: 0; } /* menu má vlastní brand */
+  @supports (animation-timeline: view()) {
+    .sub-hero { view-timeline-name: --banner; view-timeline-axis: block; }
+    body.page-sub { timeline-scope: --banner; } /* zviditelní --banner i fixní liště (sourozenec) */
+    @keyframes subhdr-logo-out { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes subhdr-logo-in2 { from { opacity: 0; } to { opacity: 1; } }
+    .page-sub .site-header { animation: hdr-stick both linear; animation-timeline: --banner; animation-range: exit 40% exit 70%; }
+    .page-sub .hdr-bar     { animation: hdr-shrink both linear; animation-timeline: --banner; animation-range: exit 40% exit 70%; }
+    .page-sub .subhdr-logo .is-white { animation: subhdr-logo-out both linear; animation-timeline: --banner; animation-range: exit 50% exit 78%; }
+    .page-sub .subhdr-logo .is-dark  { animation: subhdr-logo-in2 both linear; animation-timeline: --banner; animation-range: exit 50% exit 78%; }
+  }
+
   /* ---- Hero rychlá CTA (liquid-glass pilulky) -----------------------------
      Skupina ukotvená dole nad scroll šipkou; na desktopu dva poloviční sloupce
      dělené ve středu stránky, takže mezera (a scroll šipka) je přesně na středu
