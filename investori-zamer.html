@@ -73,7 +73,19 @@
   .vz .ltext{font-size:clamp(.9rem,1.5vw,1rem);line-height:1.45;text-wrap:pretty}
   .vz .ltext strong{font-weight:700;color:var(--ink)}
   .vz figure{margin:16px 0 0}
-  .vz figure img{width:100%;height:auto;display:block;border:1px solid var(--hair)}
+  /* masterplan se zónami — výchozí stav ukazuje všechny zóny (zona-vse),
+     hover na vysvětlivku prolne do zvýrazněného stavu dané zóny */
+  .vz .zmap{position:relative;line-height:0}
+  .vz .zmap img{width:100%;height:auto;display:block;border:1px solid var(--hair)}
+  .vz .zmap .zone{position:absolute;inset:0;height:100%;opacity:0;object-fit:cover;
+    transition:opacity .5s cubic-bezier(.25,1,.5,1)}
+  .vz .orto:has(.lrow--ctvrt:hover)  .zone--ctvrt {opacity:1}
+  .vz .orto:has(.lrow--jadro:hover)  .zone--jadro {opacity:1}
+  .vz .orto:has(.lrow--zazemi:hover) .zone--zazemi{opacity:1}
+  /* drobná mikro-interakce, ať je poznat, že vysvětlivka reaguje */
+  .vz .orto .lrow .badge{transition:transform .3s cubic-bezier(.25,1,.5,1),box-shadow .3s cubic-bezier(.25,1,.5,1)}
+  .vz .orto .lrow:hover .badge{transform:translateY(-1px);box-shadow:0 5px 16px rgba(20,20,47,.18)}
+  @media (prefers-reduced-motion:reduce){.vz .zmap .zone{transition-duration:1ms}}
   /* mobile: stack label over value, keep tinted value block */
   @media (max-width:680px){
     .vz .wrap{padding:22px 0 44px}
@@ -171,22 +183,25 @@
     <section class="sec orto" style="--tint:#E6ECF6" aria-label="Ortofotomapa">
       <h2 class="sechead">Ortofotomapa areálu Horních kasáren se schématickým zákresem zvažované 1. developerské fáze investičně-realizačního scénáře S1</h2>
       <ul class="legend">
-        <li class="lrow">
+        <li class="lrow lrow--ctvrt">
           <span class="badge" style="background:#B6CDE9">83 327 m²</span>
           <span class="ltext"><strong>Budoucí městská čtvrť</strong> –parcely tvořící areál určené ke zhodnocení za pomoci developerské činnosti – ihned lze uskutečnit rekonstrukci stávajících staveb – dle platného ÚP lze podmíněně realizovat nové stavby od roku 2030</span>
         </li>
-        <li class="lrow">
+        <li class="lrow lrow--jadro">
           <span class="badge" style="background:#ECE5A3">16 496 m²</span>
           <span class="ltext"><strong>Startovací hub (jádro)</strong> –stavby a pozemky spadající do původní administrativně-rezidenční části areálu, kde zvažujeme rekonstrukcí 10 144 m² HPP stávajících staveb zprovoznit ≈ 331 jednotek 1+kk ≈ 6 730 m² ČPP</span>
         </li>
-        <li class="lrow">
+        <li class="lrow lrow--zazemi">
           <span class="badge" style="background:#C2DCAE">18 274 m²</span>
           <span class="ltext"><strong>Startovací hub (zázemí)</strong> –stavby a pozemky spadající do původní administrativně-rezidenční části areálu, kde zvažujeme vybudovat komunitní zázemí a kultivovaný přístup k jednotkám vzniklým rekonstrukcí stávajících staveb</span>
         </li>
       </ul>
-      <figure>
-        <img src="assets/images/investori/masterplan.jpg" width="2400" height="1259" loading="lazy" decoding="async"
-             alt="Masterplan areálu Horních kasáren se schématickým zákresem zón a budov 1. developerské fáze projektu Startovací hub" />
+      <figure class="zmap">
+        <img src="assets/images/investori/zona-vse.jpg" width="1920" height="1007" decoding="async"
+             alt="Masterplan areálu Horních kasáren se schématickým zákresem všech zón a budov 1. developerské fáze projektu Startovací hub" />
+        <img class="zone zone--ctvrt"  src="assets/images/investori/zona-ctvrt.jpg"  width="1920" height="1007" decoding="async" alt="" aria-hidden="true" />
+        <img class="zone zone--jadro"  src="assets/images/investori/zona-jadro.jpg"  width="1920" height="1007" decoding="async" alt="" aria-hidden="true" />
+        <img class="zone zone--zazemi" src="assets/images/investori/zona-zazemi.jpg" width="1920" height="1007" decoding="async" alt="" aria-hidden="true" />
       </figure>
     </section>
     <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
