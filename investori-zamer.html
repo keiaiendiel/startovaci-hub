@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no"><!-- iOS: nedělej tap-to-call z čísel (m²/Kč); skutečné odkazy fungují dál -->
 <meta name="robots" content="noindex, nofollow">
 <style>html{background:#14142f}</style><!-- první paint = brand tmavá, ať navigace neproblikne bíle -->
 <meta name="description" content="Investiční záměr VPD1, areál Horních kasáren v Klecanech. Podklady pro investory.">
@@ -49,6 +50,10 @@
   .vz .upd{font-size:clamp(.85rem,1.6vw,1rem);margin:0;color:var(--ink)}
   /* working-version stamp above each block */
   .vz .verstamp{color:var(--grey);font-size:.7rem;font-weight:700;text-align:right;margin:26px 0 5px;letter-spacing:.02em}
+  /* Verze přesunutá na spodek stránky (ať nevyplňuje prostor nahoře). */
+  .vz .vzver{display:flex;flex-direction:column;align-items:center;gap:4px;margin:40px 0 8px;text-align:center}
+  .vz .vzver p{margin:0;color:var(--grey);font-size:.7rem;letter-spacing:.02em}
+  .vz .vzver p:last-child{font-weight:700}
   /* section */
   .vz .sec{margin:0}
   .vz .sechead{
@@ -150,12 +155,9 @@
 <div class="vz">
   <main class="wrap">
     <header class="cover">
-      <p class="topver">verze 2p8iaz6 · 15. 6. 2026</p>
       <p class="kicker">Investiční záměr</p>
       <h1 class="vpd">VPD1</h1>
-      <p class="upd">aktualizace č. 2026-06-15-2p8iaz6</p>
     </header>
-    <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
     <section class="sec" style="--tint:#E6ECF6" aria-label="Podkladové aktivum: areál Horních kasáren v Klecanech u Prahy (dále jen &quot;Areál&quot;)">
       <h2 class="sechead">Podkladové aktivum: areál Horních kasáren v Klecanech u Prahy (dále jen &quot;Areál&quot;)</h2>
       <div class="row">
@@ -208,7 +210,6 @@
       </div>
       <p class="foot">*pokud je použito slovní spojení &quot;odkup Areálu&quot; či &quot;kupní cena Areálu&quot;, je tím myšlen odkup 100 % obchodního podílu ve společnosti FTV a kupní cena za tento podíl</p>
     </section>
-    <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
     <section class="sec orto" style="--tint:#E6ECF6" aria-label="Ortofotomapa">
       <h2 class="sechead">Ortofotomapa areálu Horních kasáren se schématickým zákresem zvažované 1. developerské fáze investičně-realizačního scénáře S1</h2>
       <ul class="legend">
@@ -244,7 +245,6 @@
         <img class="zone zone--zazemi" src="assets/images/investori/zona-zazemi.jpg" width="1920" height="1007" decoding="async" alt="" aria-hidden="true" />
       </figure>
     </section>
-    <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
     <section class="sec" style="--tint:#ECE6F6" aria-label="Základní informace k záměru VPD1">
       <h2 class="sechead">Základní informace k záměru VPD1</h2>
       <div class="row">
@@ -337,7 +337,6 @@
       </div>
       <p class="foot">*pokud je použito slovní spojení &quot;odkup Areálu&quot; či &quot;kupní cena Areálu&quot;, je tím myšlen odkup 100 % obchodního podílu ve společnosti FTV a kupní cena za tento podíl</p>
     </section>
-    <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
     <section class="sec" style="--tint:#F6E6EC" aria-label="Ostatní informace k záměru VPD1">
       <h2 class="sechead">Ostatní informace k záměru VPD1</h2>
       <div class="row">
@@ -418,6 +417,10 @@
       </div>
       <p class="foot">*pokud je použito slovní spojení &quot;odkup Areálu&quot; či &quot;kupní cena Areálu&quot;, je tím myšlen odkup 100 % obchodního podílu ve společnosti FTV a kupní cena za tento podíl</p>
     </section>
+    <footer class="vzver">
+      <p>verze 2p8iaz6 · aktualizace č. 2026-06-15-2p8iaz6</p>
+      <p>[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
+    </footer>
   </main>
 </div>
 

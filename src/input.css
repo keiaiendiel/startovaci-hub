@@ -115,7 +115,7 @@
      pozadí, tmavé logo/burger, vlasová linka dole a o něco nižší výška. Scroll-
      driven přes délkové rozsahy, bez JS. Logo je do té doby skryté. */
   .hdr-logo { @apply self-center; opacity: 0; }
-  .hdr-logo img { @apply block h-[clamp(18px,2.2vw,24px)] w-auto; }
+  .hdr-logo img { @apply block h-[18px] w-auto; }
 
   /* Akční skupina vpravo: CTA „Pronajmout" + hamburger (jako sh-web Astro lišta).
      CTA je obrysová pilulka, barvu i obrys bere z currentColor → bílá nad tmavým
@@ -148,14 +148,14 @@
       to   { min-height: 54px; padding-top: 7px; padding-bottom: 7px; }
     }
     @keyframes hdr-logo-in { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
-    .site-header { animation: hdr-stick both linear; animation-timeline: scroll(root block); animation-range: 85vh 104vh; }
-    .hdr-bar { animation: hdr-shrink both linear; animation-timeline: scroll(root block); animation-range: 85vh 104vh; }
-    .hdr-logo { animation: hdr-logo-in both linear; animation-timeline: scroll(root block); animation-range: 92vh 108vh; }
+    .site-header { animation: hdr-stick both linear; animation-timeline: scroll(root block); animation-range: 78svh 94svh; }
+    .hdr-bar { animation: hdr-shrink both linear; animation-timeline: scroll(root block); animation-range: 78svh 94svh; }
+    .hdr-logo { animation: hdr-logo-in both linear; animation-timeline: scroll(root block); animation-range: 86svh 96svh; }
     /* Reveal řídí JEN opacity. (Transform tu dřív byl taky, ale „both" fill ho po
        odscrollování držel a přebíjel hover-lift; a dvojná vazba opacity+transform
        přes scroll-timeline + transition byla zdrojem probliknutí.) */
     @keyframes hdr-cta-in { from { opacity: 0; pointer-events: none; } to { opacity: 1; pointer-events: auto; } }
-    body:not(.page-sub) .site-header .hdr-cta { animation: hdr-cta-in both linear; animation-timeline: scroll(root block); animation-range: 92vh 108vh; }
+    body:not(.page-sub) .site-header .hdr-cta { animation: hdr-cta-in both linear; animation-timeline: scroll(root block); animation-range: 86svh 96svh; }
   }
   /* Menu otevřené: burger/X zůstává bílé i na „stuck" liště a logo se skryje
      (menu má vlastní brand); zároveň se zamkne scroll stránky za menu. */
@@ -203,7 +203,7 @@
      loga = velikost stuck loga na landingu. Bez JS; fallback bez podpory =
      trvale průhledná lišta + bílé logo (stejně jako landing bez animation-timeline). */
   .subhdr-logo { @apply inline-grid self-center; }
-  .subhdr-logo img { @apply block h-[clamp(18px,2.2vw,24px)] w-auto; grid-area: 1 / 1; }
+  .subhdr-logo img { @apply block h-[18px] w-auto; grid-area: 1 / 1; }
   .subhdr-logo .is-dark { opacity: 0; }
   #navtoggle:checked ~ .hdr-bar .subhdr-logo { opacity: 0; } /* menu má vlastní brand */
   @supports (animation-timeline: view()) {
@@ -221,31 +221,29 @@
      Skupina ukotvená dole nad scroll šipkou; na desktopu dva poloviční sloupce
      dělené ve středu stránky, takže mezera (a scroll šipka) je přesně na středu
      a šířka každé pilulky je dle obsahu. Mobil: stack na střed. */
+  /* Mobil: ukotveno dole nad scroll šipkou (jako desktop), obě pilulky stejně
+     široké (stretch přes celou šířku). */
   .hero-ctas {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(86px, 13vh, 120px);
     z-index: 2;
-    width: calc(100% - 2 * var(--gutter));
-    max-width: var(--container-wide);
-    margin: 24px auto 0;
+    padding-inline: var(--gutter);
     display: grid;
-    justify-items: center;
-    row-gap: 12px;
+    justify-items: stretch;
+    row-gap: 10px;
   }
+  .hero-ctas .hero-cta { width: 100%; }
   @media (min-width: 768px) {
     .hero-ctas {
-      position: absolute;
-      left: 0;
-      right: 0;
       bottom: clamp(96px, 12vh, 140px);
-      width: auto;
-      max-width: none;
-      margin: 0;
-      padding-inline: var(--gutter);
       grid-template-columns: 1fr 1fr;
       align-items: center;
       row-gap: 0;
       --rgap: clamp(16px, 3vw, 48px);
     }
+    .hero-ctas .hero-cta { width: auto; } /* desktop: šířka dle obsahu */
     .hero-ctas .hero-cta:nth-child(1) { justify-self: end; margin-right: calc(var(--rgap) / 2); }
     .hero-ctas .hero-cta:nth-child(2) { justify-self: start; margin-left: calc(var(--rgap) / 2); }
   }
@@ -253,9 +251,9 @@
      ať ladí s ostatními tlačítky. Skleněnou variantu vrátíš přidáním třídy
      .hero-cta--glass (její definice níže zůstává zachovaná). */
   .hero-cta {
-    @apply inline-flex items-center justify-center gap-3 rounded-[7px] px-8 py-[18px]
-           text-lg font-bold leading-none tracking-[-0.02em] text-white transition
-           md:px-10 md:py-5 md:text-[clamp(1.1rem,1.3vw,1.35rem)];
+    @apply inline-flex items-center justify-center gap-2.5 rounded-[7px] px-5 py-[14px]
+           text-[0.95rem] font-bold leading-none tracking-[-0.02em] text-white transition
+           md:gap-3 md:px-10 md:py-5 md:text-[clamp(1.1rem,1.3vw,1.35rem)];
     border: 1px solid rgba(255,255,255,0.6);
     background: transparent;
   }
