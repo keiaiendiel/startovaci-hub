@@ -59,8 +59,7 @@
     --bg: #ffffff;
     --bg-muted: var(--k-05);
     --border-muted: var(--k-15);
-    --dot: hsl(var(--hue) 10% 55%);   /* klidová tečka galerie — kontrast ≥3:1 vůči bílé */
-    --dot-on: hsl(calc(var(--hue) + 40) 44% 50%);   /* aktivní tečka — tmavší fialová */
+    --dot: hsl(var(--hue) 10% 72%);   /* klidová tečka galerie — světlejší šedá */
 
     --container-wide: 1480px;
     --gutter: max(clamp(20px, 4vw, 80px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
@@ -286,11 +285,10 @@
      accent, když je její snímek vystředěný. Prohlížeče bez podpory nechají
      tečky v klidu (swipe i kotvy fungují dál) — degraduje elegantně. */
   @supports (animation-timeline: scroll()) {
-    /* Aktivní tečka: rose (světlejší, výraznější než plum) + zvětšení, ať je
-       jasně poznat, který snímek je zobrazený. */
+    /* Aktivní tečka: brand plum (--accent) proti světlým šedým + mírné zvětšení. */
     @keyframes gallery-dot-on {
       0%, 42%   { background: var(--dot); transform: scale(1); }
-      50%       { background: var(--dot-on); transform: scale(1.4); }
+      50%       { background: var(--accent); transform: scale(1.15); }
       58%, 100% { background: var(--dot); transform: scale(1); }
     }
     .gal { timeline-scope: --g1, --g2, --g3, --g4, --g5, --g6; }
