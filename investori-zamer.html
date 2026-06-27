@@ -68,11 +68,12 @@
   .vz .foot{font-style:italic;font-size:.8rem;line-height:1.4;color:#222;margin:9px 2px 0;max-width:100ch}
   /* ortofoto legend */
   .vz .legend{list-style:none;margin:0;padding:0}
-  .vz .lrow{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:stretch;border-bottom:1px solid var(--hair)}
-  /* výšku řádku určuje text (padding na .ltext), barevný badge se přes align-items:stretch
-     natáhne na celou výšku řádku — flush nahoře i dole, bez křehkých negativních marginů */
-  .vz .badge{display:grid;place-items:center;font-weight:700;font-size:.9rem;color:#14142F;padding:8px 14px;white-space:nowrap;text-align:center;min-width:118px}
-  .vz .ltext{padding:12px 0;font-size:clamp(.9rem,1.5vw,1rem);line-height:1.45;text-wrap:pretty}
+  /* flex řádek: výšku určuje text (padding na .ltext), barevný badge se přes
+     align-self:stretch natáhne na celou výšku řádku — flush nahoře i dole.
+     Flex stretch je napříč prohlížeči (vč. Safari) spolehlivější než grid. */
+  .vz .lrow{display:flex;align-items:stretch;gap:14px;border-bottom:1px solid var(--hair)}
+  .vz .badge{display:flex;align-items:center;justify-content:center;align-self:stretch;flex:none;font-weight:700;font-size:.9rem;color:#14142F;padding:8px 14px;white-space:nowrap;text-align:center;min-width:118px}
+  .vz .ltext{flex:1;min-width:0;padding:12px 0;font-size:clamp(.9rem,1.5vw,1rem);line-height:1.45;text-wrap:pretty}
   .vz .ltext strong{font-weight:700;color:var(--ink)}
   .vz figure{margin:16px 0 0}
   /* masterplan se zónami — výchozí stav ukazuje všechny zóny (zona-vse),
@@ -95,9 +96,9 @@
     /* štítek nahoře, hodnota v tónované buňce s textem na střed (symetrický padding) */
     .vz .lab{border-bottom:0;padding:12px 15px 4px;font-weight:600}
     .vz .val{padding:11px 15px}
-    .vz .lrow{grid-template-columns:1fr;gap:6px;padding:12px 0}
+    .vz .lrow{flex-direction:column;align-items:flex-start;gap:6px;padding:12px 0}
     .vz .ltext{padding:0}
-    .vz .badge{justify-self:start;min-width:0}
+    .vz .badge{align-self:flex-start;min-width:0}
   }
 </style>
 </head>
