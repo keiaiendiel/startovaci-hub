@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <style>html{background:#14142f}</style><!-- první paint = brand tmavá, ať navigace neproblikne -->
+  <title>Struktura webu · Startovací Hub Klecany</title>
+  <meta name="description" content="Mapa stránek webu Startovacího Hubu Klecany se stavem jednotlivých sekcí. Většina podstránek je zatím ve výrobě." />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER (stejný jako landing) ===== -->
+  <header class="fixed inset-x-0 top-0 z-30 text-white">
+    <input type="checkbox" id="navtoggle" class="sr-only" aria-label="Přepnout menu" />
+
+    <div class="wrap hdr-bar">
+      <a href="index.html" class="self-center" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(22px,2.6vw,30px)] w-auto" /></a>
+      <label for="navtoggle" class="burger-btn" aria-label="Otevřít menu">
+        <span class="burger"><span></span><span></span><span></span></span>
+      </label>
+    </div>
+
+    <div class="menu">
+      <div class="wrap menu__inner">
+        <a href="index.html" class="self-center" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(22px,2.6vw,30px)] w-auto" /></a>
+
+        <a href="404.html" class="inline-flex items-center justify-center gap-2 self-center rounded-[7px] bg-rose px-8 py-3 text-base font-bold leading-none text-plum-deep transition hover:-translate-y-[2px] hover:bg-white">
+          <span>Pronajmout</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+
+        <nav class="flex flex-1 flex-col items-center justify-center gap-2" aria-label="Hlavní navigace">
+          <a class="menu-link" href="404.html">Ubytování</a>
+          <a class="menu-link" href="404.html">Stipendia</a>
+          <a class="menu-link" href="404.html">Zázemí</a>
+          <a class="menu-link" href="404.html">Doprava</a>
+          <a class="menu-link" href="404.html">Galerie</a>
+          <a class="menu-link" href="404.html">Ceník</a>
+          <a class="menu-link" href="404.html">Novinky</a>
+        </nav>
+
+        <div class="menu__foot">
+          <a class="menu-acct" href="404.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Přihlásit se / Odhlásit se</span></a>
+          <a class="menu-acct" href="404.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><span>Přepnout účet</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== SUB-HERO ===== -->
+  <section id="top" class="sub-hero" aria-label="Struktura webu">
+    <div class="sub-hero__inner">
+      <p class="sub-hero__eyebrow">Mapa webu</p>
+      <h1 class="sub-hero__title">Struktura <em>webu</em></h1>
+    </div>
+  </section>
+
+  <!-- ===== STRUKTURA / STROM ===== -->
+  <section class="struktura">
+    <div class="struktura__inner">
+      <ul class="legend">
+        <li class="legend__item"><span class="legend__chip legend__chip--live" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="legend__label">v provozu</span></li>
+        <li class="legend__item"><span class="legend__chip legend__chip--prep" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span class="legend__label">ve výrobě</span></li>
+        <li class="legend__item"><span class="legend__chip legend__chip--locked" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="legend__label">na heslo</span></li>
+      </ul>
+
+      <nav class="strom" aria-label="Struktura webu">
+        <ul class="strom__root">
+
+          <li class="snode">
+            <div class="snode__row">
+              <span class="snode__status snode__status--live" title="v provozu" aria-label="v provozu"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <a class="snode__link" href="index.html"><span class="snode__label">Úvod</span></a>
+            </div>
+          </li>
+
+          <li class="snode">
+            <div class="snode__row snode__row--section">
+              <span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+              <a class="snode__link" href="404.html"><span class="snode__label">Ubytování</span></a>
+            </div>
+            <ul class="snode__children">
+              <li class="snode">
+                <div class="snode__row snode__row--section">
+                  <span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                  <a class="snode__link" href="404.html"><span class="snode__label">Privátní apartmány</span></a>
+                </div>
+                <ul class="snode__children">
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Apartmán 1+kk</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Apartmán 2+kk</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Apartmán 3+kk</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Apartmán 4+kk</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Apartmán 5+kk</span></a></div></li>
+                </ul>
+              </li>
+              <li class="snode">
+                <div class="snode__row snode__row--section">
+                  <span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                  <a class="snode__link" href="404.html"><span class="snode__label">Sdílené pokoje</span></a>
+                </div>
+                <ul class="snode__children">
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Lůžko ve sdíleném pokoji, základní soukromí</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Dvojlůžko ve sdíleném pokoji, základní soukromí</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Lůžko ve sdíleném pokoji, zvýšené soukromí</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Dvojlůžko ve sdíleném pokoji, zvýšené soukromí</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Kapslové lůžko, vysoké soukromí</span></a></div></li>
+                  <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Kapslové dvojlůžko, vysoké soukromí</span></a></div></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li class="snode">
+            <div class="snode__row snode__row--section">
+              <span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+              <a class="snode__link" href="404.html"><span class="snode__label">Zázemí</span></a>
+            </div>
+            <ul class="snode__children">
+              <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Gastronomie</span></a></div></li>
+              <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Wellness</span></a></div></li>
+              <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Coworking</span></a></div></li>
+              <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Komunita</span></a></div></li>
+              <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Ostatní</span></a></div></li>
+              <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Okolí</span></a></div></li>
+            </ul>
+          </li>
+
+          <li class="snode">
+            <div class="snode__row snode__row--section">
+              <span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+              <a class="snode__link" href="404.html"><span class="snode__label">Doprava</span></a>
+            </div>
+            <ul class="snode__children">
+              <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Sdílená mobilita</span></a></div></li>
+              <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Privátní mobilita</span></a></div></li>
+            </ul>
+          </li>
+
+          <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Stipendia</span></a></div></li>
+          <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Galerie</span></a></div></li>
+          <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Ceník</span></a></div></li>
+          <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Novinky</span></a></div></li>
+          <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Rezervace</span></a></div></li>
+          <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">Kontakty</span></a></div></li>
+          <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">FAQ</span></a></div></li>
+          <li class="snode"><div class="snode__row"><span class="snode__status snode__status--prep" title="ve výrobě" aria-label="ve výrobě"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><a class="snode__link" href="404.html"><span class="snode__label">GDPR</span></a></div></li>
+
+          <li class="snode">
+            <div class="snode__row">
+              <span class="snode__status snode__status--locked" title="na heslo" aria-label="na heslo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+              <a class="snode__link" href="investori.html"><span class="snode__label">Pro investory</span></a>
+            </div>
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Zpět nahoru -->
+  <a href="#top" class="to-top" aria-label="Nahoru">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="m6 15 6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
+</body>
+</html>

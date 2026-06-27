@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="cs" class="inv-wait">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>html{background:#14142f}</style><!-- první paint = brand tmavá, ať navigace neproblikne bíle -->
+<meta name="description" content="Investiční záměr VPD1, areál Horních kasáren v Klecanech. Podklady pro investory.">
+<title>Investiční záměr VPD1 · podklady pro investory</title>
+
+<!-- Měkká brána: bez platného otisku zpět na login (jako v002). Skrývá jen
+     obsah (.vz); s vypnutým JS zůstane viditelná hláška v <noscript> níže. -->
+<style>html.inv-wait .vz{visibility:hidden}</style>
+<script>
+  (function () {
+    var ALLOW = ['2250c0a01e81a5c7c27c6a9632b9f92faed24cfba6868421b7311472982a1b06'];
+    var ok = false;
+    try { ok = ALLOW.indexOf(localStorage.getItem('vpd1-auth')) !== -1; } catch (e) {}
+    if (!ok) { location.replace('investori.html'); }
+    else { document.documentElement.classList.remove('inv-wait'); }
+  })();
+</script>
+
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin>
+<link rel="stylesheet" href="assets/styles.css">
+
+<!--
+  Investiční záměr VPD1 — web verze listu z tabulky Záměr VPD1_5.xlsx (verze 2p8iaz6, 15. 6. 2026).
+  Téměř shodné s původním soběstačným HTML; jen brand font (Atyp Special), ortofoto z assets/
+  a nahoře slim top bar pro návrat na úvod a odhlášení. Vše ve třídě .vz bez kolize stylů.
+-->
+<style>
+  .vz,.vz *{box-sizing:border-box}
+  .vz{
+    --ink:#2A2A60; --hair:#9696B9; --rule:#2A2A60; --grey:#7F7F7F; --link:#4351AD;
+    margin:0; background:#fff; color:var(--ink);
+    font-family:'Atyp Special',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+    font-variant-numeric:tabular-nums lining-nums;
+    -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  .vz .wrap{width:calc(100% - 2 * var(--gutter));max-width:var(--container-wide);margin:0 auto;padding:34px 0 72px}
+  .vz a{color:var(--link)}
+  /* cover */
+  .vz .cover{margin:0 0 26px}
+  .vz .topver{color:var(--grey);font-size:.7rem;text-align:right;margin:0 0 14px;letter-spacing:.02em}
+  .vz .kicker{font-size:clamp(1.05rem,2.4vw,1.35rem);font-weight:700;margin:0;letter-spacing:.005em}
+  .vz .vpd{font-size:clamp(2.9rem,11vw,5rem);font-weight:700;line-height:.92;margin:.04em 0 .14em;letter-spacing:-.01em}
+  .vz .upd{font-size:clamp(.85rem,1.6vw,1rem);margin:0;color:var(--ink)}
+  /* working-version stamp above each block */
+  .vz .verstamp{color:var(--grey);font-size:.7rem;font-weight:700;text-align:right;margin:26px 0 5px;letter-spacing:.02em}
+  /* section */
+  .vz .sec{margin:0}
+  .vz .sechead{
+    margin:0;background:var(--tint);
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    font-size:clamp(1rem,2vw,1.1rem);font-weight:700;line-height:1.3;padding:13px 15px;text-wrap:balance;
+  }
+  .vz .row{display:grid;grid-template-columns:1.08fr 1fr}
+  .vz .lab,.vz .val{
+    padding:12px 15px;font-size:clamp(.875rem,1.5vw,.95rem);line-height:1.35;
+    border-bottom:1px solid var(--hair);overflow-wrap:anywhere;text-wrap:balance;
+  }
+  .vz .lab{background:#fff}
+  .vz .val{background:var(--tint)}
+  .vz .val.num{font-weight:700}
+  .vz .val a{color:var(--link);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+  .vz .foot{font-style:italic;font-size:.8rem;line-height:1.4;color:#222;margin:9px 2px 0;max-width:100ch}
+  /* ortofoto legend */
+  .vz .legend{list-style:none;margin:0;padding:0}
+  .vz .lrow{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:12px 4px;border-bottom:1px solid var(--hair)}
+  .vz .badge{font-weight:700;font-size:.9rem;color:#14142F;padding:8px 14px;white-space:nowrap;text-align:center;min-width:118px}
+  .vz .ltext{font-size:clamp(.9rem,1.5vw,1rem);line-height:1.45;text-wrap:pretty}
+  .vz .ltext strong{font-weight:700;color:var(--ink)}
+  .vz figure{margin:16px 0 0}
+  .vz figure img{width:100%;height:auto;display:block;border:1px solid var(--hair)}
+  /* mobile: stack label over value, keep tinted value block */
+  @media (max-width:680px){
+    .vz .wrap{padding:22px 0 44px}
+    .vz .row{grid-template-columns:1fr}
+    /* štítek nahoře, hodnota v tónované buňce s textem na střed (symetrický padding) */
+    .vz .lab{border-bottom:0;padding:12px 15px 4px;font-weight:600}
+    .vz .val{padding:11px 15px}
+    .vz .lrow{grid-template-columns:1fr;gap:6px}
+    .vz .badge{justify-self:start;min-width:0}
+  }
+</style>
+</head>
+<body>
+
+<header class="inv-topbar">
+  <div class="inv-topbar__inner">
+    <a class="inv-topbar__brand" href="index.html" aria-label="Startovací Hub, na úvod">
+      <img src="assets/brand-logo-white.svg" alt="Startovací Hub" />
+    </a>
+    <span class="inv-topbar__title">Podklady pro investory</span>
+    <div class="inv-topbar__actions">
+      <button type="button" class="inv-topbar__logout" data-inv-logout>Odhlásit se</button>
+    </div>
+  </div>
+</header>
+
+<noscript>
+  <p style="max-width:680px;margin:48px auto;padding:0 20px;font:500 1rem/1.6 'Atyp Special',system-ui,-apple-system,sans-serif;color:#2A2A60;text-align:center">
+    Podklady pro investory se zobrazí jen se zapnutým JavaScriptem.
+  </p>
+</noscript>
+
+<div class="vz">
+  <main class="wrap">
+    <header class="cover">
+      <p class="topver">verze 2p8iaz6 · 15. 6. 2026</p>
+      <p class="kicker">Investiční záměr</p>
+      <h1 class="vpd">VPD1</h1>
+      <p class="upd">aktualizace č. 2026-06-15-2p8iaz6</p>
+    </header>
+    <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
+    <section class="sec" style="--tint:#E6ECF6" aria-label="Podkladové aktivum: areál Horních kasáren v Klecanech u Prahy (dále jen &quot;Areál&quot;)">
+      <h2 class="sechead">Podkladové aktivum: areál Horních kasáren v Klecanech u Prahy (dále jen &quot;Areál&quot;)</h2>
+      <div class="row">
+        <div class="lab">Rozloha všech parcel, které tvoří Areál:</div>
+        <div class="val num">83 327 m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">Celková rozloha zastavitelných ploch Areálu dle současného ÚP:</div>
+        <div class="val num">77 210 m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">HPP všech budov stojících v Areálu, u kterých lze v souladu se současným ÚP přistoupit ihned k rekonstrukci:</div>
+        <div class="val num">18 707 m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">Kupní cena Areálu (současná), jejíž splatnost lze odložit až do roku 2039:</div>
+        <div class="val num">457 829 167 Kč</div>
+      </div>
+      <div class="row">
+        <div class="lab">Kupní cena Areálu (současná) v přepočtu na jeden m2:</div>
+        <div class="val num">5 494 Kč/m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">Nejzazší termín sjednaný pro odkoupení Areálu na základě uzavřených smluv:</div>
+        <div class="val num">únor 2039</div>
+      </div>
+      <div class="row">
+        <div class="lab">Parcely, které tvoří Areál, jsou zapsány na:</div>
+        <div class="val">LV 1436; katastrální území: Klecany (vyznačeno na ortofotomapě)</div>
+      </div>
+      <div class="row">
+        <div class="lab">Majitelem Areálu je SPV společnost:</div>
+        <div class="val">FTV Cerhovice s.r.o. (dále jen &quot;FTV&quot;)</div>
+      </div>
+      <div class="row">
+        <div class="lab">Právo odkoupit Areál je smluvně zajištěno na řad SPV společnosti (na řad = smlouvu je možné podstoupit na třetí stranu):</div>
+        <div class="val">VPD Klecany s.r.o. (dále jen &quot;VPD&quot;)</div>
+      </div>
+      <div class="row">
+        <div class="lab">Zástavba Areálu novými stavbami je možná po splnění podmínek v současném ÚP (viz analýza ÚP):</div>
+        <div class="val">od roku 2030</div>
+      </div>
+      <div class="row">
+        <div class="lab">Nad rámec práva odkupu je k Areálu do února roku 2039 smluvně zajištěno:</div>
+        <div class="val">právo užívání / nájmu, právo neomezeného podnájmu, právo stavby, plná moc k jednání za FTV s úřady</div>
+      </div>
+      <div class="row">
+        <div class="lab">Základní investiční záměr s podkladovým aktivem:</div>
+        <div class="val">development Areálu do podoby moderní městské čtvrti s komunitním &amp; coworkingovým zázemím</div>
+      </div>
+      <p class="foot">*pokud je použito slovní spojení &quot;odkup Areálu&quot; či &quot;kupní cena Areálu&quot;, je tím myšlen odkup 100 % obchodního podílu ve společnosti FTV a kupní cena za tento podíl</p>
+    </section>
+    <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
+    <section class="sec orto" style="--tint:#E6ECF6" aria-label="Ortofotomapa">
+      <h2 class="sechead">Ortofotomapa areálu Horních kasáren se schématickým zákresem zvažované 1. developerské fáze investičně-realizačního scénáře S1</h2>
+      <ul class="legend">
+        <li class="lrow">
+          <span class="badge" style="background:#B6CDE9">83 327 m²</span>
+          <span class="ltext"><strong>Budoucí městská čtvrť</strong> –parcely tvořící areál určené ke zhodnocení za pomoci developerské činnosti – ihned lze uskutečnit rekonstrukci stávajících staveb – dle platného ÚP lze podmíněně realizovat nové stavby od roku 2030</span>
+        </li>
+        <li class="lrow">
+          <span class="badge" style="background:#ECE5A3">16 496 m²</span>
+          <span class="ltext"><strong>Startovací hub (jádro)</strong> –stavby a pozemky spadající do původní administrativně-rezidenční části areálu, kde zvažujeme rekonstrukcí 10 144 m² HPP stávajících staveb zprovoznit ≈ 331 jednotek 1+kk ≈ 6 730 m² ČPP</span>
+        </li>
+        <li class="lrow">
+          <span class="badge" style="background:#C2DCAE">18 274 m²</span>
+          <span class="ltext"><strong>Startovací hub (zázemí)</strong> –stavby a pozemky spadající do původní administrativně-rezidenční části areálu, kde zvažujeme vybudovat komunitní zázemí a kultivovaný přístup k jednotkám vzniklým rekonstrukcí stávajících staveb</span>
+        </li>
+      </ul>
+      <figure>
+        <img src="assets/images/investori/ortofotomapa.jpg" width="2400" height="751" loading="lazy" decoding="async"
+             alt="Ortofotomapa areálu Horních kasáren se schématickým zákresem zón: celý areál, jádro a zázemí projektu Startovací hub" />
+      </figure>
+    </section>
+    <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
+    <section class="sec" style="--tint:#ECE6F6" aria-label="Základní informace k záměru VPD1">
+      <h2 class="sechead">Základní informace k záměru VPD1</h2>
+      <div class="row">
+        <div class="lab">Rozloha všech parcel, které tvoří Areál:</div>
+        <div class="val num">83 327 m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">Rozloha parcel, které v Areálu lze zastavět novostavbami bytových domů dle současného ÚP (plochy SM - smíšené městské):</div>
+        <div class="val num">77 210 m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">HPP všech budov stojících v Areálu, u kterých lze v souladu se současným ÚP přistoupit ihned k rekonstrukci:</div>
+        <div class="val num">18 707 m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">Tržní hodnota Areálu byla odhadnuta znalcem k 31. 12. 2024 (viz příslušný znalecký posudek) na:</div>
+        <div class="val">536 200 000 Kč</div>
+      </div>
+      <div class="row">
+        <div class="lab">Kolik procent ze znalcem odhadnuté tržní hodnoty Areálu činí současná kupní cena Areálu:</div>
+        <div class="val">85,38 %</div>
+      </div>
+      <div class="row">
+        <div class="lab">Současná kupní cena Areálu po jejím navýšení v roce 2024, 2025 a 2026 (k navýšení dochází každý rok k 10. 3.):</div>
+        <div class="val num">457 829 167 Kč</div>
+      </div>
+      <div class="row">
+        <div class="lab">Kupní cena Areálu (současná) v přepočtu na jeden m2 nakupovaných pozemků:</div>
+        <div class="val">5 494 Kč/m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">Základ kupní ceny Areálu sjednaný 24. 2. 2023 uzavřením SoSB:</div>
+        <div class="val">385 000 000 Kč</div>
+      </div>
+      <div class="row">
+        <div class="lab">Základ kupní ceny Areálu se každoročně k 10. 3., a to pokud inflace CPI za předchozí rok nepřesáhne 5 %, navyšuje o částku:</div>
+        <div class="val">19 250 000 Kč</div>
+      </div>
+      <div class="row">
+        <div class="lab">Pokud inflace CPI za předchozí rok přesáhne 5 %, navýší se k 10. 3. základ kupní ceny o částku, která se získá:</div>
+        <div class="val">vynásobením základu kupní ceny s vyhlášenou inflací CPI za předchozí rok</div>
+      </div>
+      <div class="row">
+        <div class="lab">Průměrný smluvený meziroční růst Kupní ceny Areálu vzhledem k jeho Kupní ceně v příslušném roce (při inflaci do 5 %):</div>
+        <div class="val">od 2,79 % do max. 4,20 % (navýšení ceny podkladového aktiva se k 10. 3. kapitalizuje do smluvené Kupní ceny)</div>
+      </div>
+      <div class="row">
+        <div class="lab">Průměrná výše sjednaných záloh na Kupní cenu vzhledem k výši Kupní ceny v příslušném roce (při inflaci do 5 %):</div>
+        <div class="val">od 0,63 % do max. 4,01 % (bazální cash-flow záměru)</div>
+      </div>
+      <div class="row">
+        <div class="lab">Již uhrazené zálohy na kupní cenu Areálu:</div>
+        <div class="val num">16 000 000 Kč</div>
+      </div>
+      <div class="row">
+        <div class="lab">Z kupní ceny Areálu v současnosti zbývá doplatit:</div>
+        <div class="val num">441 829 167 Kč</div>
+      </div>
+      <div class="row">
+        <div class="lab">Zastavitelnost Areálu dle současného ÚP:</div>
+        <div class="val">40 %</div>
+      </div>
+      <div class="row">
+        <div class="lab">Povolená podlažnost v Areálu dle současného ÚP:</div>
+        <div class="val">tři nadzemní podlaží plus podkroví</div>
+      </div>
+      <div class="row">
+        <div class="lab">Podlažnost bytových domů přiléhajících ze severní strany k Areálu:</div>
+        <div class="val">až 8 nadzemních podlaží</div>
+      </div>
+      <div class="row">
+        <div class="lab">Index zvolený pro níže uvedený výpočet nadzemních HPP, který se držví v mezích současného ÚP:</div>
+        <div class="val">3,60</div>
+      </div>
+      <div class="row">
+        <div class="lab">Index zvolený pro níže uvedený převod HPP na ČPP:</div>
+        <div class="val">0,8</div>
+      </div>
+      <div class="row">
+        <div class="lab">HPP bytových domů (nadzemních podlaží), které lze v Areálu potenciálně umístit bez změny současného ÚP:</div>
+        <div class="val">111 182 m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">ČPP bytových jednotek, které lze v Areálu potenciálně umístit v souladu se současným ÚP:</div>
+        <div class="val">88 946 m²</div>
+      </div>
+      <div class="row">
+        <div class="lab">Kupní cena Areálu (současná) v přepočtu na jeden m2 ČPP bytových jednotek, které lze dle současného ÚP v Areálu umístit:</div>
+        <div class="val">5 147 Kč/m² ČPP</div>
+      </div>
+      <p class="foot">*pokud je použito slovní spojení &quot;odkup Areálu&quot; či &quot;kupní cena Areálu&quot;, je tím myšlen odkup 100 % obchodního podílu ve společnosti FTV a kupní cena za tento podíl</p>
+    </section>
+    <p class="verstamp">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
+    <section class="sec" style="--tint:#F6E6EC" aria-label="Ostatní informace k záměru VPD1">
+      <h2 class="sechead">Ostatní informace k záměru VPD1</h2>
+      <div class="row">
+        <div class="lab">Vlastníkem 100% obchodního podílu ve společnosti FTV a jediným jednatelem je:</div>
+        <div class="val">Jaromír Wimmer</div>
+      </div>
+      <div class="row">
+        <div class="lab">Vlastníkem 100% obchodního podílu ve společnosti VPD a jediným jednatelem je:</div>
+        <div class="val">Marek Semerád</div>
+      </div>
+      <div class="row">
+        <div class="lab">Nájem Areálu (převoditelný na společnost VPD) je do odkupu Areálu smluvně garantován a uzavřen na spolek:</div>
+        <div class="val">Občanské sdružení Alternativa II, z.s. (dále jen &quot;Spolek&quot; či &quot;OSA II&quot; či &quot;Partner společnosti VPD&quot;)</div>
+      </div>
+      <div class="row">
+        <div class="lab">Předsedou spolku OSA II a jediným jednatelem (statutárním zástupcem) je:</div>
+        <div class="val">Marek Semerád</div>
+      </div>
+      <div class="row">
+        <div class="lab">Adresa, kde se nalézá Areál (adresa původní armádní klubovny):</div>
+        <div class="val">Dolní Kasárna 798, 250 67 Klecany, Česko</div>
+      </div>
+      <div class="row">
+        <div class="lab">Odkaz na Mapy.cz (adresa klubovny):</div>
+        <div class="val"><a href="https://mapy.com/s/cezodekumo" target="_blank" rel="noopener">https://mapy.com/s/cezodekumo</a></div>
+      </div>
+      <div class="row">
+        <div class="lab">Odkaz na Google maps (adresa klubovny):</div>
+        <div class="val"><a href="https://maps.app.goo.gl/1JbSJc5jfT7ELGSZ9" target="_blank" rel="noopener">https://maps.app.goo.gl/1JbSJc5jfT7ELGSZ9</a></div>
+      </div>
+      <div class="row">
+        <div class="lab">Obec kde se nalézá Areál:</div>
+        <div class="val">Klecany (dále též jen &quot;Obec&quot; či &quot;Město&quot; či &quot;Nejmenší Město v lokalitě Praha-východ&quot;)</div>
+      </div>
+      <div class="row">
+        <div class="lab">Počet obyvatel Obce k 1. 1. 2025:</div>
+        <div class="val"><a href="https://csu.gov.cz/docs/107847/96920a0d-b169-ad96-d665-3bbdc2c0dc59/obyv_obce_25.pdf?version=1.0" target="_blank" rel="noopener">3 938 obyvatel</a></div>
+      </div>
+      <div class="row">
+        <div class="lab">Statut obce:</div>
+        <div class="val">město</div>
+      </div>
+      <div class="row">
+        <div class="lab">Okres kde se nalézá Areál:</div>
+        <div class="val">Praha-východ</div>
+      </div>
+      <div class="row">
+        <div class="lab">Správní obvod obce s rozšířenou působností:</div>
+        <div class="val">Brandýs nad Labem-Stará Boleslav</div>
+      </div>
+      <div class="row">
+        <div class="lab">Správní obvod obce s pověřeným obecním úřadem:</div>
+        <div class="val">Odolena Voda</div>
+      </div>
+      <div class="row">
+        <div class="lab">Poslední volby do zastupitelstva Obce se konaly:</div>
+        <div class="val">23.–24. září 2022</div>
+      </div>
+      <div class="row">
+        <div class="lab">Počet voličů, kteří vložili do volební urny obálku se svým rozhodnutím ve volbách do zastupitelstva Obce v roce 2022:</div>
+        <div class="val">1 228 oprávněných voličů</div>
+      </div>
+      <div class="row">
+        <div class="lab">Odkaz na podrobné volební výsledky v Obci zveřejněné ČSÚ:</div>
+        <div class="val"><a href="https://www.volby.cz/pls/kv2022/kv1111?xjazyk=CZ&amp;xid=0&amp;xdz=2&amp;xnumnuts=2109&amp;xobec=538311&amp;xstat=0&amp;xvyber=0" target="_blank" rel="noopener">https://www.volby.cz/pls/kv2022/kv1111?xjazyk=CZ&amp;xid=0&amp;xdz=2&amp;xnumnuts=2109&amp;xobec=538311&amp;xstat=0&amp;xvyber=0</a></div>
+      </div>
+      <div class="row">
+        <div class="lab">Odkaz na podrobné volební výsledky v Obci zpracované a zveřejněné na serveru Seznam.cz:</div>
+        <div class="val"><a href="https://www.seznamzpravy.cz/p/vysledky-voleb/2022/komunalni-volby/obec/538311-klecany" target="_blank" rel="noopener">https://www.seznamzpravy.cz/p/vysledky-voleb/2022/komunalni-volby/obec/538311-klecany</a></div>
+      </div>
+      <div class="row">
+        <div class="lab">Příští volby do zastupitelstva Obce se konají:</div>
+        <div class="val">23.09. – 24.09.2026</div>
+      </div>
+      <div class="row">
+        <div class="lab">Do kdy nejpozději lze přihlásit kandidáty do nejbližších voleb, ve kterých se bude volit nové zastupitelstvo Obce:</div>
+        <div class="val">19. července 2026 do 16:00 hod. (66 dní před 23. 9.)</div>
+      </div>
+      <p class="foot">*pokud je použito slovní spojení &quot;odkup Areálu&quot; či &quot;kupní cena Areálu&quot;, je tím myšlen odkup 100 % obchodního podílu ve společnosti FTV a kupní cena za tento podíl</p>
+    </section>
+  </main>
+</div>
+
+<script>
+  /* Odhlášení: smaž otisk a zpět na login. */
+  (function () {
+    var btn = document.querySelector('[data-inv-logout]');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      try { localStorage.removeItem('vpd1-auth'); } catch (e) {}
+      location.href = 'investori.html';
+    });
+  })();
+</script>
+
+</body>
+</html>

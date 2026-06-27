@@ -1,0 +1,13 @@
+{
+  "name": "sh-web-landing-html",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Statická HTML/CSS (Tailwind) verze landing page Startovacího Hubu — bez JS.",
+  "scripts": {
+    "build": "tailwindcss -c tailwind.config.js -i src/input.css -o assets/styles.css --minify",
+    "watch": "tailwindcss -c tailwind.config.js -i src/input.css -o assets/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

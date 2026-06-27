@@ -1,0 +1,543 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   Startovací Hub — landing (statická HTML/CSS verze, bez JS, Tailwind)
+   Design tokeny + komponentní třídy (CTA, galerie, investorská brána…) žijí v
+   @layer components, aby markup v index.html zůstal čistý a čitelný.
+   ============================================================================= */
+
+/* Pozn.: cross-document View Transitions byly odebrány — jejich root crossfade
+   na okamžik odhalil plátno (= probliknutí brand barvy při navigaci). Bez nich
+   nechá prohlížeč starou stránku až do prvního vykreslení nové (paint holding)
+   a inline `html{background}` v <head> každé stránky drží první paint v tmavé. */
+
+@layer base {
+  /* Atyp Special — self-hosted brand font. Cesty relativní k assets/styles.css */
+  @font-face {
+    font-family: 'Atyp Special';
+    src: url('fonts/AtypText-Special-Medium.woff2') format('woff2');
+    font-weight: 400 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Atyp Special';
+    src: url('fonts/AtypText-Special-Bold.woff2') format('woff2');
+    font-weight: 600 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Atyp Special';
+    src: url('fonts/AtypText-Special-Italic.woff2') format('woff2');
+    font-weight: 400 500;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  :root {
+    --hue: 240;
+
+    /* Monochromatická škála tónovaná na brand --hue */
+    --k-05: hsl(var(--hue) 14% 97%);
+    --k-15: hsl(var(--hue) 12% 87%);
+    --k-80: hsl(var(--hue) 14% 35%);
+
+    /* Brand */
+    --c-plum: hsl(var(--hue) 39% 27%);
+    --accent: var(--c-plum);
+    --accent-rule: hsl(var(--hue) 39% 27% / 0.22);
+    --plum-deep: hsl(var(--hue) 41% 13%);
+    --rose: hsl(calc(var(--hue) + 44) 30% 70%);
+    --cream: #f7f4ef;
+
+    /* Semantické povrchy */
+    --fg: var(--c-plum);
+    --fg-muted: var(--k-80);
+    --bg: #ffffff;
+    --bg-muted: var(--k-05);
+    --border-muted: var(--k-15);
+    --dot: hsl(var(--hue) 10% 55%);   /* klidová tečka galerie — kontrast ≥3:1 vůči bílé */
+    --dot-on: hsl(calc(var(--hue) + 40) 44% 50%);   /* aktivní tečka — tmavší fialová */
+
+    --container-wide: 1480px;
+    --gutter: max(clamp(20px, 4vw, 80px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+    --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  @media (max-width: 640px) {
+    :root {
+      --gutter: max(16px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+    }
+  }
+
+  html {
+    font-family: 'Atyp Special', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--fg);
+    /* Plum-deep místo bílé: přetečení (rubber-band) nahoře/dole pak odhalí
+       tmavé pozadí v barvě hera a patičky, ne bílý pruh. */
+    background: var(--plum-deep);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    /* Jen svislý overscroll držíme (kvůli rubber-bandu); vodorovný necháme být,
+       ať na trackpadu funguje swipe-back (gesto zpět v historii). */
+    overscroll-behavior-y: none;
+  }
+  body { margin: 0; }
+}
+
+@layer components {
+  /* ---- Layout ------------------------------------------------------------- */
+  .wrap {
+    width: calc(100% - 2 * var(--gutter));
+    max-width: var(--container-wide);
+    margin-inline: auto;
+  }
+
+  /* ---- Ribbon SVG na pozadí karet a sekcí ---------------------------------
+     POZOR: wrapper NESMÍ mít overflow:hidden. SVG přetéká (overflow:visible) a
+     ořezává ho až zaoblená karta/sekce (ta má overflow:hidden). Kdyby ořez
+     dělal tenhle wrapper, vznikne rovná „uříznutá" hrana uvnitř karty. */
+  .ribbon { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .ribbon svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .ribbon path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---- Typografie sekcí --------------------------------------------------- */
+  .sec-title { @apply m-0 max-w-[22ch] text-[clamp(1.875rem,3.5vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em]; }
+  .sec-lede { @apply m-0 max-w-[54ch] text-base leading-[1.6] text-fg; }
+
+  /* ---- Header + celoobrazovkové menu (toggle přes CSS checkbox, bez JS) ---- */
+  .hdr-bar { @apply relative z-[3] flex min-h-[68px] items-center py-3; }
+
+  /* Po odscrollování pod hero (100svh) lišta zbělá (jako Astro is-stuck): bílé
+     pozadí, tmavé logo/burger, vlasová linka dole a o něco nižší výška. Scroll-
+     driven přes délkové rozsahy, bez JS. Logo je do té doby skryté. */
+  .hdr-logo { @apply self-center; opacity: 0; }
+  .hdr-logo img { @apply block h-[clamp(18px,2.2vw,24px)] w-auto; }
+  @supports (animation-timeline: scroll()) {
+    @keyframes hdr-stick {
+      from { background-color: transparent; color: #fff; box-shadow: none; }
+      to   { background-color: #fff; color: var(--plum-deep); box-shadow: 0 1px 0 0 var(--border-muted); }
+    }
+    @keyframes hdr-shrink {
+      from { min-height: 68px; padding-top: 12px; padding-bottom: 12px; }
+      to   { min-height: 54px; padding-top: 7px; padding-bottom: 7px; }
+    }
+    @keyframes hdr-logo-in { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
+    .site-header { animation: hdr-stick both linear; animation-timeline: scroll(root block); animation-range: 85vh 104vh; }
+    .hdr-bar { animation: hdr-shrink both linear; animation-timeline: scroll(root block); animation-range: 85vh 104vh; }
+    .hdr-logo { animation: hdr-logo-in both linear; animation-timeline: scroll(root block); animation-range: 92vh 108vh; }
+  }
+  /* Menu otevřené: burger/X zůstává bílé i na „stuck" liště a logo se skryje
+     (menu má vlastní brand); zároveň se zamkne scroll stránky za menu. */
+  #navtoggle:checked ~ .hdr-bar { color: #fff !important; }
+  #navtoggle:checked ~ .hdr-bar .hdr-logo { opacity: 0 !important; }
+  html:has(#navtoggle:checked), html:has(#navtoggle:checked) body { overflow: hidden; }
+  .burger-btn { @apply ml-auto inline-flex h-11 w-11 cursor-pointer items-center justify-center; }
+  .burger { @apply grid w-[22px] gap-[5px]; }
+  .burger > span { @apply block h-[1.5px] origin-center rounded bg-current; }
+  .burger > span:nth-child(1), .burger > span:nth-child(3) { transition: transform 300ms var(--ease-quart); }
+  .burger > span:nth-child(2) { transition: opacity 150ms linear; }
+  /* Checkbox je sr-only → viditelný focus prsten ukaž na ikoně burgeru (klávesnice). */
+  #navtoggle:focus-visible ~ .hdr-bar .burger-btn { outline: 2px solid #fff; outline-offset: 3px; border-radius: 6px; }
+
+  .menu {
+    @apply invisible fixed inset-0 z-[2] -translate-y-2 overflow-y-auto text-white opacity-0;
+    background:
+      radial-gradient(ellipse at 88% 105%, hsl(calc(var(--hue) + 44) 30% 70% / 0.16) 0%, transparent 50%),
+      linear-gradient(150deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 36% 18%) 100%);
+    transition: opacity 320ms var(--ease-quart), transform 380ms var(--ease-quart), visibility 0s 380ms;
+  }
+  .menu__inner { @apply flex min-h-full flex-col gap-7 pb-16 pt-[88px]; }
+  .menu-link { @apply text-[clamp(1.75rem,5.2vw,3.5rem)] font-bold leading-[1.04] tracking-[-0.02em] text-white transition-colors; }
+  .menu-link:hover { color: var(--rose); }
+  /* Účet v patě menu (Přihlásit / Přepnout účet) — zatím ve výrobě → 404. */
+  .menu__foot { @apply mt-2 flex flex-col items-center gap-3 border-t pt-6; border-color: hsl(0 0% 100% / 0.14); }
+  .menu-acct { @apply inline-flex items-center gap-2 text-base font-semibold no-underline transition-colors; color: hsl(0 0% 100% / 0.78); }
+  .menu-acct:hover { color: var(--rose); }
+  .menu-acct svg { flex-shrink: 0; }
+
+  /* Otevřený stav: checkbox je sourozenec lišty i menu (general sibling ~). */
+  #navtoggle:checked ~ .menu {
+    @apply visible translate-y-0 opacity-100;
+    transition: opacity 320ms var(--ease-quart), transform 380ms var(--ease-quart), visibility 0s;
+  }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(2) { opacity: 0; }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ---- Hero rychlá CTA (liquid-glass pilulky) -----------------------------
+     Skupina ukotvená dole nad scroll šipkou; na desktopu dva poloviční sloupce
+     dělené ve středu stránky, takže mezera (a scroll šipka) je přesně na středu
+     a šířka každé pilulky je dle obsahu. Mobil: stack na střed. */
+  .hero-ctas {
+    position: relative;
+    z-index: 2;
+    width: calc(100% - 2 * var(--gutter));
+    max-width: var(--container-wide);
+    margin: 24px auto 0;
+    display: grid;
+    justify-items: center;
+    row-gap: 12px;
+  }
+  @media (min-width: 768px) {
+    .hero-ctas {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: clamp(96px, 12vh, 140px);
+      width: auto;
+      max-width: none;
+      margin: 0;
+      padding-inline: var(--gutter);
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      row-gap: 0;
+      --rgap: clamp(16px, 3vw, 48px);
+    }
+    .hero-ctas .hero-cta:nth-child(1) { justify-self: end; margin-right: calc(var(--rgap) / 2); }
+    .hero-ctas .hero-cta:nth-child(2) { justify-self: start; margin-left: calc(var(--rgap) / 2); }
+  }
+  /* HERO CTA — výchozí: outline (bílý tah + bílý text, bez pozadí, mírný radius),
+     ať ladí s ostatními tlačítky. Skleněnou variantu vrátíš přidáním třídy
+     .hero-cta--glass (její definice níže zůstává zachovaná). */
+  .hero-cta {
+    @apply inline-flex items-center justify-center gap-3 rounded-[7px] px-8 py-[18px]
+           text-lg font-bold leading-none tracking-[-0.02em] text-white transition
+           md:px-10 md:py-5 md:text-[clamp(1.1rem,1.3vw,1.35rem)];
+    border: 1px solid rgba(255,255,255,0.6);
+    background: transparent;
+  }
+  .hero-cta:not(.hero-cta--glass):hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+  /* Šipku opticky o 1px výš (ke střední výšce textu); na hover popojede vpravo. */
+  .hero-cta > .arrow { @apply inline-flex; transform: translateY(-1px); transition: transform 350ms var(--ease-quart); }
+  .hero-cta:hover > .arrow { transform: translate(3px, -1px); }
+
+  /* Skleněný povrch — scroll šipka + ZACHOVANÁ glass varianta hero CTA: jemný
+     gradient + backdrop blur/saturate + světelný okraj + měkký stín. */
+  .hero-cta--glass {
+    position: relative; isolation: isolate; color: #fff; border-radius: 9999px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: linear-gradient(150deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05) 52%, rgba(255,255,255,0.10));
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    backdrop-filter: blur(16px) saturate(170%);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255,255,255,0.34),
+      inset 0 -1px 1px 0 rgba(255,255,255,0.06),
+      0 10px 26px -14px rgba(0,0,0,0.5);
+    transition: box-shadow 350ms var(--ease-quart), border-color 350ms var(--ease-quart);
+  }
+  .hero-cta--glass::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(125% 90% at 28% -12%, rgba(255,255,255,0.30), rgba(255,255,255,0) 58%);
+    opacity: 0.7; transition: opacity 350ms var(--ease-quart);
+  }
+  .hero-cta--glass:hover {
+    border-color: rgba(255,255,255,0.26);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255,255,255,0.5),
+      inset 0 -1px 1px 0 rgba(255,255,255,0.08),
+      0 16px 34px -14px rgba(0,0,0,0.55);
+  }
+  .hero-cta--glass:hover::before { opacity: 1; }
+
+  /* Scroll šipka dolů — STEJNÝ vzhled jako hero CTA (outline: bílý tah, bez pozadí). */
+  .scroll-cue {
+    @apply absolute left-1/2 z-[2] grid h-12 w-12 -translate-x-1/2 place-items-center rounded-full text-white transition;
+    bottom: clamp(20px, 4vh, 36px);
+    border: 1px solid rgba(255,255,255,0.6);
+    background: transparent;
+  }
+  .scroll-cue:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+  .scroll-cue svg { transform: translateY(1px); transition: transform 350ms var(--ease-quart); }
+  .scroll-cue:hover svg { transform: translateY(3px); }
+
+  /* ---- Sekční CTA --------------------------------------------------------- */
+  .sec-cta {
+    @apply inline-flex items-center gap-2 rounded-[7px] px-[18px] py-3 text-sm font-semibold leading-none tracking-[0.02em] transition;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+  }
+  .sec-cta:hover { background: var(--accent); color: #fff; }
+  .sec-cta > .arrow { @apply inline-flex transition-transform; }
+  .sec-cta:hover > .arrow { transform: translateX(2px); }
+
+  /* ---- Galerie (CSS scroll-snap, bez JS) ----------------------------------
+     `.gal` obaluje galerii i tečky a slouží jako rozsah časových os (níže). */
+  .gal { position: relative; }
+  .gallery { @apply flex snap-x snap-mandatory gap-2 overflow-x-auto rounded-[7px]; scrollbar-width: thin; scroll-behavior: smooth; overscroll-behavior-x: contain; }
+  .gallery img { @apply aspect-[4/3] w-full shrink-0 snap-center rounded-[7px] object-cover; }
+  /* Tečky pod galerií: indikátor počtu snímků + kotva ke každému snímku. */
+  .gallery__dots { @apply mt-3 flex flex-wrap justify-center gap-2.5; }
+  .gallery__dot {
+    @apply h-2.5 w-2.5 rounded-full transition;
+    background: var(--dot);
+  }
+  /* !important, aby hover/focus přebil trvale běžící scroll-driven animaci níže. */
+  .gallery__dot:hover { background: var(--accent) !important; transform: scale(1.3); }
+  .gallery__dot:focus-visible { background: var(--accent) !important; transform: scale(1.3); outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Aktivní tečka v barvě = poloha ve scroll-snap galerii, bez JS.
+     Každý snímek má vlastní view-timeline (--g1…--g5), tečka se rozsvítí na
+     accent, když je její snímek vystředěný. Prohlížeče bez podpory nechají
+     tečky v klidu (swipe i kotvy fungují dál) — degraduje elegantně. */
+  @supports (animation-timeline: scroll()) {
+    /* Aktivní tečka: rose (světlejší, výraznější než plum) + zvětšení, ať je
+       jasně poznat, který snímek je zobrazený. */
+    @keyframes gallery-dot-on {
+      0%, 42%   { background: var(--dot); transform: scale(1); }
+      50%       { background: var(--dot-on); transform: scale(1.4); }
+      58%, 100% { background: var(--dot); transform: scale(1); }
+    }
+    .gal { timeline-scope: --g1, --g2, --g3, --g4, --g5, --g6; }
+    .gal .gallery > img:nth-child(1) { view-timeline: --g1 inline; }
+    .gal .gallery > img:nth-child(2) { view-timeline: --g2 inline; }
+    .gal .gallery > img:nth-child(3) { view-timeline: --g3 inline; }
+    .gal .gallery > img:nth-child(4) { view-timeline: --g4 inline; }
+    .gal .gallery > img:nth-child(5) { view-timeline: --g5 inline; }
+    .gal .gallery > img:nth-child(6) { view-timeline: --g6 inline; }
+    .gal .gallery__dot { animation: gallery-dot-on both linear; }
+    .gal .gallery__dots > .gallery__dot:nth-child(1) { animation-timeline: --g1; }
+    .gal .gallery__dots > .gallery__dot:nth-child(2) { animation-timeline: --g2; }
+    .gal .gallery__dots > .gallery__dot:nth-child(3) { animation-timeline: --g3; }
+    .gal .gallery__dots > .gallery__dot:nth-child(4) { animation-timeline: --g4; }
+    .gal .gallery__dots > .gallery__dot:nth-child(5) { animation-timeline: --g5; }
+    .gal .gallery__dots > .gallery__dot:nth-child(6) { animation-timeline: --g6; }
+  }
+
+  /* Drobné šipky ‹ › přes nativní CSS scroll-buttons (bez JS, bez markupu).
+     Posouvají galerii o stránku, samy se deaktivují na krajích. Zobrazí se
+     jen v prohlížečích s podporou; jinde se prostě nevykreslí. */
+  @supports selector(::scroll-button(*)) {
+    .gal .gallery { position: relative; }
+    .gal .gallery::scroll-button(left),
+    .gal .gallery::scroll-button(right) {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      display: grid; place-items: center;
+      width: 36px; height: 36px; border: 0; border-radius: 9999px; cursor: pointer;
+      color: var(--plum-deep); font-size: 20px; line-height: 1;
+      background: hsl(0 0% 100% / 0.82);
+      box-shadow: 0 6px 18px hsl(var(--hue) 41% 13% / 0.28);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      opacity: 0; pointer-events: none; transition: opacity 200ms var(--ease-quart), background 200ms var(--ease-quart);
+    }
+    .gal .gallery::scroll-button(left) { left: 10px; content: "\2039"; }
+    .gal .gallery::scroll-button(right) { right: 10px; content: "\203A"; }
+    .gal:hover .gallery::scroll-button(left),
+    .gal:hover .gallery::scroll-button(right),
+    .gal .gallery:focus-within::scroll-button(left),
+    .gal .gallery:focus-within::scroll-button(right) { opacity: 1; pointer-events: auto; }
+    .gal .gallery::scroll-button(left):hover,
+    .gal .gallery::scroll-button(right):hover { background: #fff; }
+    .gal .gallery::scroll-button(*):disabled { opacity: 0; pointer-events: none; }
+  }
+
+  /* ---- Karty uvnitř sekce Ubytování (Privátní apartmány / Sdílené pokoje) -- */
+  .ucards { @apply mt-10 grid gap-[clamp(24px,4vw,56px)] md:grid-cols-2; }
+  .ucard { @apply flex min-w-0 flex-col; }
+  .ucard__media { @apply mb-4; }
+  .ucard__title { @apply m-0 text-[clamp(1.25rem,1.7vw,1.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]; }
+  .ucard__title a { color: var(--fg); text-decoration: none; }
+  .ucard__title a:hover { color: var(--accent); }
+  .ucard__text { @apply mb-3 mt-2 max-w-[46ch] text-base leading-[1.55]; color: var(--fg-muted); }
+  /* CTA „Zjistit více" v kartě = stejný rámeček jako sekční .sec-cta (jen
+     posunutý na patu karty přes mt-auto), ať jsou všechna CTA jednotná. */
+  .ucard__cta {
+    @apply mt-auto inline-flex items-center gap-2 self-start rounded-[7px] px-[18px] py-3 text-sm font-semibold leading-none tracking-[0.02em] transition;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+  }
+  .ucard__cta > .arrow { @apply inline-flex transition-transform; }
+  .ucard__cta:hover { background: var(--accent); color: #fff; }
+  .ucard__cta:hover > .arrow { transform: translateX(2px); }
+
+  /* ---- Patička ------------------------------------------------------------ */
+  .foot-act {
+    @apply inline-flex items-center justify-between gap-3 rounded-[7px] bg-rose px-[clamp(18px,1.8vw,26px)] py-[clamp(15px,1.6vw,20px)]
+           text-base font-bold leading-[1.1] text-plum-deep transition hover:-translate-y-[2px] hover:bg-white;
+  }
+  .foot-act > svg { @apply transition-transform; }
+  .foot-act:hover > svg { transform: translateX(3px); }
+  .foot-label { @apply mb-3 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-rose; }
+
+  /* ---- Plovoucí „nahoru" (kotva #top, plynulý scroll, bez JS) ------------- */
+  .to-top {
+    @apply fixed z-20 grid h-11 w-11 place-items-center rounded-full text-white;
+    right: clamp(16px, 3vw, 32px);
+    bottom: clamp(16px, 3vw, 32px);
+    border: 1px solid rgba(255,255,255,0.16);
+    /* Tmavě tónované sklo (plum) — bílá ikona je čitelná nad světlým i tmavým podkladem. */
+    background: linear-gradient(150deg, hsl(var(--hue) 41% 24% / 0.42), hsl(var(--hue) 41% 13% / 0.40));
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    backdrop-filter: blur(14px) saturate(150%);
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.22), 0 10px 26px -12px hsl(var(--hue) 41% 8% / 0.5);
+    transition: box-shadow 350ms var(--ease-quart), border-color 350ms var(--ease-quart);
+  }
+  .to-top svg { transition: transform 350ms var(--ease-quart); }
+  .to-top:hover {
+    border-color: rgba(255,255,255,0.30);
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.34), 0 16px 32px -12px hsl(var(--hue) 41% 8% / 0.55);
+  }
+  .to-top:hover svg { transform: translateY(-2px); }
+  /* Umí-li prohlížeč scroll-driven animace (Safari 26, Chrome…), schovej tlačítko
+     u horního kraje a nech ho najet po odscrollování — jako originál. Ostatní
+     prohlížeče ho zobrazí trvale. */
+  @supports (animation-timeline: scroll()) {
+    @keyframes to-top-reveal {
+      0%, 8%    { opacity: 0; visibility: hidden; }
+      20%, 100% { opacity: 1; visibility: visible; }
+    }
+    .to-top { animation: to-top-reveal both linear; animation-timeline: scroll(root block); }
+  }
+
+  /* ---- 404 / „ve výrobě" obrazovka (sdílená pro všechny necílové odkazy) -- */
+  .hub-404 {
+    position: relative;
+    overflow: hidden;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: clamp(96px, 12vw, 168px) var(--gutter) clamp(56px, 9vw, 128px);
+    text-align: center;
+    color: #fff;
+    background:
+      radial-gradient(circle at 50% -8%, hsl(calc(var(--hue) + 44) 34% 64% / 0.30) 0%, transparent 58%),
+      linear-gradient(160deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 37% 19%) 100%);
+  }
+  .hub-404__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.55; }
+  .hub-404__bg svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .hub-404__bg path { fill: none; stroke: var(--rose); stroke-width: 26; stroke-linecap: round; stroke-linejoin: round; }
+  .hub-404__inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; max-width: 560px; }
+  .hub-404__code {
+    margin: 0; color: var(--rose);
+    font-weight: 700; font-size: clamp(120px, 23vw, 256px); line-height: 0.92;
+    letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums;
+  }
+  .hub-404__title {
+    margin: 12px 0 8px; color: #fff;
+    font-weight: 600; font-size: clamp(1.75rem, 3vw + 0.75rem, 2.25rem); line-height: 1.15;
+    letter-spacing: -0.02em; text-wrap: balance;
+  }
+  .hub-404__lead { margin: 0 auto 32px; max-width: 44ch; font-size: 1.125rem; line-height: 1.6; color: rgba(255,255,255,0.74); }
+  .hub-404__cta {
+    display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px;
+    font-weight: 700; font-size: 1rem; line-height: 1; color: var(--plum-deep);
+    background: var(--rose); border-radius: 7px; text-decoration: none;
+    transition: background 180ms var(--ease-quart), transform 180ms var(--ease-quart);
+  }
+  .hub-404__cta:hover { background: #fff; transform: translateY(-2px); }
+  .hub-404__cta > svg { transition: transform 180ms var(--ease-quart); flex-shrink: 0; }
+  .hub-404__cta:hover > svg { transform: translateX(3px); }
+
+  /* ---- Investorský pod-web: slim top bar + přihlašovací karta -------------
+     Měkká brána (JS) k podkladům pro investory. Sdílí brand tokeny landingu. */
+  .inv-topbar {
+    @apply sticky top-0 z-40 text-white;
+    background: var(--plum-deep);
+    box-shadow: inset 0 -1px 0 hsl(calc(var(--hue) + 44) 30% 70% / 0.35);
+  }
+  .inv-topbar__inner {
+    @apply relative mx-auto flex min-h-[60px] items-center justify-between gap-3 py-2.5;
+    width: calc(100% - 2 * var(--gutter));
+    max-width: var(--container-wide);
+  }
+  .inv-topbar__brand { @apply inline-flex items-center self-center text-white no-underline; }
+  .inv-topbar__brand img { @apply block h-[22px] w-auto; }
+  /* Titulek opticky na střed lišty — normální písmo, bez kapitálek. */
+  .inv-topbar__title {
+    @apply pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-medium text-white;
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    letter-spacing: normal;
+    white-space: nowrap;
+  }
+  .inv-topbar__actions { @apply flex items-center gap-3; }
+  /* Na mobilu se logo + centrovaný titulek + akce nevejdou — titulek skryj
+     (identitu nese velký nadpis stránky), logo (domů) i akce zůstanou. */
+  @media (max-width: 640px) { .inv-topbar__title { display: none; } }
+  .inv-topbar__logout {
+    @apply inline-flex cursor-pointer items-center rounded-[7px] border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.04em] transition;
+    color: var(--rose); background: transparent; border-color: hsl(var(--hue) 24% 42%);
+  }
+  .inv-topbar__logout:hover { color: #fff; border-color: var(--rose); background: hsl(calc(var(--hue) + 44) 30% 70% / 0.16); }
+
+  .inv-login {
+    /* Výška okna minus lišta (60px) → stránka se přesně vejde, žádný scroll. */
+    min-height: calc(100svh - 60px); display: grid; place-items: center;
+    padding: clamp(24px, 6vh, 72px) var(--gutter);
+    background:
+      radial-gradient(circle at 50% -8%, hsl(calc(var(--hue) + 44) 34% 64% / 0.30) 0%, transparent 58%),
+      linear-gradient(160deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 37% 19%) 100%);
+  }
+  .inv-login__card {
+    position: relative; width: 100%; max-width: 420px; overflow: hidden;
+    background: var(--cream); border-radius: 7px;
+    padding: clamp(28px, 4vw, 40px) clamp(24px, 3.5vw, 36px) clamp(24px, 3vw, 32px);
+    box-shadow: 0 30px 70px -30px hsl(var(--hue) 41% 6% / 0.7);
+  }
+  .inv-login__card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--rose); }
+  .inv-login__title { @apply m-0 text-2xl font-bold leading-[1.2] tracking-[-0.02em]; color: var(--fg); }
+  .inv-login__lede { @apply mb-5 mt-2 text-sm leading-[1.55]; color: var(--fg-muted); }
+  .inv-login input {
+    @apply mb-4 w-full rounded-[7px] border px-3.5 py-3 text-base transition;
+    color: var(--fg); background: #fff; border-color: var(--border-muted);
+  }
+  .inv-login input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px hsl(var(--hue) 39% 27% / 0.16); }
+  .inv-btn {
+    @apply inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-[7px] px-6 py-3 text-base font-bold leading-none text-white transition;
+    background: var(--accent); border: 0;
+  }
+  .inv-btn:hover { background: var(--plum-deep); transform: translateY(-1px); }
+  .inv-login__error {
+    @apply mb-4 hidden rounded-[7px] border px-3.5 py-2.5 text-sm font-semibold leading-snug;
+    color: #b42318; background: hsl(4 70% 50% / 0.08); border-color: hsl(4 70% 50% / 0.25);
+  }
+  .inv-login__error.is-visible { display: block; }
+  .inv-login__hint { @apply mt-5 border-t pt-4 text-xs leading-relaxed; color: var(--fg-muted); border-color: var(--border-muted); }
+  .inv-login__hint a { color: var(--accent); }
+
+  /* ---- Podstránka „Struktura webu" (mapa webu se statusy) ----------------- */
+  .sub-hero {
+    position: relative; overflow: hidden; color: #fff;
+    padding: clamp(116px, 15vw, 188px) var(--gutter) clamp(44px, 7vw, 80px);
+    background:
+      radial-gradient(circle at 50% -10%, hsl(calc(var(--hue) + 44) 34% 64% / 0.28) 0%, transparent 56%),
+      linear-gradient(160deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 37% 19%) 100%);
+  }
+  .sub-hero__inner { position: relative; z-index: 1; width: calc(100% - 2 * var(--gutter)); max-width: var(--container-wide); margin-inline: auto; }
+  .sub-hero__eyebrow { @apply mb-3 inline-flex items-center text-[0.6875rem] font-semibold uppercase tracking-[0.1em]; color: var(--rose); }
+  .sub-hero__eyebrow::before { content: ""; width: 16px; height: 2px; background: var(--rose); margin-right: 10px; }
+  .sub-hero__title { @apply m-0 text-[clamp(2.25rem,6vw,4rem)] font-bold leading-[1.02] tracking-[-0.02em]; }
+  .sub-hero__title em { font-style: italic; color: var(--rose); }
+
+  .struktura { @apply bg-bg py-[clamp(40px,6vw,72px)]; }
+  .struktura__inner { width: calc(100% - 2 * var(--gutter)); max-width: var(--container-wide); margin-inline: auto; }
+
+  .legend { @apply mb-8 flex flex-wrap gap-x-6 gap-y-3 rounded-[7px] border p-4; border-color: var(--border-muted); }
+  .legend__item { @apply inline-flex items-center gap-2 text-sm font-medium; color: var(--fg-muted); }
+  .legend__chip, .snode__status { @apply inline-grid h-[26px] w-[26px] flex-none place-items-center rounded-full; }
+  .legend__chip--live, .snode__status--live { background: hsl(var(--hue) 39% 27% / 0.10); color: var(--accent); border: 1px solid var(--accent-rule); }
+  .legend__chip--prep, .snode__status--prep { background: var(--rose); color: var(--plum-deep); }
+  .legend__chip--locked, .snode__status--locked { background: var(--bg-muted); color: var(--fg-muted); border: 1px solid var(--border-muted); }
+
+  .strom__root, .snode__children { @apply m-0 flex list-none flex-col p-0; }
+  .strom__root { gap: 2px; }
+  .snode__children { @apply mt-1 gap-1; margin-left: 13px; padding-left: 22px; border-left: 1px solid var(--border-muted); }
+  .snode__row { @apply flex items-center gap-3 py-[5px]; }
+  .snode__link { @apply inline-flex items-baseline gap-x-2 rounded-[7px] no-underline; color: var(--fg); }
+  .snode__label { @apply text-base font-medium leading-[1.3]; }
+  .snode__row--section .snode__label { @apply text-lg font-semibold; }
+  a.snode__link:hover .snode__label, a.snode__link:focus-visible .snode__label { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+}
+
+@layer utilities {
+  @media (prefers-reduced-motion: reduce) {
+    .to-top { animation: none; opacity: 1; visibility: visible; }
+    html, .gallery { scroll-behavior: auto; }
+    .menu { transition: none; }
+  }
+}
