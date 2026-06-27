@@ -116,6 +116,24 @@
      driven přes délkové rozsahy, bez JS. Logo je do té doby skryté. */
   .hdr-logo { @apply self-center; opacity: 0; }
   .hdr-logo img { @apply block h-[clamp(18px,2.2vw,24px)] w-auto; }
+
+  /* Akční skupina vpravo: CTA „Pronajmout" + hamburger (jako sh-web Astro lišta).
+     CTA je obrysová pilulka, barvu i obrys bere z currentColor → bílá nad tmavým
+     herem/bannerem, tmavá (plum) na bílé „stuck" liště. */
+  .hdr-actions { @apply ml-auto flex items-center gap-2; }
+  .hdr-cta {
+    @apply relative inline-flex items-center justify-center self-center whitespace-nowrap rounded-[7px] border px-[18px] py-2 text-sm font-bold leading-none no-underline;
+    border-color: currentColor; color: inherit;
+    transition: color 160ms var(--ease-quart), background-color 160ms var(--ease-quart), opacity 240ms var(--ease-quart), transform 120ms ease;
+  }
+  .hdr-cta:hover { background: color-mix(in srgb, currentColor 14%, transparent); transform: translateY(-1px); }
+  .hdr-cta:active { transform: scale(.97); }
+  .hdr-cta:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+  /* Landing (home, ne .page-sub): CTA skrytá nad herem, najede se stuck lištou
+     (níže ve scroll-driven bloku). Podstránky (struktura/404) ji ukazují hned. */
+  body:not(.page-sub) .site-header .hdr-cta { opacity: 0; }
+  #navtoggle:checked ~ .hdr-bar .hdr-cta { opacity: 0 !important; pointer-events: none; } /* menu má vlastní CTA */
+
   @supports (animation-timeline: scroll()) {
     @keyframes hdr-stick {
       from { background-color: transparent; color: #fff; box-shadow: none; }
@@ -129,6 +147,8 @@
     .site-header { animation: hdr-stick both linear; animation-timeline: scroll(root block); animation-range: 85vh 104vh; }
     .hdr-bar { animation: hdr-shrink both linear; animation-timeline: scroll(root block); animation-range: 85vh 104vh; }
     .hdr-logo { animation: hdr-logo-in both linear; animation-timeline: scroll(root block); animation-range: 92vh 108vh; }
+    @keyframes hdr-cta-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    body:not(.page-sub) .site-header .hdr-cta { animation: hdr-cta-in both linear; animation-timeline: scroll(root block); animation-range: 92vh 108vh; }
   }
   /* Menu otevřené: burger/X zůstává bílé i na „stuck" liště a logo se skryje
      (menu má vlastní brand); zároveň se zamkne scroll stránky za menu. */
