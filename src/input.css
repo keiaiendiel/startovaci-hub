@@ -124,14 +124,18 @@
   .hdr-cta {
     @apply relative inline-flex items-center justify-center self-center whitespace-nowrap rounded-[7px] border px-[18px] py-2 text-sm font-bold leading-none no-underline;
     border-color: currentColor; color: inherit;
-    transition: color 160ms var(--ease-quart), background-color 160ms var(--ease-quart), opacity 240ms var(--ease-quart), transform 120ms ease;
+    /* Pozn.: `opacity` ZÁMĚRNĚ není v transition. Reveal CTA po odscrollování pod
+       hero řídí scroll-driven animace `hdr-cta-in` (níže). Když byla opacity i v
+       transition, obě věci si o stejnou vlastnost „konkurovaly" a tlačítko při
+       najetí 2–3× probliklo (hlavně Safari). Hover používá jen background/transform. */
+    transition: color 160ms var(--ease-quart), background-color 160ms var(--ease-quart), transform 120ms ease;
   }
   .hdr-cta:hover { background: color-mix(in srgb, currentColor 14%, transparent); transform: translateY(-1px); }
   .hdr-cta:active { transform: scale(.97); }
   .hdr-cta:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
   /* Landing (home, ne .page-sub): CTA skrytá nad herem, najede se stuck lištou
      (níže ve scroll-driven bloku). Podstránky (struktura/404) ji ukazují hned. */
-  body:not(.page-sub) .site-header .hdr-cta { opacity: 0; }
+  body:not(.page-sub) .site-header .hdr-cta { opacity: 0; pointer-events: none; } /* skryté = i mimo tab/klik, dokud nenajede (níže) */
   #navtoggle:checked ~ .hdr-bar .hdr-cta { opacity: 0 !important; pointer-events: none; } /* menu má vlastní CTA */
 
   @supports (animation-timeline: scroll()) {
@@ -147,7 +151,10 @@
     .site-header { animation: hdr-stick both linear; animation-timeline: scroll(root block); animation-range: 85vh 104vh; }
     .hdr-bar { animation: hdr-shrink both linear; animation-timeline: scroll(root block); animation-range: 85vh 104vh; }
     .hdr-logo { animation: hdr-logo-in both linear; animation-timeline: scroll(root block); animation-range: 92vh 108vh; }
-    @keyframes hdr-cta-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    /* Reveal řídí JEN opacity. (Transform tu dřív byl taky, ale „both" fill ho po
+       odscrollování držel a přebíjel hover-lift; a dvojná vazba opacity+transform
+       přes scroll-timeline + transition byla zdrojem probliknutí.) */
+    @keyframes hdr-cta-in { from { opacity: 0; pointer-events: none; } to { opacity: 1; pointer-events: auto; } }
     body:not(.page-sub) .site-header .hdr-cta { animation: hdr-cta-in both linear; animation-timeline: scroll(root block); animation-range: 92vh 108vh; }
   }
   /* Menu otevřené: burger/X zůstává bílé i na „stuck" liště a logo se skryje
@@ -551,8 +558,48 @@
   .sub-hero__inner { position: relative; z-index: 1; width: calc(100% - 2 * var(--gutter)); max-width: var(--container-wide); margin-inline: auto; }
   .sub-hero__eyebrow { @apply mb-3 inline-flex items-center text-[0.6875rem] font-semibold uppercase tracking-[0.1em]; color: var(--rose); }
   .sub-hero__eyebrow::before { content: ""; width: 16px; height: 2px; background: var(--rose); margin-right: 10px; }
-  .sub-hero__title { @apply m-0 text-[clamp(2.25rem,6vw,4rem)] font-bold leading-[1.02] tracking-[-0.02em]; }
-  .sub-hero__title em { font-style: italic; color: var(--rose); }
+  .sub-hero__title { @apply m-0 text-[clamp(2.25rem,6vw,4rem)] font-bold leading-[1.02] tracking-[-0.02em]; max-width: 20ch; text-wrap: balance; }
+  .sub-hero__title em { font-style: italic; font-weight: 500; color: var(--rose); }
+
+  /* ---- Poster banner varianta (port Astro SubpageHero „deep" + skoky) -------
+     Vyšší banner s obsahem dole: breadcrumb → titulek → lede → chip „skoky".
+     Modifikátor, ať se nedotkne struktura-webu (sdílí .sub-hero). */
+  .sub-hero--poster { display: grid; align-items: end; min-height: clamp(340px, 44vw, 500px); }
+  .sub-hero--poster .sub-hero__inner { display: flex; flex-direction: column; gap: clamp(14px, 1.6vw, 20px); }
+
+  .sub-hero__crumbs {
+    display: inline-flex; flex-wrap: wrap; align-items: center; gap: 7px;
+    font-size: 0.6875rem; font-weight: 500; line-height: 1.3;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .crumb-link { color: #fff; opacity: 0.58; text-decoration: none; white-space: nowrap; transition: opacity 160ms var(--ease-quart); }
+  .crumb-link:hover, .crumb-link:focus-visible { opacity: 1; outline: none; }
+  .crumb-link:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+  .crumb-current { color: #fff; opacity: 1; font-weight: 700; white-space: nowrap; }
+  .crumb-dot { color: #fff; opacity: 0.4; }
+
+  .sub-hero__sub {
+    margin: 0; max-width: 56ch; font-weight: 500;
+    font-size: clamp(1rem, 1.2vw, 1.125rem); line-height: 1.5;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  /* Chip „skoky" na sekce — průhledné rámečkové pilulky na tmavém banneru,
+     hover → rose (deep varianta z Astro). */
+  .sub-hero__jumps { display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(4px, 0.8vw, 10px); }
+  .sub-hero__jump {
+    display: inline-flex; align-items: center; padding: 10px 18px;
+    font-size: 0.875rem; font-weight: 600; line-height: 1;
+    color: #fff; text-decoration: none; border-radius: 7px;
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.22);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+    transition: background-color 200ms var(--ease-quart), color 200ms var(--ease-quart), border-color 200ms var(--ease-quart), transform 200ms var(--ease-quart);
+  }
+  .sub-hero__jump:hover, .sub-hero__jump:focus-visible {
+    background: var(--rose); color: var(--plum-deep); border-color: var(--rose);
+    transform: translateY(-1px); outline: none;
+  }
+  .sub-hero__jump:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
   .struktura { @apply bg-bg py-[clamp(40px,6vw,72px)]; }
   .struktura__inner { width: calc(100% - 2 * var(--gutter)); max-width: var(--container-wide); margin-inline: auto; }
@@ -572,6 +619,79 @@
   .snode__label { @apply text-base font-medium leading-[1.3]; }
   .snode__row--section .snode__label { @apply text-lg font-semibold; }
   a.snode__link:hover .snode__label, a.snode__link:focus-visible .snode__label { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---- Galerie (galerie.html) --------------------------------------------
+     Klasická stránka: poster banner (.sub-hero--poster) s chip „skoky" → sekce
+     s mřížkami (.ggrid) → lightbox přes CSS :target (.lb), bez JS. */
+
+  .gmain { background: var(--bg); }
+  /* scroll-margin-top = jen fixní lišta (stuck ~54px) + rezerva — navigace žije
+     v banneru (ne sticky), takže žádná další výška. */
+  .gsec { padding: clamp(32px, 5vw, 60px) 0; border-bottom: 1px solid var(--border-muted); scroll-margin-top: 80px; }
+  .gsec:nth-of-type(even) { background: var(--bg-muted); }
+  .gsec:last-child { border-bottom: 0; }
+  .gwrap { width: calc(100% - 2 * var(--gutter)); max-width: var(--container-wide); margin-inline: auto; }
+  .gsec__title { @apply m-0 text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[1.15] tracking-[-0.02em]; }
+  .gsub__title { @apply mb-4 mt-9 text-[clamp(1.05rem,1.6vw,1.3rem)] font-semibold leading-[1.2] tracking-[-0.01em]; color: var(--fg-muted); }
+  .gsec__title + .ggrid { margin-top: clamp(20px, 3vw, 32px); }
+
+  .ggrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.4vw, 18px); }
+  @media (max-width: 900px) { .ggrid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Dlaždice: jednotný ořez 4/3, jemný hover zoom; klik → #lb-N (lightbox). */
+  .gcell {
+    position: relative; display: block; overflow: hidden; border-radius: 7px;
+    background: var(--bg-muted); aspect-ratio: 4 / 3; cursor: zoom-in;
+    scroll-margin-top: 80px;
+  }
+  .gcell img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-quart); }
+  .gcell::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to top, hsl(var(--hue) 41% 8% / 0.22), transparent 42%);
+    opacity: 0; transition: opacity 220ms var(--ease-quart);
+  }
+  .gcell:hover img, .gcell:focus-visible img { transform: scale(1.05); }
+  .gcell:hover::after, .gcell:focus-visible::after { opacity: 1; }
+  .gcell:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---- Lightbox (CSS :target) --------------------------------------------- */
+  .lb {
+    position: fixed; inset: 0; z-index: 60; display: none; place-items: center;
+    padding: clamp(12px, 3vw, 40px);
+    background: hsl(var(--hue) 41% 6% / 0.93);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  }
+  .lb:target { display: grid; }
+  /* Zamkni scroll stránky za otevřeným lightboxem (modální chování, jako u menu).
+     Prohlížeče bez :has() degradují na scrollovatelné pozadí — to je v pohodě. */
+  html:has(.lb:target), html:has(.lb:target) body { overflow: hidden; }
+  .lb__backdrop { position: absolute; inset: 0; z-index: 0; cursor: zoom-out; }
+  .lb__img {
+    position: relative; z-index: 1; max-width: min(1400px, 92vw); max-height: 86vh;
+    width: auto; height: auto; object-fit: contain; border-radius: 6px;
+    box-shadow: 0 30px 80px -20px #000;
+  }
+  .lb__nav, .lb__close {
+    position: absolute; z-index: 2; display: grid; place-items: center; color: #fff;
+    background: hsl(0 0% 100% / 0.10); border: 1px solid hsl(0 0% 100% / 0.22);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    text-decoration: none; transition: background-color 160ms var(--ease-quart), border-color 160ms var(--ease-quart), transform 160ms var(--ease-quart);
+  }
+  .lb__nav { top: 50%; transform: translateY(-50%); width: 56px; height: 56px; border-radius: 9999px; }
+  .lb__prev { left: clamp(8px, 2vw, 28px); }
+  .lb__next { right: clamp(8px, 2vw, 28px); }
+  .lb__prev:hover { transform: translateY(-50%) translateX(-2px); }
+  .lb__next:hover { transform: translateY(-50%) translateX(2px); }
+  .lb__close { top: clamp(10px, 2vw, 24px); right: clamp(10px, 2vw, 24px); width: 44px; height: 44px; border-radius: 9999px; }
+  .lb__nav:hover, .lb__close:hover { background: hsl(0 0% 100% / 0.20); border-color: #fff; }
+  .lb__nav:focus-visible, .lb__close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .lb__count {
+    position: absolute; z-index: 2; bottom: clamp(10px, 2vw, 22px); left: 50%; transform: translateX(-50%);
+    color: hsl(0 0% 100% / 0.82); font-size: 0.85rem; letter-spacing: 0.03em;
+    font-variant-numeric: tabular-nums lining-nums;
+    background: hsl(var(--hue) 41% 6% / 0.5); padding: 4px 12px; border-radius: 9999px;
+  }
+  @media (max-width: 640px) { .lb__nav { width: 46px; height: 46px; } }
 }
 
 @layer utilities {
@@ -579,5 +699,7 @@
     .to-top { animation: none; opacity: 1; visibility: visible; }
     html, .gallery { scroll-behavior: auto; }
     .menu { transition: none; }
+    .gcell img { transition: none; }
+    .gcell:hover img, .gcell:focus-visible img { transform: none; }
   }
 }
