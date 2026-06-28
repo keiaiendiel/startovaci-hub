@@ -104,6 +104,7 @@ STYLE = r"""<style>
   .vz .vz-mbtn:hover{background:#fff;box-shadow:0 6px 18px rgba(20,20,47,.26)}
   .vz .vz-mbtn:active{transform:translateY(-50%) scale(.94)}
   .vz .vz-mbtn:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+  .vz .vz-mbtn svg{display:block}
   /* headline číslo */
   .vz .vz-headline{margin:14px 0 0;padding:18px;background:var(--tint);
     border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:5px}
@@ -165,6 +166,13 @@ STYLE = r"""<style>
     border:1px solid var(--hair)}
   .vz .vz-figrow figcaption{margin-top:7px;font-size:.78rem;color:var(--grey);line-height:1.4}
   @media (max-width:760px){ .vz .vz-figrow{grid-template-columns:1fr} .vz .vz-figrow img{height:clamp(200px,52vw,320px)} }
+  /* velký pravý ribbon (náhrada původní zahnuté šipky) — kreslí JS dle pozic.
+     Tabulka i souhrn dostanou pravý okraj, kam se oblouk vejde. */
+  .vz .vz-flowblock{position:relative}
+  .vz .vz-flowblock > .vz-mwrap, .vz .vz-flowblock > .vz-summary{margin-right:78px}
+  .vz .vz-bigribbon{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
+  .vz .vz-bigribbon path{fill:none;stroke:var(--rose,#C4A2C0);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+  @media (max-width:820px){ .vz .vz-flowblock > .vz-mwrap, .vz .vz-flowblock > .vz-summary{margin-right:0} .vz .vz-bigribbon{display:none} }
   /* vstupní parametry jako barevné boxy */
   .vz .vz-params{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px}
   .vz .vz-param{flex:1 1 165px;background:#EEF1F6;border:1px solid var(--hair);border-radius:7px;padding:11px 13px}
@@ -299,6 +307,38 @@ SCRIPTS = """
       window.addEventListener('resize', update);
       update();
     });
+  })();
+
+  /* Velký pravý ribbon: oblouk od posledního sloupce tabulky k poslednímu souhrnnému boxu
+     (náhrada původní zahnuté šipky; zvýrazňuje „roční příjem → roční výše příjmů"). */
+  (function () {
+    function draw(block) {
+      var svg = block.querySelector('.vz-bigribbon');
+      var wrap = block.querySelector('.vz-mwrap');
+      var boxes = block.querySelectorAll('.vz-sbox');
+      if (!svg || !wrap || !boxes.length) return;
+      if (window.innerWidth < 820) { svg.innerHTML = ''; return; }
+      var end = boxes[boxes.length - 1];
+      var b = block.getBoundingClientRect();
+      var t = wrap.getBoundingClientRect();
+      var e = end.getBoundingClientRect();
+      var W = b.width, H = b.height;
+      var sx = t.right - b.left, sy = (t.top - b.top) + 26;
+      var ex = e.right - b.left, ey = (e.top - b.top) - 5;
+      var bow = 58;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var c1x = sx + bow, c1y = sy + (ey - sy) * 0.46;
+      var c2x = ex + 12,  c2y = ey - 40;
+      var d = 'M ' + sx + ' ' + sy + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + ex + ' ' + ey;
+      var a = 12;
+      var head = 'M ' + (ex - a) + ' ' + (ey - a) + ' L ' + ex + ' ' + ey + ' L ' + (ex + a) + ' ' + (ey - a);
+      svg.innerHTML = '<path d="' + d + '"/><path d="' + head + '"/>';
+    }
+    function all() { Array.prototype.forEach.call(document.querySelectorAll('.vz-flowblock'), draw); }
+    all();
+    window.addEventListener('resize', all);
+    window.addEventListener('load', all);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
   })();
 </script>
 

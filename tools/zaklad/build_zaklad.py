@@ -170,8 +170,12 @@ def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfill
         w('      </tbody>')
         w('    </table>')
         w('  </div>')
-        w('  <button type="button" class="vz-mbtn vz-mbtn--left" aria-label="Posunout tabulku doleva" tabindex="-1">‹</button>')
-        w('  <button type="button" class="vz-mbtn vz-mbtn--right" aria-label="Posunout tabulku doprava" tabindex="-1">›</button>')
+        w('  <button type="button" class="vz-mbtn vz-mbtn--left" aria-label="Posunout tabulku doleva" tabindex="-1">'
+          '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" '
+          'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>')
+        w('  <button type="button" class="vz-mbtn vz-mbtn--right" aria-label="Posunout tabulku doprava" tabindex="-1">'
+          '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" '
+          'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>')
         w('  </div>')
         if foot:
             w(f'  <p class="foot">{esc(foot)}</p>')
@@ -248,6 +252,17 @@ def figrow(items):
         for fn, cap in items:
             w(f'    <figure><img src="{IMGDIR}{fn}" alt="{esc(cap)}" loading="lazy">'
               f'<figcaption>{esc(cap)}</figcaption></figure>')
+        w('  </div>')
+    return _
+
+def flowblock(blocks):
+    """Obal (tabulka + souhrn) — JS dokreslí velký pravý ribbon spojující poslední
+    sloupec tabulky s posledním souhrnným boxem (jako zahnutá šipka v originále)."""
+    def _():
+        w('  <div class="vz-flowblock">')
+        for b in blocks:
+            b()
+        w('    <svg class="vz-bigribbon" aria-hidden="true"></svg>')
         w('  </div>')
     return _
 
@@ -480,10 +495,7 @@ zonesection(
     "#FBFAF0", [
         greenband("Odhad příjmů z pronájmu jednotek vzniklých pro projekt Startovací hub"),
         hub_params,
-        hub_prijem,
-        flow("Roční příjem z pronajímání po jednotlivých budovách → odhadovaná výše ročních "
-             "příjmů z pronájmu"),
-        hub_souhrn,
+        flowblock([hub_prijem, hub_souhrn]),
         subhead("Vizualizace"),
         figrow([
             ("render-jednotka-1kk-interier.jpg", "Vizualizace interiéru: jednotka 1+kk o 21 m² ČPP"),
