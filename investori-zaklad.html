@@ -50,7 +50,10 @@
   .vz .upd{font-size:clamp(.85rem,1.6vw,1rem);margin:0;color:var(--ink)}
   /* section */
   .vz .sec{margin:0}
-  .vz .sec + .sec{margin-top:clamp(26px,4vw,44px)}
+  .vz .sec + .sec{margin-top:clamp(30px,4.5vw,52px)}
+  /* full-bleed alternující podklad — odděluje hlavní sekce (jako zig-zag na landingu) */
+  .vz .sec--shade{background:#F3F5FA;box-shadow:0 0 0 100vw #F3F5FA;clip-path:inset(0 -100vw);
+    padding-top:clamp(22px,2.8vw,36px);padding-bottom:clamp(26px,3.4vw,44px)}
   .vz .sechead{
     margin:0;background:var(--tint);
     border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
@@ -107,8 +110,26 @@
   .vz .vz-matrix td.is-yellow,.vz .vz-matrix .vz-stickcol.is-yellow{background:#F2ECC9 !important}
   .vz .vz-matrix td.is-tan,.vz .vz-matrix .vz-stickcol.is-tan{background:#E6D9BF !important}
   .vz .val.is-green{background:#D4E6C6}
-  .vz .vz-matrix::after{content:"";position:absolute;top:0;right:0;width:24px;height:100%;
-    pointer-events:none;background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.85))}
+  /* obal posuvné tabulky: fade + scroll tlačítka zůstávají na hraně viditelné oblasti (ne uvnitř scrollu) */
+  .vz .vz-mwrap{position:relative}
+  .vz .vz-mwrap::before,.vz .vz-mwrap::after{content:"";position:absolute;top:0;bottom:0;width:34px;
+    pointer-events:none;opacity:0;transition:opacity .2s;z-index:2}
+  .vz .vz-mwrap::before{left:0;background:linear-gradient(to left,rgba(255,255,255,0),rgba(255,255,255,.92))}
+  .vz .vz-mwrap::after{right:0;background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.92))}
+  .vz .vz-mwrap.can-left::before{opacity:1}
+  .vz .vz-mwrap.can-right::after{opacity:1}
+  .vz .vz-mbtn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:none;
+    width:38px;height:38px;border-radius:9999px;border:1px solid var(--hair);background:rgba(255,255,255,.95);
+    color:var(--ink);font:400 24px/1 system-ui,sans-serif;cursor:pointer;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(20,20,47,.18);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+    transition:background .15s,box-shadow .15s}
+  .vz .vz-mbtn--left{left:7px}
+  .vz .vz-mbtn--right{right:7px}
+  .vz .vz-mwrap.can-left .vz-mbtn--left{display:inline-flex}
+  .vz .vz-mwrap.can-right .vz-mbtn--right{display:inline-flex}
+  .vz .vz-mbtn:hover{background:#fff;box-shadow:0 6px 18px rgba(20,20,47,.26)}
+  .vz .vz-mbtn:active{transform:translateY(-50%) scale(.94)}
+  .vz .vz-mbtn:focus-visible{outline:2px solid var(--link);outline-offset:2px}
   /* headline číslo */
   .vz .vz-headline{margin:14px 0 0;padding:18px;background:var(--tint);
     border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:5px}
@@ -169,7 +190,19 @@
   .vz .vz-param.is-blue{background:#E6ECF6;border-color:#B6CDE9}
   .vz .vz-param__label{display:block;font-size:.76rem;color:#3a3a52;line-height:1.3}
   .vz .vz-param__num{display:block;margin-top:5px;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
-  @media (max-width:680px){ .vz .vz-totals{grid-template-columns:1fr} .vz .vz-bmetrics{grid-template-columns:1fr} }
+  /* zvýrazněné info boxy = hranaté obdélníky (sjednoceno se zbytkem tabulek) */
+  .vz .vz-total,.vz .vz-sbox,.vz .vz-bm,.vz .vz-param{border-radius:0}
+  /* citace ze smlouvy (text místo obrázku) */
+  .vz .vz-quote{margin:14px 0 0;padding:18px 20px;background:#FAFAFC;border:1px solid var(--hair);
+    border-left:3px solid #88B673;font-size:.86rem;line-height:1.55;color:#2a2a44}
+  .vz .vz-quote__head{margin:0 0 12px;font-weight:700;font-size:.98rem}
+  .vz .vz-quote__list{margin:0;display:flex;flex-direction:column;gap:10px}
+  .vz .vz-quote__list>div{display:grid;grid-template-columns:44px 1fr;gap:4px}
+  .vz .vz-quote__list dt{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+  .vz .vz-quote__list dd{margin:0}
+  .vz .vz-quote__formula{display:block;text-align:center;font-style:italic;font-weight:700;font-size:1.05rem;margin:9px 0}
+  .vz .vz-quote__where{display:block;margin-top:6px;padding-left:16px;color:#444}
+  @media (max-width:680px){ .vz .vz-totals{grid-template-columns:1fr} .vz .vz-bmetrics{grid-template-columns:1fr} .vz .vz-quote__list>div{grid-template-columns:34px 1fr} }
   /* verze dole */
   .vz .vzver{display:flex;flex-direction:column;align-items:center;gap:4px;margin:44px 0 8px;text-align:center}
   .vz .vzver p{margin:0;color:var(--grey);font-size:.7rem;letter-spacing:.02em}
@@ -224,6 +257,7 @@
     <img src="assets/images/investori/zaklad/mapa-arealu-masterplan.jpg" alt="Mapa Areálu se schématickým zákresem 1. developerské fáze investičně-realizačního scénáře S1" loading="lazy">
     <figcaption>Mapa Areálu se schématickým zákresem 1. developerské fáze investičně-realizačního scénáře S1</figcaption>
   </figure>
+  <div class="vz-mwrap">
   <div class="vz-matrix" tabindex="0" role="region" aria-label="tabulka – vodorovně posuvná tabulka">
     <table>
       <thead><tr>
@@ -470,6 +504,9 @@
       </tbody>
     </table>
   </div>
+  <button type="button" class="vz-mbtn vz-mbtn--left" aria-label="Posunout tabulku doleva" tabindex="-1">‹</button>
+  <button type="button" class="vz-mbtn vz-mbtn--right" aria-label="Posunout tabulku doprava" tabindex="-1">›</button>
+  </div>
   <p class="foot">Plochy SM = plochy smíšené obytné – městské dle současného ÚP. Žlutě jádro projektu (budovy Startovacího hubu), zeleně zázemí.</p>
   <div class="vz-totals">
     <div class="vz-total">
@@ -502,9 +539,10 @@
     <div class="vz-bm"><span class="vz-bm__label">Podíl na plochách SM (≈)</span><span class="vz-bm__num">24 %</span></div>
   </div>
 </section>
-<section class="sec" style="--tint:#E6ECF6" aria-label="Tabulka se základními informacemi č. 2 — stavby a HPP">
+<section class="sec sec--shade" style="--tint:#E6ECF6" aria-label="Tabulka se základními informacemi č. 2 — stavby a HPP">
   <h2 class="sechead">Tabulka se základními informacemi č. 2</h2>
   <h3 class="vz-subhead">Stavby, podlažnost a hrubé podlažní plochy (HPP) po parcelách</h3>
+  <div class="vz-mwrap">
   <div class="vz-matrix" tabindex="0" role="region" aria-label="Stavby, podlažnost a hrubé podlažní plochy (HPP) po parcelách – vodorovně posuvná tabulka">
     <table>
       <thead><tr>
@@ -991,6 +1029,9 @@
       </tbody>
     </table>
   </div>
+  <button type="button" class="vz-mbtn vz-mbtn--left" aria-label="Posunout tabulku doleva" tabindex="-1">‹</button>
+  <button type="button" class="vz-mbtn vz-mbtn--right" aria-label="Posunout tabulku doprava" tabindex="-1">›</button>
+  </div>
   <p class="foot">Žlutě jádro projektu Startovací hub (budovy A1–A6, štáb, hlavní pozemek), zeleně zázemí projektu.</p>
   <h3 class="vz-subhead">Souhrn ploch a HPP</h3>
   <div class="vz-summary">
@@ -1011,6 +1052,7 @@
 <section class="sec" style="--tint:#EEF1F6" aria-label="Základní údaje a výpočty vyplývající z uzavřených smluv">
   <h2 class="vz-zonehead">Základní údaje a výpočty vyplývající z uzavřených smluv</h2>
   <p class="vz-greenband">Sjednané zálohy na kupní cenu Areálu</p>
+  <div class="vz-mwrap">
   <div class="vz-matrix" tabindex="0" role="region" aria-label="tabulka – vodorovně posuvná tabulka">
     <table>
       <thead><tr>
@@ -1136,6 +1178,9 @@
       </tbody>
     </table>
   </div>
+  <button type="button" class="vz-mbtn vz-mbtn--left" aria-label="Posunout tabulku doleva" tabindex="-1">‹</button>
+  <button type="button" class="vz-mbtn vz-mbtn--right" aria-label="Posunout tabulku doprava" tabindex="-1">›</button>
+  </div>
   <p class="vz-greenband vz-greenband--center">Mimořádná záloha (tzv. příspěvek na příjezdovou cestu)</p>
   <div class="vz-kv">
     <div class="row"><div class="lab">Splatnost do 90 dní od vydání stavebního povolení na novou cestu se smluvně stanovenými parametry, která bude přiléhat k východní části Areálu</div><div class="val num is-green">7 500 000 Kč</div></div>
@@ -1148,6 +1193,7 @@
     <div class="vz-param is-blue"><span class="vz-param__label">Plocha Areálu</span><span class="vz-param__num">83 327 m²</span></div>
     <div class="vz-param is-blue"><span class="vz-param__label">Plochy SM v Areálu</span><span class="vz-param__num">77 210 m²</span></div>
   </div>
+  <div class="vz-mwrap">
   <div class="vz-matrix" tabindex="0" role="region" aria-label="tabulka – vodorovně posuvná tabulka">
     <table>
       <thead><tr>
@@ -1443,11 +1489,23 @@
       </tbody>
     </table>
   </div>
+  <button type="button" class="vz-mbtn vz-mbtn--left" aria-label="Posunout tabulku doleva" tabindex="-1">‹</button>
+  <button type="button" class="vz-mbtn vz-mbtn--right" aria-label="Posunout tabulku doprava" tabindex="-1">›</button>
+  </div>
   <p class="foot">*sjednaná kupní cena Areálu se každoročně k 10. 3. navyšuje v souladu s čl. 3 Smlouvy o 19 250 000 Kč, pokud inflace CPI za předchozí rok nepřekročí 5 %.</p>
-  <p class="vz-greenband vz-greenband--center">↓↓↓ Způsob výpočtu navýšení kupní ceny Areálu uvedený v uzavřené Smlouvě ↓↓↓</p>
-  <figure class="vz-map">
-    <img src="assets/images/investori/zaklad/zdroj-smlouva-vypocet-navyseni.jpg" alt="Mapa Areálu" loading="lazy">
-  </figure>
+  <p class="vz-greenband vz-greenband--center">Způsob výpočtu navýšení kupní ceny Areálu uvedený v uzavřené Smlouvě</p>
+  <blockquote class="vz-quote">
+    <p class="vz-quote__head">3.&nbsp;&nbsp;Kupní cena a způsob jejího určení</p>
+    <dl class="vz-quote__list">
+      <div><dt>3.1</dt><dd>Strana budoucí kupující se zavazuje zaplatit Straně budoucí prodávající za Předmět převodu kupní cenu ve výši, která bude složena ze základu kupní ceny ve výši <strong>385 000 000,- Kč</strong> (slovy: <em>tři sta osmdesát pět milionů korun českých</em>) a částky odpovídající míře inflace, respektive částky stanovené postupem uvedeným níže v čl. 3 a 4 této Smlouvy.</dd></div>
+      <div><dt>3.2</dt><dd>Základ kupní ceny ve výši <strong>385 000 000,- Kč</strong> (slovy: <em>tři sta osmdesát pět milionů korun českých</em>) (dále jen jako „Základ kupní ceny“) <strong>bude každoročně dne 10. března příslušného roku navýšen</strong> o procento odpovídající počtu procentních bodů meziroční inflace (dále jen „Míra inflace“) vyhlášené Českým statistickým úřadem za předchozí kalendářní rok, a to po celou dobu platnosti této Smlouvy až do uzavření Smlouvy o převodu obchodního podílu. K navýšení Základu kupní ceny nedojde v případě, že již byla učiněna výzva k uzavření Smlouvy o převodu obchodního podílu dle čl. 2.4 této Smlouvy.</dd></div>
+      <div><dt>3.3</dt><dd>V případě, že Míra inflace nepřesáhne za příslušný kalendářní rok 5 procentních bodů, pak se Smluvní strany dohodly, že za takovýto kalendářní rok se Základ kupní ceny navýší o 5 procentních bodů počítaných ze Základu kupní ceny (tedy o částku ve výši <strong>19 250 000,- Kč</strong>).</dd></div>
+      <div><dt>3.4</dt><dd>Pro vyloučení jakýchkoliv pochybností se sjednává, že v případě záporné Míry inflace se kupní cena Předmětu převodu nesnižuje, ale uplatní se postup uvedený v článku 3.3 této Smlouvy výše.</dd></div>
+      <div><dt>3.5</dt><dd>Za kalendářní rok, ve kterém bude uzavřena tato Smlouva, se bude Základ kupní ceny k 10. 3. následujícího roku navyšovat pouze poměrným způsobem v souladu s články 3.2 až 3.4 této Smlouvy v souladu s níže uvedeným vzorcem.</dd></div>
+      <div><dt>3.6</dt><dd>Výpočet výše navýšení Základu kupní ceny za příslušný rok se řídí následujícím vzorcem:<span class="vz-quote__formula">VNZ = ZKC × MI × P / 12</span><span class="vz-quote__where">kde<br><strong>VNZ</strong> je číselně vyjádřené navýšení Základu kupní ceny<br><strong>ZKC</strong> je Základ kupní ceny uvedený v této smlouvě<br><strong>MI</strong> je příslušná Míra inflace za předchozí rok (minimální dosazovaná hodnota bude 5 %)<br><strong>P</strong> je počet celých měsíců trvání této Smlouvy v příslušném roce.</span></dd></div>
+      <div><dt>3.7</dt><dd>Kupní cenu Předmětu převodu tvoří součet Základu kupní ceny a každoročně číselně vyjádřeného navýšení Základu kupní ceny; přičemž toto číselné vyjádření navýšení Základu kupní ceny je stanoveno postupem uvedeným výše (dále jen jako „Kupní cena“).</dd></div>
+    </dl>
+  </blockquote>
 </section>
     <footer class="vzver">
       <p>verze 2p8iaz6 · aktualizace č. 2026-06-15-2p8iaz6</p>
@@ -1464,6 +1522,29 @@
     btn.addEventListener('click', function () {
       try { localStorage.removeItem('vpd1-auth'); } catch (e) {}
       location.href = 'investori.html';
+    });
+  })();
+
+  /* Vodorovně posuvné tabulky: tlačítka ‹ › pro plynulý posun + fade dle pozice. */
+  (function () {
+    var wraps = document.querySelectorAll('.vz-mwrap');
+    Array.prototype.forEach.call(wraps, function (wrap) {
+      var box = wrap.querySelector('.vz-matrix');
+      var bl = wrap.querySelector('.vz-mbtn--left');
+      var br = wrap.querySelector('.vz-mbtn--right');
+      if (!box) return;
+      function update() {
+        var max = box.scrollWidth - box.clientWidth;
+        var x = box.scrollLeft;
+        wrap.classList.toggle('can-left', max > 4 && x > 4);
+        wrap.classList.toggle('can-right', max > 4 && x < max - 4);
+      }
+      function go(dir) { box.scrollBy({ left: dir * box.clientWidth * 0.8, behavior: 'smooth' }); }
+      if (bl) bl.addEventListener('click', function () { go(-1); });
+      if (br) br.addEventListener('click', function () { go(1); });
+      box.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
     });
   })();
 </script>

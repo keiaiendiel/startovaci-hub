@@ -71,8 +71,9 @@ OUT = []
 def w(s): OUT.append(s)
 
 # ---------- block emitters ----------
-def section(title, tint, blocks, label=None, lede=None):
-    w(f'<section class="sec" style="--tint:{tint}" aria-label="{esc(label or title)}">')
+def section(title, tint, blocks, label=None, lede=None, shade=False):
+    cls = "sec sec--shade" if shade else "sec"
+    w(f'<section class="{cls}" style="--tint:{tint}" aria-label="{esc(label or title)}">')
     w(f'  <h2 class="sechead">{esc(title)}</h2>')
     if lede:
         w(f'  <p class="sec-lede">{esc(lede)}</p>')
@@ -132,6 +133,7 @@ def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfill
     def _():
         if caption:
             w(f'  <h3 class="vz-subhead">{esc(caption)}</h3>')
+        w('  <div class="vz-mwrap">')
         w('  <div class="vz-matrix" tabindex="0" role="region" aria-label="'
           + esc(caption or "tabulka") + ' – vodorovně posuvná tabulka">')
         w('    <table>')
@@ -167,6 +169,9 @@ def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfill
             w('        </tr>')
         w('      </tbody>')
         w('    </table>')
+        w('  </div>')
+        w('  <button type="button" class="vz-mbtn vz-mbtn--left" aria-label="Posunout tabulku doleva" tabindex="-1">‹</button>')
+        w('  <button type="button" class="vz-mbtn vz-mbtn--right" aria-label="Posunout tabulku doprava" tabindex="-1">›</button>')
         w('  </div>')
         if foot:
             w(f'  <p class="foot">{esc(foot)}</p>')
@@ -221,9 +226,10 @@ def vzsummary(items):
         w('  </div>')
     return _
 
-def zonesection(zonetitle, tint, blocks, label=None):
+def zonesection(zonetitle, tint, blocks, label=None, shade=False):
     """Zóna s velkým nadpisem (zelený pruh) místo běžné sechead."""
-    w(f'<section class="sec" style="--tint:{tint}" aria-label="{esc(label or zonetitle)}">')
+    cls = "sec sec--shade" if shade else "sec"
+    w(f'<section class="{cls}" style="--tint:{tint}" aria-label="{esc(label or zonetitle)}">')
     w(f'  <h2 class="vz-zonehead">{esc(zonetitle)}</h2>')
     for b in blocks:
         b()
@@ -331,7 +337,7 @@ section("Tabulka se základními informacemi č. 2", "#E6ECF6", [
                ("HPP zázemí projektu SH", "V39"),
                ("HPP kolem jádra projektu SH", "W39"),
                ("HPP jádra i zázemí projektu SH", "X39")]),
-], label="Tabulka se základními informacemi č. 2 — stavby a HPP")
+], label="Tabulka se základními informacemi č. 2 — stavby a HPP", shade=True)
 
 # ============================================================
 # 3) ZÓNA: Základní údaje a výpočty vyplývající z uzavřených smluv
@@ -370,6 +376,47 @@ cena_calc = matrix(
     foot="*sjednaná kupní cena Areálu se každoročně k 10. 3. navyšuje v souladu s čl. 3 Smlouvy "
          "o 19 250 000 Kč, pokud inflace CPI za předchozí rok nepřekročí 5 %.")
 
+def smlouva_cl3():
+    """Citace čl. 3 uzavřené Smlouvy (přepis z původního obrázku do textu)."""
+    arts = [
+        ("3.1", 'Strana budoucí kupující se zavazuje zaplatit Straně budoucí prodávající za Předmět převodu '
+                'kupní cenu ve výši, která bude složena ze základu kupní ceny ve výši <strong>385 000 000,- Kč</strong> '
+                '(slovy: <em>tři sta osmdesát pět milionů korun českých</em>) a částky odpovídající míře inflace, '
+                'respektive částky stanovené postupem uvedeným níže v čl. 3 a 4 této Smlouvy.'),
+        ("3.2", 'Základ kupní ceny ve výši <strong>385 000 000,- Kč</strong> (slovy: <em>tři sta osmdesát pět milionů '
+                'korun českých</em>) (dále jen jako „Základ kupní ceny“) <strong>bude každoročně dne 10. března '
+                'příslušného roku navýšen</strong> o procento odpovídající počtu procentních bodů meziroční inflace '
+                '(dále jen „Míra inflace“) vyhlášené Českým statistickým úřadem za předchozí kalendářní rok, a to po '
+                'celou dobu platnosti této Smlouvy až do uzavření Smlouvy o převodu obchodního podílu. K navýšení '
+                'Základu kupní ceny nedojde v případě, že již byla učiněna výzva k uzavření Smlouvy o převodu '
+                'obchodního podílu dle čl. 2.4 této Smlouvy.'),
+        ("3.3", 'V případě, že Míra inflace nepřesáhne za příslušný kalendářní rok 5 procentních bodů, pak se Smluvní '
+                'strany dohodly, že za takovýto kalendářní rok se Základ kupní ceny navýší o 5 procentních bodů '
+                'počítaných ze Základu kupní ceny (tedy o částku ve výši <strong>19 250 000,- Kč</strong>).'),
+        ("3.4", 'Pro vyloučení jakýchkoliv pochybností se sjednává, že v případě záporné Míry inflace se kupní cena '
+                'Předmětu převodu nesnižuje, ale uplatní se postup uvedený v článku 3.3 této Smlouvy výše.'),
+        ("3.5", 'Za kalendářní rok, ve kterém bude uzavřena tato Smlouva, se bude Základ kupní ceny k 10. 3. '
+                'následujícího roku navyšovat pouze poměrným způsobem v souladu s články 3.2 až 3.4 této Smlouvy '
+                'v souladu s níže uvedeným vzorcem.'),
+    ]
+    w('  <blockquote class="vz-quote">')
+    w('    <p class="vz-quote__head">3.&nbsp;&nbsp;Kupní cena a způsob jejího určení</p>')
+    w('    <dl class="vz-quote__list">')
+    for n, t in arts:
+        w(f'      <div><dt>{n}</dt><dd>{t}</dd></div>')
+    w('      <div><dt>3.6</dt><dd>Výpočet výše navýšení Základu kupní ceny za příslušný rok se řídí následujícím '
+      'vzorcem:<span class="vz-quote__formula">VNZ = ZKC × MI × P / 12</span>'
+      '<span class="vz-quote__where">kde<br>'
+      '<strong>VNZ</strong> je číselně vyjádřené navýšení Základu kupní ceny<br>'
+      '<strong>ZKC</strong> je Základ kupní ceny uvedený v této smlouvě<br>'
+      '<strong>MI</strong> je příslušná Míra inflace za předchozí rok (minimální dosazovaná hodnota bude 5 %)<br>'
+      '<strong>P</strong> je počet celých měsíců trvání této Smlouvy v příslušném roce.</span></dd></div>')
+    w('      <div><dt>3.7</dt><dd>Kupní cenu Předmětu převodu tvoří součet Základu kupní ceny a každoročně číselně '
+      'vyjádřeného navýšení Základu kupní ceny; přičemž toto číselné vyjádření navýšení Základu kupní ceny je '
+      'stanoveno postupem uvedeným výše (dále jen jako „Kupní cena“).</dd></div>')
+    w('    </dl>')
+    w('  </blockquote>')
+
 zonesection("Základní údaje a výpočty vyplývající z uzavřených smluv", "#EEF1F6", [
     greenband("Sjednané zálohy na kupní cenu Areálu"),
     zalohy,
@@ -378,8 +425,8 @@ zonesection("Základní údaje a výpočty vyplývající z uzavřených smluv",
               "na základě uzavřené smlouvy"),
     cena_params,
     cena_calc,
-    greenband("↓↓↓ Způsob výpočtu navýšení kupní ceny Areálu uvedený v uzavřené Smlouvě ↓↓↓", center=True),
-    vzmap("zdroj-smlouva-vypocet-navyseni.jpg"),
+    greenband("Způsob výpočtu navýšení kupní ceny Areálu uvedený v uzavřené Smlouvě", center=True),
+    smlouva_cl3,
 ], label="Základní údaje a výpočty vyplývající z uzavřených smluv")
 
 # ============================================================
