@@ -216,24 +216,40 @@ def breakdown(title, mapfn, area, arealu, sm):
         w('  </div>')
     return _
 
-def vzsummary(items):
-    """Řada zelených souhrnných boxů (auto-fit). items: (label, coord)."""
+def vzsummary(items, bg="#E7F0E3", bd="#A8CE9F"):
+    """Řada souhrnných boxů (auto-fit). items: (label, coord). Barva přes bg/bd."""
     def _():
-        w('  <div class="vz-summary">')
+        w(f'  <div class="vz-summary" style="--sbox-bg:{bg};--sbox-bd:{bd}">')
         for label, coord in items:
             w(f'    <div class="vz-sbox"><span class="vz-sbox__label">{esc(label)}</span>'
               f'<span class="vz-sbox__num">{esc(V(coord))}</span></div>')
         w('  </div>')
     return _
 
-def zonesection(zonetitle, tint, blocks, label=None, shade=False):
-    """Zóna s velkým nadpisem (zelený pruh) místo běžné sechead."""
+def zonesection(zonetitle, tint, blocks, label=None, shade=False, band="#D4E6C6", bandbd="#88B673"):
+    """Zóna s velkým nadpisem (barevný pruh dle --band) místo běžné sechead."""
     cls = "sec sec--shade" if shade else "sec"
-    w(f'<section class="{cls}" style="--tint:{tint}" aria-label="{esc(label or zonetitle)}">')
-    w(f'  <h2 class="vz-zonehead">{esc(zonetitle)}</h2>')
+    w(f'<section class="{cls}" style="--tint:{tint};--band:{band};--band-bd:{bandbd}" '
+      f'aria-label="{esc(label or zonetitle)}">')
+    parts = zonetitle.split(" | ", 1)
+    if len(parts) > 1:
+        w(f'  <h2 class="vz-zonehead">{esc(parts[0])}'
+          f'<span class="vz-zonehead__sub">{esc(parts[1])}</span></h2>')
+    else:
+        w(f'  <h2 class="vz-zonehead">{esc(zonetitle)}</h2>')
     for b in blocks:
         b()
     w('</section>')
+
+def figrow(items):
+    """3 obrázky vedle sebe, popisek pod každým. items: (filename, caption)."""
+    def _():
+        w('  <div class="vz-figrow">')
+        for fn, cap in items:
+            w(f'    <figure><img src="{IMGDIR}{fn}" alt="{esc(cap)}" loading="lazy">'
+              f'<figcaption>{esc(cap)}</figcaption></figure>')
+        w('  </div>')
+    return _
 
 def greenband(text, center=False):
     """Titulní zelený pruh dílčí tabulky."""
@@ -432,67 +448,56 @@ zonesection("Základní údaje a výpočty vyplývající z uzavřených smluv",
 # ============================================================
 # 3) STARTOVACÍ HUB — JEDNOTKY 1+kk
 # ============================================================
-j_inputs = kv([
-    ("Odhadované tržní nájemné za jednotku 1+kk (21 m² ČPP) měsíčně","BO6"),
-    ("Obsazenost","BQ6"),
-    ("Odhadovaná prodejní cena jedné jednotky 1+kk (2026)","CL6"),
-    ("Zvolený index meziročního růstu ceny nemovitostí","CR6"),
-], inputs=True)
-
-j_prijem = matrix(
-    ["Parcela","Označení","Název","1.NP","2.NP","3.NP","Počet jednotek","Měsíční příjem","Roční příjem"],
-    ["BI","BJ","BK","BL","BM","BN","BO","BP","BQ"], list(range(10,27)),
-    caption="Odhad příjmů z pronájmu jednotek (po budovách)")
-
-j_narust = matrix(
-    ["Rok","Meziroční růst","Příjem v daném roce","Akumulované příjmy"],
-    ["BS","BT","BU","BV"], list(range(8,24)),
-    caption="Odhadovaný meziroční nárůst příjmů z pronájmu")
-
-j_porovnani = matrix(
-    ["Rok","Příjem v roce","Záloha na kupní cenu","Rozdíl příjmů a nákladů","Akumulovaný rozdíl"],
-    ["BY","BZ","CA","CB","CC"], list(range(8,24)),
-    caption="Hrubé porovnání hlavních provozních příjmů a nákladů")
-
-j_trzni = matrix(
-    ["Parcela","Označení","Název","Celkem podlaží","Podlaží pro rekonstrukci","Počet jednotek","Tržní cena jednotek v budově"],
-    ["CG","CH","CI","CJ","CK","CL","CM"], list(range(10,27)),
-    caption="Odhad tržní ceny jednotek (po budovách, 2026)")
-
-j_trzni_narust = matrix(
-    ["Rok","Index růstu","Odhadovaná tržní cena všech jednotek"],
-    ["CP","CQ","CR"], list(range(8,24)),
-    caption="Odhadovaný nárůst tržní ceny jednotek")
-
-j_rozdil = matrix(
-    ["Rok","Přírůstek prodejní ceny","Prodejní cena jednotek","Kupní cena Areálu","K doplacení po zálohách","Rozdíl (trh − doplatek)"],
-    ["CU","CV","CW","CX","CY","CZ"], list(range(8,24)),
-    caption="Rozdíl mezi kupní cenou Areálu a tržní cenou jednotek")
-
-j_souhrn = kv([
-    ("Odhadované příjmy z pronájmu jednotek do konce roku 2038","BV39"),
-    ("Cena Areálu po odečtení uhrazených záloh (konec 2038)","BZ39"),
-    ("Hlavní příjmy projektu Startovací hub do konce 2038","CB39"),
-    ("Odhadovaný rozdíl mezi prodejní cenou jednotek a doplatkem (2038)","CX39"),
+hub_params = paramstrip([
+    ("Odhadované tržní nájemné za jednotku 1+kk (21 m² ČPP), měsíčně bez služeb", "BO6"),
+    ("Obsazenost", "BQ6"),
 ])
 
-section_draft("Startovací hub · jednotky 1+kk", "#E7F0E3", [
-    subhead("Vstupní parametry"),
-    j_inputs,
-    flow("Tržní nájemné × obsazenost → odhad ročních příjmů po jednotlivých budovách"),
-    j_prijem,
-    j_narust,
-    j_porovnani,
-    j_trzni,
-    j_trzni_narust,
-    j_rozdil,
-    flow("Akumulované příjmy a tržní cena jednotek → souhrnné ukazatele projektu"),
-    subhead("Souhrn"),
-    j_souhrn,
-    subhead("Vizualizace"),
-    figs([("render-jednotka-1kk-interier.jpg", "Vizualizace interiéru: jednotka 1+kk o 21 m² ČPP"),
-          ("render-exterier-jadro-vecer.jpg", "Vizualizace exteriéru: jádro projektu Startovací hub")]),
-], label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu jednotek 1+kk")
+hub_prijem = matrix(
+    ["Číslo parcely", "Označení", "Název", "1.NP", "2.NP", "3.NP",
+     "Odhadovaný počet jednotek v příslušné budově",
+     "Měsíční příjem z pronajímání příslušných jednotek",
+     "Roční příjem z pronajímání příslušných jednotek"],
+    ["BI", "BJ", "BK", "BL", "BM", "BN", "BO", "BP", "BQ"], list(range(10, 27)),
+    cellfills=True, zonecols=(61, 69))
+
+hub_souhrn = vzsummary([
+    ("Potenciální množství všech jednotek (1+kk)", "BL39"),
+    ("Plánovaný počet jednotek (1+kk)", "BO39"),
+    ("Odhadovaná měsíční výše příjmů z pronájmu", "BP39"),
+    ("Odhadovaná výše ročních příjmů z pronájmu", "BQ39"),
+], bg="#F2ECC9", bd="#D8CD7E")
+
+# benchmark: odhad tržního nájemného (odhad-zdarma.cz) — dva odhady
+hub_bench = matrix(
+    ["Tržní nájemné za měsíc", "Plocha (ČPP)", "Cena za m²"],
+    ["BO", "BP", "BQ"], [41, 42], cellfills=True)
+
+zonesection(
+    "Projekt Startovací hub | orientační výpočty týkající se potenciálních příjmů plynoucích "
+    "z jádra projektu složeného výhradně z jednotek 1+kk o 21 m² ČPP, které může vzniknout "
+    "komplexní rekonstrukcí budov A1 až A6 + C",
+    "#FBFAF0", [
+        greenband("Odhad příjmů z pronájmu jednotek vzniklých pro projekt Startovací hub"),
+        hub_params,
+        hub_prijem,
+        flow("Roční příjem z pronajímání po jednotlivých budovách → odhadovaná výše ročních "
+             "příjmů z pronájmu"),
+        hub_souhrn,
+        subhead("Vizualizace"),
+        figrow([
+            ("render-jednotka-1kk-interier.jpg", "Vizualizace interiéru: jednotka 1+kk o 21 m² ČPP"),
+            ("render-exterier-jadro-vecer.jpg", "Vizualizace exteriéru: jádro projektu Startovací hub"),
+            ("render-exterier-plaza.jpg", "Vizualizace exteriéru: budova D – ateliéry / dílny"),
+        ]),
+        greenband("Odhad tržního nájemného pro jednotku 1+kk o ČPP 21 m² v příslušné lokalitě "
+                  "(www.odhad-zdarma.cz, k 18. 1. 2026)", center=True),
+        hub_bench,
+        vzmap("zdroj-odhad-najemneho.jpg",
+              "Odhad tržního nájemného srovnatelné nemovitosti (oceňovací nástroj odhad-zdarma.cz)"),
+    ],
+    label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu jednotek 1+kk",
+    shade=True, band="#E9E2A8", bandbd="#CDBF6E")
 
 # ============================================================
 # 4) STARTOVACÍ HUB — LŮŽKA

@@ -146,16 +146,25 @@ STYLE = r"""<style>
   .vz .vz-bm__num{display:block;margin-top:5px;font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums}
   /* zelené souhrnné boxy (auto-fit řada) */
   .vz .vz-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:12px 0 2px}
-  .vz .vz-sbox{background:#E7F0E3;border:1px solid #A8CE9F;border-radius:7px;padding:11px 13px}
+  .vz .vz-sbox{background:var(--sbox-bg,#E7F0E3);border:1px solid var(--sbox-bd,#A8CE9F);border-radius:7px;padding:11px 13px}
   .vz .vz-sbox__label{display:block;font-size:.76rem;color:#3a3a52;line-height:1.3}
   .vz .vz-sbox__num{display:block;margin-top:5px;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
   /* zóna: velký nadpis + zelené title bandy dílčích tabulek */
-  .vz .vz-zonehead{margin:clamp(38px,5.5vw,64px) 0 0;background:#D4E6C6;border-top:2px solid #88B673;
-    border-bottom:2px solid #88B673;padding:18px 16px;font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;
+  .vz .vz-zonehead{margin:clamp(38px,5.5vw,64px) 0 0;background:var(--band,#D4E6C6);
+    border-top:2px solid var(--band-bd,#88B673);border-bottom:2px solid var(--band-bd,#88B673);
+    padding:18px 16px;font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;
     line-height:1.25;color:var(--ink);text-wrap:balance}
-  .vz .vz-greenband{margin:22px 0 0;background:#D4E6C6;padding:11px 15px;font-size:clamp(1rem,2vw,1.18rem);
+  .vz .vz-zonehead__sub{display:block;margin-top:8px;font-size:.5em;font-weight:500;line-height:1.4;color:#39394f}
+  .vz .vz-greenband{margin:22px 0 0;background:var(--band,#D4E6C6);padding:11px 15px;font-size:clamp(1rem,2vw,1.18rem);
     font-weight:700;line-height:1.3;color:var(--ink);text-wrap:balance}
   .vz .vz-greenband--center{text-align:center}
+  /* 3 obrázky vedle sebe s popiskem pod (řada figur) */
+  .vz .vz-figrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0 2px}
+  .vz .vz-figrow figure{margin:0}
+  .vz .vz-figrow img{display:block;width:100%;height:clamp(200px,18vw,300px);object-fit:cover;
+    border:1px solid var(--hair)}
+  .vz .vz-figrow figcaption{margin-top:7px;font-size:.78rem;color:var(--grey);line-height:1.4}
+  @media (max-width:760px){ .vz .vz-figrow{grid-template-columns:1fr} .vz .vz-figrow img{height:clamp(200px,52vw,320px)} }
   /* vstupní parametry jako barevné boxy */
   .vz .vz-params{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px}
   .vz .vz-param{flex:1 1 165px;background:#EEF1F6;border:1px solid var(--hair);border-radius:7px;padding:11px 13px}
