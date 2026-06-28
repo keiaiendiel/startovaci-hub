@@ -516,6 +516,83 @@ hub_bench = matrix(
     ["Tržní nájemné za měsíc", "Plocha (ČPP)", "Cena za m²"],
     ["BO", "BP", "BQ"], [41, 42], cellfills=True)
 
+# ---- finále: 5 tabulek (BS–CZ) ----
+t20_params = paramstrip([
+    ("Odhadovaná výše příjmu pro rok 2026", "BS6"),
+    ("Odhadovaný meziroční růst ceny pronájmů", "BU6"),
+])
+t20_matrix = matrix(
+    ["Rok", "Odhadovaný meziroční růst cen pronájmů v jednotlivých letech",
+     "Odhadovaný příjem z pronájmu v jednotlivých letech",
+     "Odhad celkových (akumulovaných) příjmů z pronájmu"],
+    ["BS", "BT", "BU", "BV"], list(range(8, 24)), cellfills=True)
+t20_grand = vzgrand([
+    ("Odhadovaná výše všech příjmů z pronájmu jednotlivých jednotek v rámci projektu "
+     "Startovací hub do konce roku 2038:", "BV39", True),
+])
+
+t21_matrix = matrix(
+    ["Rok", "Odhadovaný příjem v jednotlivých letech",
+     "Výše zálohy na kupní cenu Areálu v příslušném roce",
+     "Rozdíl mezi příjmy a náklady v jednotlivých letech",
+     "Akumulovaný rozdíl hlavních příjmů a nákladů projektu"],
+    ["BY", "BZ", "CA", "CB", "CC"], list(range(8, 24)), cellfills=True)
+t21_grand = vzgrand([
+    ("Cena Areálu po odečtení uhrazených záloh na konci roku 2038:", "BZ39", False),
+    ("Hlavní příjmy projektu Startovací hub do konce roku 2038:", "CB39", True),
+])
+
+t22_params = paramstrip([
+    ("Odhadovaná prodejní cena jedné jednotky 1+kk o ČPP cca 21 m² v příslušné lokalitě "
+     "pro rok 2026", "CL6"),
+])
+t22_matrix = matrix(
+    ["Číslo parcely", "Označení", "Název", "Celkem podlaží",
+     "Počet podlaží vhodných pro rekonstrukci na jednotky 1+kk",
+     "Počet jednotek v příslušné budově",
+     "Odhad prodejní ceny všech jednotek v příslušné budově"],
+    ["CG", "CH", "CI", "CJ", "CK", "CL", "CM"], list(range(10, 27)),
+    cellfills=True, zonecols=(85, 93))
+t22_grand = vzgrand([
+    ("Počet jednotek 1+kk vzniklých pro Startovací hub:", "CL39", False),
+    ("Odhadovaná tržní ceny všech jednotek pro rok 2026:", "CM39", True),
+])
+t22_bench = matrix(
+    ["Odhadovaná tržní cena jednotky 1+kk", "Plocha (ČPP)", "Cena za m²"],
+    ["CK", "CL", "CM"], [42], cellfills=True)
+
+t24_params = paramstrip([
+    ("Odhadovaná tržní cena všech jednotek (2026)", "CP6"),
+    ("Zvolený index pro meziroční růst ceny nemovitostí v příslušné lokalitě", "CR6"),
+])
+t24_matrix = matrix(
+    ["Rok", "Index zvolený pro růst tržní ceny jednotek 1+kk v lokalitě Areálu",
+     "Odhadovaná tržní cena jednotek vzniklých pro projekt Startovací hub"],
+    ["CP", "CQ", "CR"], list(range(8, 24)), cellfills=True)
+t24_grand = vzgrand([
+    ("Počet jednotek 1+kk vybudovaných pro Startovací hub:", "CQ39", False),
+    ("Odhadovaná tržní cena jednotek vybudovaných pro Startovací hub v roce 2038:",
+     "CR39", True),
+])
+
+t25_params = paramstrip([
+    ("Odhadovaný průměrný meziroční růst ceny nemovitostí v lokalitě Areálu mezi roky "
+     "2026 až 2038", "CU6"),
+    ("Odhad tržní ceny jednotek vzniklých pro projekt Startovací hub (2026)", "CX6"),
+])
+t25_matrix = matrix(
+    ["Rok", "Přírůstek prodejní ceny",
+     "Prodejní cena zrekonstruovaných ubytovacích jednotek",
+     "Kupní cena Areálu při předpokládané inflaci CPI do 5 %",
+     "Kupní cena Areálu k doplacení po započtení uhrazených záloh",
+     "Rozdíl mezi doplatkem kupní ceny Areálu a tržní cenou jednotek vzniklých "
+     "v jádru projektu Startovací hub"],
+    ["CU", "CV", "CW", "CX", "CY", "CZ"], list(range(8, 24)), cellfills=True)
+t25_grand = vzgrand([
+    ("Odhadovaný rozdíl mezi prodejní cenou jednotek vzniklých pro projekt Startovací "
+     "hub a doplatkem kupní ceny za Areál v roce 2038:", "CX39", True),
+])
+
 zonesection(
     "Projekt Startovací hub | orientační výpočty týkající se potenciálních příjmů plynoucích "
     "z jádra projektu složeného výhradně z jednotek 1+kk o 21 m² ČPP, které může vzniknout "
@@ -536,6 +613,26 @@ zonesection(
         hub_bench,
         vzmap("zdroj-odhad-najemneho.jpg",
               "Odhad tržního nájemného srovnatelné nemovitosti (oceňovací nástroj odhad-zdarma.cz)"),
+        # --- finále: 5 tabulek ---
+        greenband("Odhadovaný meziroční nárůst příjmů z pronájmu jednotek vzniklých pro projekt Startovací hub"),
+        t20_params,
+        flowblock([t20_matrix, t20_grand]),
+        greenband("Hrubé porovnání hlavních provozních příjmů a nákladů projektu Startovací hub"),
+        flowblock([t21_matrix, t21_grand]),
+        greenband("Odhad tržní ceny všech jednotek vzniklých pro projekt Startovací hub"),
+        t22_params,
+        flowblock([t22_matrix, t22_grand]),
+        greenband("Odhad tržní ceny jedné jednotky 1+kk o ČPP 21 m² v příslušné lokalitě "
+                  "(www.odhad-zdarma.cz, k 18. 1. 2026)", center=True),
+        t22_bench,
+        vzmap("zdroj-odhad-prodejni-ceny.jpg",
+              "Odhad tržní prodejní ceny srovnatelné nemovitosti (oceňovací nástroj odhad-zdarma.cz)"),
+        greenband("Odhadovaný nárůst tržní ceny jednotek vzniklých pro projekt Startovací hub"),
+        t24_params,
+        flowblock([t24_matrix, t24_grand]),
+        greenband("Rozdíl mezi nákupní cenou Areálu a tržní cenou jednotek vzniklých pro projekt Startovací hub"),
+        t25_params,
+        flowblock([t25_matrix, t25_grand]),
     ],
     label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu jednotek 1+kk",
     shade=True, band="#E9E2A8", bandbd="#CDBF6E")
