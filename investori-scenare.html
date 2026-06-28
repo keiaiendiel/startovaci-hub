@@ -50,19 +50,36 @@
     font-size:clamp(1.05rem,2.1vw,1.2rem);font-weight:700;line-height:1.3;padding:13px 15px;text-wrap:balance}
   .vz .sec-lede{margin:12px 15px 0;font-size:clamp(.8rem,1.4vw,.9rem);line-height:1.5;color:#6b6b80;font-weight:700;letter-spacing:.02em}
   .vz .foot{font-style:italic;font-size:.8rem;line-height:1.45;color:#444;margin:14px 15px 0;max-width:110ch}
-  /* ---- scénáře: vodorovně posuvná barevná tabulka, ukotvený 1. sloupec ---- */
-  .vz .scn-wrap{position:relative;overflow-x:auto;margin:14px 0 0;border:1px solid var(--hair);
+  /* ---- scénáře: vodorovně posuvná barevná tabulka, ukotvený 1. sloupec, šipky po stranách ---- */
+  .vz .scn-mwrap{position:relative;margin:14px 0 0}
+  .vz .scn-mwrap::after{content:"";position:absolute;top:0;bottom:0;right:0;width:30px;pointer-events:none;
+    opacity:0;transition:opacity .2s;z-index:2;background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.92))}
+  .vz .scn-mwrap.can-right::after{opacity:1}
+  .vz .scn-wrap{position:relative;overflow-x:auto;border:1px solid var(--hair);
     -webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .vz .scn-wrap:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+  .vz .scn-mbtn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:none;
+    width:38px;height:38px;border-radius:9999px;border:1px solid var(--hair);background:rgba(255,255,255,.96);
+    color:var(--ink);cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(20,20,47,.18);
+    -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:background .15s,box-shadow .15s}
+  .vz .scn-mbtn--left{left:8px} .vz .scn-mbtn--right{right:8px}
+  .vz .scn-mwrap.can-left .scn-mbtn--left{display:inline-flex}
+  .vz .scn-mwrap.can-right .scn-mbtn--right{display:inline-flex}
+  .vz .scn-mbtn:hover{background:#fff;box-shadow:0 6px 18px rgba(20,20,47,.26)}
+  .vz .scn-mbtn:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+  .vz .scn-mbtn svg{display:block}
   .vz .scn-table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-size:.82rem;line-height:1.4}
-  .vz .scn-table th,.vz .scn-table td{padding:12px 13px;border-bottom:1px solid var(--hair);
-    border-right:1px solid #ECECF3;text-align:left;vertical-align:top;white-space:normal}
-  .vz .scn-table thead th{background:#E6ECF6;font-weight:700;border-bottom:2px solid var(--rule);
-    min-width:150px;max-width:230px;position:sticky;top:0;z-index:2}
-  .vz .scn-table tbody td{min-width:160px;max-width:260px}
+  .vz .scn-table th,.vz .scn-table td{padding:11px 12px;border-bottom:1px solid var(--hair);
+    border-right:1px solid #ECECF3;text-align:left;vertical-align:top;white-space:normal;max-width:198px}
+  .vz .scn-table thead th{background:#E6ECF6;font-weight:700;border-bottom:2px solid var(--rule);min-width:138px}
+  .vz .scn-table tbody td{min-width:138px}
   /* ukotvený 1. sloupec (název scénáře) */
-  .vz .scn-name{position:sticky;left:0;z-index:1;min-width:210px;max-width:240px;
+  .vz .scn-table .scn-name{position:sticky;left:0;z-index:1;min-width:180px;max-width:198px;
     border-right:1px solid var(--rule);box-shadow:1px 0 0 0 var(--rule)}
   .vz .scn-table thead .scn-name{z-index:3}
+  /* užší sloupce: 3 = Název základního scénáře, 4 = Detail (nadpis se zalomí na víc řádků) */
+  .vz .scn-table th:nth-child(3),.vz .scn-table td:nth-child(3){min-width:78px;max-width:96px}
+  .vz .scn-table th:nth-child(4),.vz .scn-table td:nth-child(4){min-width:48px;max-width:66px;text-align:center}
   .vz .scn-name strong{display:block;font-size:.98rem;margin:0 0 6px}
   .vz .scn-goal,.vz .scn-phases{display:block;font-size:.78rem;line-height:1.4;color:#3a3a52;margin-top:4px}
   .vz .scn-phases{font-weight:600}
@@ -142,7 +159,8 @@
       <p class="sec-lede">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
       <p class="scn-hint">Tabulku lze posouvat vodorovně; první sloupec (scénář) zůstává ukotvený.</p>
 
-      <div class="scn-wrap">
+      <div class="scn-mwrap">
+        <div class="scn-wrap" tabindex="0" role="region" aria-label="Scénáře – vodorovně posuvná tabulka">
         <table class="scn-table">
           <thead>
             <tr>
@@ -239,6 +257,9 @@
             </tr>
           </tbody>
         </table>
+        </div>
+        <button type="button" class="scn-mbtn scn-mbtn--left" aria-label="Posunout tabulku doleva" tabindex="-1"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button type="button" class="scn-mbtn scn-mbtn--right" aria-label="Posunout tabulku doprava" tabindex="-1"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
 
       <p class="foot">*Pokud je použito slovní spojení „odkup Areálu" či „kupní cena Areálu", je tím myšlen odkup 100 % obchodního podílu ve společnosti FTV Klecany s.r.o., respektive kupní cena za tento podíl.</p>
@@ -261,6 +282,27 @@
         location.href = 'investori.html';
       });
     });
+  })();
+
+  /* Scénáře: vodorovný posuv tlačítky ‹ › + fade dle pozice (jako matice „Základních údajů"). */
+  (function () {
+    var wrap = document.querySelector('.scn-mwrap');
+    if (!wrap) return;
+    var box = wrap.querySelector('.scn-wrap');
+    var bl = wrap.querySelector('.scn-mbtn--left');
+    var br = wrap.querySelector('.scn-mbtn--right');
+    if (!box) return;
+    function update() {
+      var max = box.scrollWidth - box.clientWidth, x = box.scrollLeft;
+      wrap.classList.toggle('can-left', max > 4 && x > 4);
+      wrap.classList.toggle('can-right', max > 4 && x < max - 4);
+    }
+    function go(dir) { box.scrollBy({ left: dir * box.clientWidth * 0.8, behavior: 'smooth' }); }
+    if (bl) bl.addEventListener('click', function () { go(-1); });
+    if (br) br.addEventListener('click', function () { go(1); });
+    box.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   })();
 </script>
 

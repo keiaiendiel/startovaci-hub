@@ -586,11 +586,12 @@
   .inv-nav:checked ~ .inv-topbar__inner .burger > span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
   html:has(.inv-nav:checked), html:has(.inv-nav:checked) body { overflow: hidden; }
 
-  /* Telefon/tablet: 3 sekce zmizí z lišty, ovládá je hamburger uprostřed lišty. */
+  /* Telefon/tablet: 3 sekce zmizí z lišty, ovládá je hamburger vpravo nahoře
+     (otevřené menu má položky centrované). */
   @media (max-width: 819px) {
     .inv-topnav { display: none; }
     .inv-topbar__inner > .inv-topbar__logout { display: none; }
-    .inv-burger { display: inline-flex; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+    .inv-burger { display: inline-flex; margin-left: auto; }
   }
   /* Slim lišta na telefonu (i na šířku) — menší logo, nižší pruh. */
   @media (max-width: 640px) {
