@@ -92,15 +92,22 @@ Mapy vedou ven.
   stavby/podlažnost/HPP, barevné řádky jádro/zázemí), zóna *Základní údaje a výpočty
   vyplývající z uzavřených smluv* (zálohy + výpočet/predikce kupní ceny + citace
   smlouvy čl. 3), zóna *Projekt Startovací hub* (příjmy z pronájmu + vizualizace +
-  benchmark). **Zatím vypnuté** (čekají na revizi — viz `section_draft` v generátoru):
-  lůžka, Nová čtvrť, zdroje. Komponenty (inline `.vz` styly v HTML, NE Tailwind):
-  `.vz-matrix` (sticky 1. sloupec + vodorovný posuv + scroll tlačítka `.vz-mbtn`),
-  `.vz-map`, `.vz-totals/.vz-summary` (hranaté souhrnné boxy), `.vz-zonehead/.vz-greenband`
+  benchmark + **finále: 5 tabulek** — meziroční nárůst příjmů, hrubé porovnání příjmů/nákladů,
+  odhad tržní ceny jednotek + benchmark prodejní ceny, nárůst tržní ceny, rozdíl
+  kupní vs. tržní cena; sloupce BS–CZ). **Zatím vypnuté** (čekají na revizi — viz
+  `section_draft` v generátoru): lůžka, Nová čtvrť, zdroje. Komponenty (inline `.vz`
+  styly v HTML, NE Tailwind): `.vz-matrix` (sticky 1. sloupec + vodorovný posuv + scroll
+  tlačítka `.vz-mbtn`), `.vz-map`, `.vz-totals/.vz-summary/.vz-grand` (hranaté souhrnné boxy;
+  `vz-grand` = barva dle fillu + cíl konektoru), `.vz-zonehead/.vz-greenband`
   (barevné pásy zóny dle CSS `--band`), `paramstrip`, `.vz-quote` (text smlouvy),
   `.vz-figrow/.vz-figs`, `.sec--shade` (full-bleed oddělení hlavních sekcí). **Věrné
   barvení buněk dle zdrojových Excel fillů** (`cellfills`: oranžová = vstupy, zelená,
-  žlutá jádro / zelená zázemí). **Ribbony místo Excel šipek = rozpracováno** (helpery
-  `.vz-flow`/`.vz-flowblock` v generátoru jsou dormantní, vizuál se ještě ladí). Obrázky
+  žlutá jádro / zelená zázemí) + **červená čísla** dle font color z Excelu (`is_red`,
+  zachyceno v `dump_zaklad.py` jako `fc`). **Konektor místo Excel šipek = hotovo**
+  (`flowblock` + `.vz-bigribbon`: trvalá jemná linka tabulka→souhrnný box, na hover/focus
+  zesílí a rozsvítí poslední řádek + cílový box; < 820 px skrytá). **Hover řádků** ztmaví
+  i barevné buňky (inset box-shadow overlay, ne background). **Lightbox** (`.lbx`, JS):
+  klik na obsahový obrázek → zvětšení, ‹ ›/←→/Esc, modální focus trap. Obrázky
   v `assets/images/investori/zaklad/` (zmenšené, `mapping.json` pro snadnou výměnu).
 - V top baru obou stránek je **segmentový přepínač** (`.inv-seg`) „Investiční záměr
   ↔ Základní údaje" (dva odkazy, bez JS) — po přidání tříd nezapomeň `npm run build`.
