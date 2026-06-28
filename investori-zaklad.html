@@ -121,6 +121,22 @@
     stroke-linecap:round;stroke-linejoin:round}
   .vz .vz-flow span{font-size:.78rem;font-weight:600;color:#8d6a86;line-height:1.35;max-width:64ch}
   @media (max-width:680px){ .vz .vz-flow{gap:9px} .vz .vz-flow span{font-size:.74rem} }
+  /* mapy na celou šířku (masterplan + ortofoto breakdowny) */
+  .vz .vz-map{margin:12px 0 0}
+  .vz .vz-map img{display:block;width:100%;height:auto;border:1px solid var(--hair);border-radius:8px;background:#f1f1f6}
+  .vz .vz-map figcaption{margin:8px 2px 0;font-size:.8rem;color:var(--grey);font-style:italic;line-height:1.4}
+  /* zvýrazněné souhrnné boxy (Celková výměra…) */
+  .vz .vz-totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px}
+  .vz .vz-total{background:#E7F0E3;border:1px solid #A8CE9F;border-radius:8px;padding:14px 16px}
+  .vz .vz-total__label{display:block;font-size:.82rem;color:#3a3a52;line-height:1.3}
+  .vz .vz-total__num{display:block;margin-top:4px;font-size:clamp(1.35rem,3.4vw,1.9rem);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  /* breakdown metriky (Pozemky: jádro / zázemí …) */
+  .vz .vz-bmetrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 2px}
+  .vz .vz-bm{background:var(--tint);border:1px solid var(--hair);border-radius:7px;padding:11px 13px}
+  .vz .vz-bm--area{background:#E7F0E3;border-color:#A8CE9F}
+  .vz .vz-bm__label{display:block;font-size:.74rem;color:var(--grey);line-height:1.3}
+  .vz .vz-bm__num{display:block;margin-top:5px;font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums}
+  @media (max-width:680px){ .vz .vz-totals{grid-template-columns:1fr} .vz .vz-bmetrics{grid-template-columns:1fr} }
   /* verze dole */
   .vz .vzver{display:flex;flex-direction:column;align-items:center;gap:4px;margin:44px 0 8px;text-align:center}
   .vz .vzver p{margin:0;color:var(--grey);font-size:.7rem;letter-spacing:.02em}
@@ -169,31 +185,21 @@
       <h1 class="vpd">VPD1</h1>
       <p class="upd">areál Horních kasáren v Klecanech u Prahy (dále jen „Areál")</p>
     </header>
-<section class="sec" style="--tint:#E6ECF6" aria-label="Areál · parcely a plochy">
-  <h2 class="sechead">Areál · parcely a plochy</h2>
-  <h3 class="vz-subhead">Inventura parcel (tab. č. 1 a č. 2)</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Inventura parcel (tab. č. 1 a č. 2) – vodorovně posuvná tabulka">
+<section class="sec" style="--tint:#E6ECF6" aria-label="Tabulka se základními informacemi č. 1 — parcely Areálu a podíly zón">
+  <h2 class="sechead">Tabulka se základními informacemi č. 1</h2>
+  <figure class="vz-map">
+    <img src="assets/images/investori/zaklad/mapa-arealu-masterplan.jpg" alt="Mapa Areálu se schématickým zákresem 1. developerské fáze investičně-realizačního scénáře S1" loading="lazy">
+    <figcaption>Mapa Areálu se schématickým zákresem 1. developerské fáze investičně-realizačního scénáře S1</figcaption>
+  </figure>
+  <div class="vz-matrix" tabindex="0" role="region" aria-label="tabulka – vodorovně posuvná tabulka">
     <table>
       <thead><tr>
-        <th scope="col" class="vz-stickcol">Parcela</th>
+        <th scope="col" class="vz-stickcol">Číslo parcely</th>
         <th scope="col">Zkratka</th>
-        <th scope="col">Výměra (KN)</th>
-        <th scope="col">Využití dle ÚP</th>
-        <th scope="col">Etap.</th>
-        <th scope="col">Výměra v SM</th>
-        <th scope="col">Účel / název</th>
-        <th scope="col">Zpevněné</th>
-        <th scope="col">Zastavěné</th>
-        <th scope="col">Pozemky jádro</th>
-        <th scope="col">NP</th>
-        <th scope="col">PP</th>
-        <th scope="col">Podlaží</th>
-        <th scope="col">HPP stávajících</th>
-        <th scope="col">HPP jádra</th>
-        <th scope="col">HPP pro 1+kk</th>
-        <th scope="col">HPP zázemí</th>
-        <th scope="col">HPP mimo jádro</th>
-        <th scope="col">HPP jádra+zázemí</th>
+        <th scope="col">Výměra parcely v KN</th>
+        <th scope="col">Současným ÚP navrhované využití</th>
+        <th scope="col">Etapizace výstavby</th>
+        <th scope="col">Výměra parcel zařazených do SM</th>
       </tr></thead>
       <tbody>
         <tr>
@@ -203,6 +209,290 @@
           <td>Plochy smíšené obytné – městské (SM)</td>
           <td class="num">2</td>
           <td class="num">60 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 986</th>
+          <td></td>
+          <td class="num">119 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">119 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 987</th>
+          <td>S</td>
+          <td class="num">207 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">207 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 988</th>
+          <td>P</td>
+          <td class="num">209 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">209 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 989</th>
+          <td>E, F</td>
+          <td class="num">465 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">465 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 991</th>
+          <td></td>
+          <td class="num">23 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">23 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 992</th>
+          <td>B</td>
+          <td class="num">959 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">959 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 990</th>
+          <td>C</td>
+          <td class="num">693 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">693 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 993</th>
+          <td class="num">A1</td>
+          <td class="num">751 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">751 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 994</th>
+          <td class="num">A2</td>
+          <td class="num">747 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">747 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 995</th>
+          <td class="num">A3</td>
+          <td class="num">746 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">746 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 996</th>
+          <td class="num">A4</td>
+          <td class="num">632 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">632 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 997</th>
+          <td class="num">A5</td>
+          <td class="num">745 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">745 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 998</th>
+          <td class="num">A6</td>
+          <td class="num">758 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">758 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 999</th>
+          <td class="num">H1</td>
+          <td class="num">339 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">339 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 1000</th>
+          <td class="num">H2</td>
+          <td class="num">335 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">335 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 1001</th>
+          <td class="num">H3</td>
+          <td class="num">338 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">338 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 1002</th>
+          <td>U</td>
+          <td class="num">617 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">617 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 1003</th>
+          <td class="num">D1</td>
+          <td class="num">2 612 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">2 612 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 1004</th>
+          <td class="num">D2</td>
+          <td class="num">370 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">370 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 1005</th>
+          <td>K</td>
+          <td class="num">105 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">105 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">463/8</th>
+          <td></td>
+          <td class="num">62 604 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">62 604 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">463/9</th>
+          <td></td>
+          <td class="num">1 911 m²</td>
+          <td>Plochy veřejných prostranství – veřejná zeleň (ZV)</td>
+          <td class="num">0</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">463/86</th>
+          <td></td>
+          <td class="num">1 820 m²</td>
+          <td>Plochy veřejných prostranství – veřejná zeleň (ZV)</td>
+          <td class="num">0</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">671</th>
+          <td></td>
+          <td class="num">2 386 m²</td>
+          <td>Plochy veřejných prostranství (PV)</td>
+          <td class="num">0</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">883</th>
+          <td></td>
+          <td class="num">742 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">742 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">884</th>
+          <td></td>
+          <td class="num">732 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">732 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">885</th>
+          <td></td>
+          <td class="num">651 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">651 m²</td>
+        </tr>
+        <tr>
+          <th scope="row" class="vz-stickcol">886</th>
+          <td></td>
+          <td class="num">651 m²</td>
+          <td>Plochy smíšené obytné – městské (SM)</td>
+          <td class="num">2</td>
+          <td class="num">651 m²</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="foot">Plochy SM = plochy smíšené obytné – městské dle současného ÚP.</p>
+  <div class="vz-totals">
+    <div class="vz-total">
+      <span class="vz-total__label">Celková výměra parcel</span>
+      <span class="vz-total__num">83 327 m²</span>
+    </div>
+    <div class="vz-total">
+      <span class="vz-total__label">Celková výměra ploch SM</span>
+      <span class="vz-total__num">77 210 m²</span>
+    </div>
+  </div>
+  <h3 class="vz-subhead">Pozemky: jádro projektu Startovací hub</h3>
+  <figure class="vz-map"><img src="assets/images/investori/zaklad/schema-ortofoto-zony-1.jpg" alt="Pozemky: jádro projektu Startovací hub" loading="lazy"></figure>
+  <div class="vz-bmetrics">
+    <div class="vz-bm vz-bm--area"><span class="vz-bm__label">Zatížené parcely (≈)</span><span class="vz-bm__num">16 496 m²</span></div>
+    <div class="vz-bm"><span class="vz-bm__label">Podíl na ploše Areálu (≈)</span><span class="vz-bm__num">20 %</span></div>
+    <div class="vz-bm"><span class="vz-bm__label">Podíl na plochách SM (≈)</span><span class="vz-bm__num">21 %</span></div>
+  </div>
+  <h3 class="vz-subhead">Pozemky: jádro + zázemí projektu Startovací hub (celek)</h3>
+  <figure class="vz-map"><img src="assets/images/investori/zaklad/schema-ortofoto-zony-2.jpg" alt="Pozemky: jádro + zázemí projektu Startovací hub (celek)" loading="lazy"></figure>
+  <div class="vz-bmetrics">
+    <div class="vz-bm vz-bm--area"><span class="vz-bm__label">Zatížené parcely (≈)</span><span class="vz-bm__num">34 770 m²</span></div>
+    <div class="vz-bm"><span class="vz-bm__label">Podíl na ploše Areálu (≈)</span><span class="vz-bm__num">42 %</span></div>
+    <div class="vz-bm"><span class="vz-bm__label">Podíl na plochách SM (≈)</span><span class="vz-bm__num">45 %</span></div>
+  </div>
+  <h3 class="vz-subhead">Zázemí projektu Startovací hub (celek mínus jádro)</h3>
+  <div class="vz-bmetrics">
+    <div class="vz-bm vz-bm--area"><span class="vz-bm__label">Zatížené parcely (≈)</span><span class="vz-bm__num">18 274 m²</span></div>
+    <div class="vz-bm"><span class="vz-bm__label">Podíl na ploše Areálu (≈)</span><span class="vz-bm__num">22 %</span></div>
+    <div class="vz-bm"><span class="vz-bm__label">Podíl na plochách SM (≈)</span><span class="vz-bm__num">24 %</span></div>
+  </div>
+</section>
+<section class="sec" style="--tint:#E6ECF6" aria-label="Tabulka se základními informacemi č. 2 — stavby a HPP">
+  <h2 class="sechead">Tabulka se základními informacemi č. 2</h2>
+  <h3 class="vz-subhead">Stavby, podlažnost a hrubé podlažní plochy (HPP) po parcelách</h3>
+  <div class="vz-matrix" tabindex="0" role="region" aria-label="Stavby, podlažnost a hrubé podlažní plochy (HPP) po parcelách – vodorovně posuvná tabulka">
+    <table>
+      <thead><tr>
+        <th scope="col" class="vz-stickcol">Číslo parcely</th>
+        <th scope="col">Účel / název</th>
+        <th scope="col">Zpevněné plochy</th>
+        <th scope="col">Zastavěné plochy</th>
+        <th scope="col">Pozemky jádro</th>
+        <th scope="col">Nadzemních podlaží</th>
+        <th scope="col">Podzemních podlaží</th>
+        <th scope="col">Celkem podlaží</th>
+        <th scope="col">HPP stávajících</th>
+        <th scope="col">HPP jádra</th>
+        <th scope="col">HPP pro 1+kk</th>
+        <th scope="col">HPP zázemí</th>
+        <th scope="col">HPP mimo jádro</th>
+        <th scope="col">HPP jádra + zázemí</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <th scope="row" class="vz-stickcol">st. 985</th>
           <td>vrátnice</td>
           <td class="num">60 m²</td>
           <td class="num">60 m²</td>
@@ -219,11 +509,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 986</th>
-          <td></td>
-          <td class="num">119 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">119 m²</td>
           <td>trafostanice</td>
           <td class="num">119 m²</td>
           <td class="num">119 m²</td>
@@ -240,11 +525,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 987</th>
-          <td>S</td>
-          <td class="num">207 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">207 m²</td>
           <td>strážnice</td>
           <td class="num">207 m²</td>
           <td class="num">207 m²</td>
@@ -261,11 +541,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 988</th>
-          <td>P</td>
-          <td class="num">209 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">209 m²</td>
           <td>sklad PHM</td>
           <td class="num">209 m²</td>
           <td class="num">209 m²</td>
@@ -282,11 +557,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 989</th>
-          <td>E, F</td>
-          <td class="num">465 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">465 m²</td>
           <td>kotelna LTO, sauna</td>
           <td class="num">465 m²</td>
           <td class="num">465 m²</td>
@@ -303,11 +573,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 991</th>
-          <td></td>
-          <td class="num">23 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">23 m²</td>
           <td>kuchyňský sklad – zbořeniště</td>
           <td class="num">23 m²</td>
           <td></td>
@@ -324,11 +589,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 992</th>
-          <td>B</td>
-          <td class="num">959 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">959 m²</td>
           <td>kuchyňský blok</td>
           <td class="num">959 m²</td>
           <td class="num">959 m²</td>
@@ -345,11 +605,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 990</th>
-          <td>C</td>
-          <td class="num">693 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">693 m²</td>
           <td>štáb (multifunkční budova se shromažďovacím sálem)</td>
           <td class="num">693 m²</td>
           <td class="num">693 m²</td>
@@ -366,11 +621,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 993</th>
-          <td class="num">A1</td>
-          <td class="num">751 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">751 m²</td>
           <td>ubytovna</td>
           <td class="num">751 m²</td>
           <td class="num">751 m²</td>
@@ -387,11 +637,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 994</th>
-          <td class="num">A2</td>
-          <td class="num">747 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">747 m²</td>
           <td>ubytovna</td>
           <td class="num">747 m²</td>
           <td class="num">747 m²</td>
@@ -408,11 +653,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 995</th>
-          <td class="num">A3</td>
-          <td class="num">746 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">746 m²</td>
           <td>ubytovna</td>
           <td class="num">746 m²</td>
           <td class="num">746 m²</td>
@@ -429,11 +669,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 996</th>
-          <td class="num">A4</td>
-          <td class="num">632 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">632 m²</td>
           <td>ubytovna</td>
           <td class="num">632 m²</td>
           <td class="num">632 m²</td>
@@ -450,11 +685,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 997</th>
-          <td class="num">A5</td>
-          <td class="num">745 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">745 m²</td>
           <td>ubytovna</td>
           <td class="num">745 m²</td>
           <td class="num">745 m²</td>
@@ -471,11 +701,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 998</th>
-          <td class="num">A6</td>
-          <td class="num">758 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">758 m²</td>
           <td>velitelská budova (s byty velitelů)</td>
           <td class="num">758 m²</td>
           <td class="num">758 m²</td>
@@ -492,11 +717,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 999</th>
-          <td class="num">H1</td>
-          <td class="num">339 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">339 m²</td>
           <td>sklad Čejka</td>
           <td class="num">339 m²</td>
           <td class="num">339 m²</td>
@@ -513,11 +733,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 1000</th>
-          <td class="num">H2</td>
-          <td class="num">335 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">335 m²</td>
           <td>sklad Čejka</td>
           <td class="num">335 m²</td>
           <td class="num">335 m²</td>
@@ -534,11 +749,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 1001</th>
-          <td class="num">H3</td>
-          <td class="num">338 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">338 m²</td>
           <td>sklad Čejka</td>
           <td class="num">338 m²</td>
           <td class="num">338 m²</td>
@@ -555,11 +765,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 1002</th>
-          <td>U</td>
-          <td class="num">617 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">617 m²</td>
           <td>učebny + výstrojní sklad</td>
           <td class="num">617 m²</td>
           <td class="num">617 m²</td>
@@ -576,11 +781,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 1003</th>
-          <td class="num">D1</td>
-          <td class="num">2 612 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">2 612 m²</td>
           <td>dílny</td>
           <td class="num">2 612 m²</td>
           <td class="num">2 612 m²</td>
@@ -597,11 +797,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 1004</th>
-          <td class="num">D2</td>
-          <td class="num">370 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">370 m²</td>
           <td>kotelna + sklad uhlí</td>
           <td class="num">370 m²</td>
           <td class="num">370 m²</td>
@@ -618,11 +813,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">st. 1005</th>
-          <td>K</td>
-          <td class="num">105 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">105 m²</td>
           <td>klubovna</td>
           <td class="num">105 m²</td>
           <td class="num">105 m²</td>
@@ -639,11 +829,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">463/8</th>
-          <td></td>
-          <td class="num">62 604 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">62 604 m²</td>
           <td>hlavní pozemek v areálu</td>
           <td class="num">38 770 m²</td>
           <td></td>
@@ -660,11 +845,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">463/9</th>
-          <td></td>
-          <td class="num">1 911 m²</td>
-          <td>Plochy veřejných prostranství – veřejná zeleň (ZV)</td>
-          <td class="num">0</td>
-          <td></td>
           <td>veřejně přístupná komunikace / zpevněná plocha před areálem</td>
           <td></td>
           <td></td>
@@ -681,11 +861,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">463/86</th>
-          <td></td>
-          <td class="num">1 820 m²</td>
-          <td>Plochy veřejných prostranství – veřejná zeleň (ZV)</td>
-          <td class="num">0</td>
-          <td></td>
           <td>veřejně přístupný park / zeleň před areálem</td>
           <td></td>
           <td></td>
@@ -702,11 +877,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">671</th>
-          <td></td>
-          <td class="num">2 386 m²</td>
-          <td>Plochy veřejných prostranství (PV)</td>
-          <td class="num">0</td>
-          <td></td>
           <td>veřejně přístupná komunikace před areálem</td>
           <td></td>
           <td></td>
@@ -723,11 +893,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">883</th>
-          <td></td>
-          <td class="num">742 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">742 m²</td>
           <td>jiná plocha (původně zde bylo zastřešení stání)</td>
           <td></td>
           <td></td>
@@ -744,11 +909,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">884</th>
-          <td></td>
-          <td class="num">732 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">732 m²</td>
           <td>jiná plocha (původně zde bylo zastřešení stání)</td>
           <td></td>
           <td></td>
@@ -765,11 +925,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">885</th>
-          <td></td>
-          <td class="num">651 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">651 m²</td>
           <td>jiná plocha (původně zde bylo zastřešení stání)</td>
           <td></td>
           <td></td>
@@ -786,11 +941,6 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">886</th>
-          <td></td>
-          <td class="num">651 m²</td>
-          <td>Plochy smíšené obytné – městské (SM)</td>
-          <td class="num">2</td>
-          <td class="num">651 m²</td>
           <td>jiná plocha (původně zde bylo zastřešení stání)</td>
           <td></td>
           <td></td>
@@ -808,17 +958,8 @@
       </tbody>
     </table>
   </div>
-  <p class="foot">Plochy SM = plochy smíšené obytné – městské dle současného ÚP.</p>
   <h3 class="vz-subhead">Souhrn ploch a HPP</h3>
   <div class="vz-kv">
-    <div class="row">
-      <div class="lab">Celková výměra parcel</div>
-      <div class="val num">83 327 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">Celková výměra ploch SM</div>
-      <div class="val num">77 210 m²</div>
-    </div>
     <div class="row">
       <div class="lab">Zpevněné plochy</div>
       <div class="val num">50 600 m²</div>
@@ -856,14 +997,7 @@
       <div class="val num">12 986 m²</div>
     </div>
   </div>
-  <p class="foot">*celkem z ploch SM: 15 %</p>
-  <h3 class="vz-subhead">Podíly zón na Areálu</h3>
-  <div class="vz-matrix" role="region" aria-label="Podíly zón">
-    <table><thead><tr><th scope="col" class="vz-stickcol">Zóna</th><th scope="col">Zatížené parcely (≈)</th><th scope="col">Podíl na ploše Areálu</th><th scope="col">Podíl na plochách SM</th></tr></thead><tbody>
-      <tr><th scope="row" class="vz-stickcol">Jádro projektu Startovací hub</th><td class="num">16 496 m²</td><td class="num">20 %</td><td class="num">21 %</td></tr>
-      <tr><th scope="row" class="vz-stickcol">Jádro + zázemí (celek)</th><td class="num">34 770 m²</td><td class="num">42 %</td><td class="num">45 %</td></tr>
-      <tr><th scope="row" class="vz-stickcol">Zázemí (celek − jádro)</th><td class="num">18 274 m²</td><td class="num">22 %</td><td class="num">24 %</td></tr>
-    </tbody></table></div>
+  <p class="foot">*zastavěné plochy: cca 15 % z ploch SM</p>
 </section>
 <section class="sec" style="--tint:#ECE6F6" aria-label="Základní údaje a výpočty vyplývající z uzavřených smluv">
   <h2 class="sechead">Smlouvy · kupní cena Areálu</h2>

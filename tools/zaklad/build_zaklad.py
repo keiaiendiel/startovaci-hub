@@ -145,6 +145,44 @@ def matrix(headers, cols, rows, caption=None, foot=None):
     return _
 
 IMGDIR = "assets/images/investori/zaklad/"
+
+def vzmap(fn, caption=None):
+    """Mapa na celou šířku + (volitelně) popisek."""
+    def _():
+        w('  <figure class="vz-map">')
+        w(f'    <img src="{IMGDIR}{fn}" alt="{esc(caption or "Mapa Areálu")}" loading="lazy">')
+        if caption:
+            w(f'    <figcaption>{esc(caption)}</figcaption>')
+        w('  </figure>')
+    return _
+
+def vztotals(items):
+    """Zvýrazněné souhrnné boxy (label + velké číslo). items: (label, coord)."""
+    def _():
+        w('  <div class="vz-totals">')
+        for label, coord in items:
+            w('    <div class="vz-total">')
+            w(f'      <span class="vz-total__label">{esc(label)}</span>')
+            w(f'      <span class="vz-total__num">{esc(V(coord))}</span>')
+            w('    </div>')
+        w('  </div>')
+    return _
+
+def breakdown(title, mapfn, area, arealu, sm):
+    """Blok „Pozemky": nadpis + (volitelně) mapa + 3 metriky (m² / podíl Areál / podíl SM)."""
+    def _():
+        w(f'  <h3 class="vz-subhead">{esc(title)}</h3>')
+        if mapfn:
+            w(f'  <figure class="vz-map"><img src="{IMGDIR}{mapfn}" alt="{esc(title)}" loading="lazy"></figure>')
+        w('  <div class="vz-bmetrics">')
+        for lab, coord, mod in [("Zatížené parcely (≈)", area, " vz-bm--area"),
+                                ("Podíl na ploše Areálu (≈)", arealu, ""),
+                                ("Podíl na plochách SM (≈)", sm, "")]:
+            w(f'    <div class="vz-bm{mod}"><span class="vz-bm__label">{esc(lab)}</span>'
+              f'<span class="vz-bm__num">{esc(V(coord))}</span></div>')
+        w('  </div>')
+    return _
+
 def figs(items, label="Vizualizace"):
     """items: list of (filename, caption). Vodorovně posuvný proužek figur."""
     def _():
@@ -167,54 +205,58 @@ w('      <p class="upd">areál Horních kasáren v Klecanech u Prahy (dále jen 
 w('    </header>')
 
 # ============================================================
-# 1) AREÁL — PARCELY & PLOCHY
+# 1) TABULKA SE ZÁKLADNÍMI INFORMACEMI č. 1  (sloupce A–H + mapy + breakdowny)
 # ============================================================
-parcel_headers = ["Parcela","Zkratka","Výměra (KN)","Využití dle ÚP","Etap.","Výměra v SM",
-                  "Účel / název","Zpevněné","Zastavěné","Pozemky jádro","NP","PP","Podlaží",
-                  "HPP stávajících","HPP jádra","HPP pro 1+kk","HPP zázemí","HPP mimo jádro","HPP jádra+zázemí"]
-parcel_cols = ["C","D","E","F","G","H","L","M","N","O","P","Q","R","S","T","U","V","W","X"]
-parcel_rows = list(range(8,37))
+parcel_rows = list(range(8, 37))
 
-plochy = kv([
-    ("Celková výměra parcel","E39"),
-    ("Celková výměra ploch SM","H39"),
-    ("Zpevněné plochy","M39"),
-    ("Zastavěné plochy","N39"),
-    ("Pozemky: jádro projektu Startovací hub","O39"),
-    ("HPP stávajících budov","S39"),
-    ("HPP jádra projektu Startovací hub","T39"),
-    ("HPP určené pro jednotky 1+kk","U39"),
-    ("HPP zázemí projektu Startovací hub","V39"),
-    ("HPP budov mimo jádro","W39"),
-    ("HPP jádra i zázemí projektu Startovací hub","X39"),
-])
+t1_headers = ["Číslo parcely", "Zkratka", "Výměra parcely v KN",
+              "Současným ÚP navrhované využití", "Etapizace výstavby",
+              "Výměra parcel zařazených do SM"]
+t1_cols = ["C", "D", "E", "F", "G", "H"]
 
-def podily():
-    rows=[("Jádro projektu Startovací hub","C43","E43","E45"),
-          ("Jádro + zázemí (celek)","C70","E70","E72"),
-          ("Zázemí (celek − jádro)","C119","E119","E121")]
-    w('  <h3 class="vz-subhead">Podíly zón na Areálu</h3>')
-    w('  <div class="vz-matrix" role="region" aria-label="Podíly zón">')
-    w('    <table><thead><tr>'
-      '<th scope="col" class="vz-stickcol">Zóna</th>'
-      '<th scope="col">Zatížené parcely (≈)</th>'
-      '<th scope="col">Podíl na ploše Areálu</th>'
-      '<th scope="col">Podíl na plochách SM</th>'
-      '</tr></thead><tbody>')
-    for name,a,b,c in rows:
-        w(f'      <tr><th scope="row" class="vz-stickcol">{esc(name)}</th>'
-          f'<td class="num">{esc(V(a))}</td><td class="num">{esc(V(b))}</td><td class="num">{esc(V(c))}</td></tr>')
-    w('    </tbody></table></div>')
-
-section("Areál · parcely a plochy", "#E6ECF6", [
-    matrix(parcel_headers, parcel_cols, parcel_rows,
-           caption="Inventura parcel (tab. č. 1 a č. 2)",
+section("Tabulka se základními informacemi č. 1", "#E6ECF6", [
+    vzmap("mapa-arealu-masterplan.jpg",
+          "Mapa Areálu se schématickým zákresem 1. developerské fáze investičně-realizačního scénáře S1"),
+    matrix(t1_headers, t1_cols, parcel_rows,
            foot="Plochy SM = plochy smíšené obytné – městské dle současného ÚP."),
-    subhead("Souhrn ploch a HPP"),
-    plochy,
-    note("*celkem z ploch SM: 15 %"),
-    podily,
+    vztotals([("Celková výměra parcel", "E39"),
+              ("Celková výměra ploch SM", "H39")]),
+    breakdown("Pozemky: jádro projektu Startovací hub",
+              "schema-ortofoto-zony-1.jpg", "C43", "E43", "E45"),
+    breakdown("Pozemky: jádro + zázemí projektu Startovací hub (celek)",
+              "schema-ortofoto-zony-2.jpg", "C70", "E70", "E72"),
+    breakdown("Zázemí projektu Startovací hub (celek mínus jádro)",
+              None, "C119", "E119", "E121"),
+], label="Tabulka se základními informacemi č. 1 — parcely Areálu a podíly zón")
+
+# ============================================================
+# 2) TABULKA SE ZÁKLADNÍMI INFORMACEMI č. 2  (sloupce K–X: stavby, podlaží, HPP)
+# ============================================================
+t2_headers = ["Číslo parcely", "Účel / název", "Zpevněné plochy", "Zastavěné plochy",
+              "Pozemky jádro", "Nadzemních podlaží", "Podzemních podlaží", "Celkem podlaží",
+              "HPP stávajících", "HPP jádra", "HPP pro 1+kk", "HPP zázemí",
+              "HPP mimo jádro", "HPP jádra + zázemí"]
+t2_cols = ["K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X"]
+
+plochy2 = kv([
+    ("Zpevněné plochy", "M39"),
+    ("Zastavěné plochy", "N39"),
+    ("Pozemky: jádro projektu Startovací hub", "O39"),
+    ("HPP stávajících budov", "S39"),
+    ("HPP jádra projektu Startovací hub", "T39"),
+    ("HPP určené pro jednotky 1+kk", "U39"),
+    ("HPP zázemí projektu Startovací hub", "V39"),
+    ("HPP budov mimo jádro", "W39"),
+    ("HPP jádra i zázemí projektu Startovací hub", "X39"),
 ])
+
+section("Tabulka se základními informacemi č. 2", "#E6ECF6", [
+    matrix(t2_headers, t2_cols, parcel_rows,
+           caption="Stavby, podlažnost a hrubé podlažní plochy (HPP) po parcelách"),
+    subhead("Souhrn ploch a HPP"),
+    plochy2,
+    note("*zastavěné plochy: cca 15 % z ploch SM"),
+], label="Tabulka se základními informacemi č. 2 — stavby a HPP")
 
 # ============================================================
 # 2) SMLOUVY — KUPNÍ CENA AREÁLU

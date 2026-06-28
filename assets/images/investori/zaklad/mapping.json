@@ -9,8 +9,8 @@
     "schema-hmota-letecky-2.jpg": "image018",
     "schema-hmota-letecky-3.jpg": "image028",
     "schema-zony-zakres.jpg": "image017",
-    "schema-ortofoto-zony-1.jpg": "image020",
-    "schema-ortofoto-zony-2.jpg": "image029",
+    "schema-ortofoto-zony-1.jpg": "image020 = Pozemky: jádro (16 496 m²)",
+    "schema-ortofoto-zony-2.jpg": "image029 = Pozemky: jádro + zázemí (34 770 m²)",
     "zdroj-smlouva-vypocet-navyseni.jpg": "image019",
     "zdroj-nabidka-bytu-web.jpg": "image023",
     "zdroj-odhad-najemneho.jpg": "image024",
@@ -18,6 +18,7 @@
     "zdroj-cena-ubytovani-luzko.jpg": "image026",
     "zdroj-naklady-luzko.jpg": "image027",
     "ikona-a.png": "image032 (=033..058 skupina A)",
-    "ikona-b.png": "image037 (=038..055 skupina B)"
+    "ikona-b.png": "image037 (=038..055 skupina B)",
+    "mapa-arealu-masterplan.jpg": "edits/combined2.jpg (masterplan Areálu, S1)"
   }
 }

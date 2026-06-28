@@ -95,6 +95,22 @@ STYLE = r"""<style>
     stroke-linecap:round;stroke-linejoin:round}
   .vz .vz-flow span{font-size:.78rem;font-weight:600;color:#8d6a86;line-height:1.35;max-width:64ch}
   @media (max-width:680px){ .vz .vz-flow{gap:9px} .vz .vz-flow span{font-size:.74rem} }
+  /* mapy na celou šířku (masterplan + ortofoto breakdowny) */
+  .vz .vz-map{margin:12px 0 0}
+  .vz .vz-map img{display:block;width:100%;height:auto;border:1px solid var(--hair);border-radius:8px;background:#f1f1f6}
+  .vz .vz-map figcaption{margin:8px 2px 0;font-size:.8rem;color:var(--grey);font-style:italic;line-height:1.4}
+  /* zvýrazněné souhrnné boxy (Celková výměra…) */
+  .vz .vz-totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px}
+  .vz .vz-total{background:#E7F0E3;border:1px solid #A8CE9F;border-radius:8px;padding:14px 16px}
+  .vz .vz-total__label{display:block;font-size:.82rem;color:#3a3a52;line-height:1.3}
+  .vz .vz-total__num{display:block;margin-top:4px;font-size:clamp(1.35rem,3.4vw,1.9rem);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  /* breakdown metriky (Pozemky: jádro / zázemí …) */
+  .vz .vz-bmetrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 2px}
+  .vz .vz-bm{background:var(--tint);border:1px solid var(--hair);border-radius:7px;padding:11px 13px}
+  .vz .vz-bm--area{background:#E7F0E3;border-color:#A8CE9F}
+  .vz .vz-bm__label{display:block;font-size:.74rem;color:var(--grey);line-height:1.3}
+  .vz .vz-bm__num{display:block;margin-top:5px;font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums}
+  @media (max-width:680px){ .vz .vz-totals{grid-template-columns:1fr} .vz .vz-bmetrics{grid-template-columns:1fr} }
   /* verze dole */
   .vz .vzver{display:flex;flex-direction:column;align-items:center;gap:4px;margin:44px 0 8px;text-align:center}
   .vz .vzver p{margin:0;color:var(--grey);font-size:.7rem;letter-spacing:.02em}
