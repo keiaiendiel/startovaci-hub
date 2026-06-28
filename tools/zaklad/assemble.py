@@ -76,6 +76,13 @@ STYLE = r"""<style>
   /* zvýraznění konektoru (rose) na hover/focus zdroje nebo cíle */
   .vz .vz-matrix tbody tr.is-flowmark td{box-shadow:inset 0 0 0 999px rgba(196,162,192,.30)}
   .vz .vz-matrix tbody tr.is-flowmark .vz-stickcol{box-shadow:1px 0 0 0 var(--hair),inset 0 0 0 999px rgba(196,162,192,.30)}
+  /* zdrojový sloupec souhrnu: hover/focus na souhrnném boxu rozsvítí celý sloupec, z nějž
+     hodnota vyplývá (a tabulka se k němu případně posune) */
+  .vz .vz-matrix .is-colhot{box-shadow:inset 0 0 0 999px rgba(118,168,96,.36)}
+  .vz .vz-matrix .vz-stickcol.is-colhot{box-shadow:1px 0 0 0 var(--rule),inset 0 0 0 999px rgba(118,168,96,.36)}
+  .vz .vz-matrix thead .is-colhot{box-shadow:inset 0 0 0 999px rgba(118,168,96,.30)}
+  .vz .is-colsrc{outline:2px solid #6F9E57;outline-offset:-2px}
+  .vz [data-hl-col]{cursor:default}
   /* zónové obarvení řádků parcel (žlutá=jádro, zelená=zázemí) — přebíjí zebru */
   .vz .vz-matrix tbody tr.is-jadro td,.vz .vz-matrix tbody tr.is-jadro .vz-stickcol{background:#F2ECC9}
   .vz .vz-matrix tbody tr.is-zazemi td,.vz .vz-matrix tbody tr.is-zazemi .vz-stickcol{background:#E2EFD9}
@@ -392,6 +399,50 @@ SCRIPTS = """
     window.addEventListener('resize', all);
     window.addEventListener('load', all);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
+  })();
+
+  /* Propojení souhrnných boxů se zdrojovým sloupcem: hover/focus na boxu (data-hl-col)
+     rozsvítí celý sloupec v příslušné tabulce, z nějž součet vyplývá, a je-li sloupec
+     mimo viditelnou oblast, tabulku k němu vodorovně posune. */
+  (function () {
+    var boxes = document.querySelectorAll('[data-hl-col]');
+    if (!boxes.length) return;
+    function matrixFor(box){
+      var sec = box.closest('section') || document;
+      var prev = null;
+      Array.prototype.forEach.call(sec.querySelectorAll('.vz-mwrap'), function(mw){
+        if (box.compareDocumentPosition(mw) & Node.DOCUMENT_POSITION_PRECEDING) prev = mw;
+      });
+      return prev ? prev.querySelector('.vz-matrix') : null;
+    }
+    function reveal(matrix, cell){
+      var mr = matrix.getBoundingClientRect(), cr = cell.getBoundingClientRect();
+      if (cr.left >= mr.left + 4 && cr.right <= mr.right - 4) return;
+      var t = matrix.scrollLeft + (cr.left - mr.left) - matrix.clientWidth / 2 + cr.width / 2;
+      matrix.scrollTo({ left: Math.max(0, t), behavior: 'smooth' });
+    }
+    Array.prototype.forEach.call(boxes, function(box){
+      var col = box.getAttribute('data-hl-col');
+      var matrix = matrixFor(box);
+      if (!matrix || !col) return;
+      var cells = matrix.querySelectorAll('[data-col="' + col + '"]');
+      if (!cells.length) return;
+      var firstBody = matrix.querySelector('tbody [data-col="' + col + '"]') || cells[0];
+      function on(){
+        box.classList.add('is-colsrc');
+        Array.prototype.forEach.call(cells, function(c){ c.classList.add('is-colhot'); });
+        reveal(matrix, firstBody);
+      }
+      function off(){
+        box.classList.remove('is-colsrc');
+        Array.prototype.forEach.call(cells, function(c){ c.classList.remove('is-colhot'); });
+      }
+      box.addEventListener('mouseenter', on);
+      box.addEventListener('mouseleave', off);
+      box.setAttribute('tabindex', '0');
+      box.addEventListener('focusin', on);
+      box.addEventListener('focusout', off);
+    });
   })();
 
   /* Lightbox: klik na obrázek v podkladech → zvětšení. Esc / pozadí / × zavře, ‹ › a ←/→ navigace. */

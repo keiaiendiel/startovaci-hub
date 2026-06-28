@@ -64,6 +64,11 @@ def row_zone(r, c0, c1):
 def esc(s):
     return _html.escape(str(s), quote=True)
 
+def coord_col(coord):
+    """'E39' -> 'E' (písmeno sloupce pro propojení souhrnu se zdrojovým sloupcem)."""
+    m = re.match(r'^([A-Z]+)\d+$', str(coord))
+    return m.group(1) if m else ""
+
 NUM_RE = re.compile(r'\d')
 def is_num(v):
     if not v or not NUM_RE.search(v):
@@ -144,8 +149,8 @@ def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfill
         w('    <table>')
         w('      <thead><tr>')
         for i, h in enumerate(headers):
-            scope = 'col'
-            w(f'        <th scope="{scope}"{" class=\"vz-stickcol\"" if i==0 else ""}>{esc(h)}</th>')
+            stick = ' class="vz-stickcol"' if i == 0 else ''
+            w(f'        <th scope="col"{stick} data-col="{cols[i]}">{esc(h)}</th>')
         w('      </tr></thead>')
         w('      <tbody>')
         for r in rows:
@@ -162,7 +167,7 @@ def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfill
                 fc = cell_fill_class(r, c) if cellfills else ""
                 if i == 0:
                     scls = "vz-stickcol" + ((" " + fc) if fc else "") + (" is-red" if is_red(r, c) else "")
-                    w(f'          <th scope="row" class="{scls}">{esc(v)}</th>')
+                    w(f'          <th scope="row" class="{scls}" data-col="{cl}">{esc(v)}</th>')
                 else:
                     cls = []
                     if is_num(v):
@@ -172,7 +177,7 @@ def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfill
                     if is_red(r, c):
                         cls.append("is-red")
                     clsattr = f' class="{" ".join(cls)}"' if cls else ''
-                    w(f'          <td{clsattr}>{esc(v)}</td>')
+                    w(f'          <td{clsattr} data-col="{cl}">{esc(v)}</td>')
             w('        </tr>')
         w('      </tbody>')
         w('    </table>')
@@ -205,7 +210,8 @@ def vztotals(items):
     def _():
         w('  <div class="vz-totals">')
         for label, coord in items:
-            w('    <div class="vz-total">')
+            hl = coord_col(coord)
+            w(f'    <div class="vz-total" data-hl-col="{hl}">')
             w(f'      <span class="vz-total__label">{esc(label)}</span>')
             w(f'      <span class="vz-total__num">{esc(V(coord))}</span>')
             w('    </div>')
@@ -232,7 +238,7 @@ def vzsummary(items, bg="#E7F0E3", bd="#A8CE9F"):
     def _():
         w(f'  <div class="vz-summary" style="--sbox-bg:{bg};--sbox-bd:{bd}">')
         for label, coord in items:
-            w(f'    <div class="vz-sbox"><span class="vz-sbox__label">{esc(label)}</span>'
+            w(f'    <div class="vz-sbox" data-hl-col="{coord_col(coord)}"><span class="vz-sbox__label">{esc(label)}</span>'
               f'<span class="vz-sbox__num">{esc(V(coord))}</span></div>')
         w('  </div>')
     return _
