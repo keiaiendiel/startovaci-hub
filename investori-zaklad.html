@@ -105,6 +105,22 @@
   /* zdroje */
   .vz .vz-sources{margin:10px 15px 0;padding:0 0 0 1.1em;font-size:.88rem;line-height:1.55}
   .vz .vz-sources li{margin:0 0 7px}
+  /* vizualizace — vodorovně posuvný „filmstrip" s pevnou výškou (bez JS).
+     Pevná výška + width:auto → různé poměry stran sdílí stejnou výšku řádku. */
+  .vz .vz-figs{display:flex;gap:14px;overflow-x:auto;margin:8px 0 2px;padding:2px 15px 12px;
+    scroll-snap-type:x mandatory;scrollbar-width:thin;-webkit-overflow-scrolling:touch;align-items:flex-start}
+  .vz .vz-figs figure{flex:0 0 auto;margin:0;scroll-snap-align:start;max-width:680px}
+  .vz .vz-figs img{display:block;height:clamp(200px,26vw,300px);width:auto;max-width:680px;
+    border:1px solid var(--hair);border-radius:7px;background:#f1f1f6}
+  .vz .vz-figs figcaption{margin-top:7px;font-size:.78rem;color:var(--grey);line-height:1.4;max-width:680px}
+  /* ribbon konektor (náhrada Excel šipek): tok konkrétní hodnoty do dalšího výpočtu.
+     Zaoblený rose tah + šipka dolů, v duchu brand .ribbon. */
+  .vz .vz-flow{display:flex;align-items:center;justify-content:center;gap:13px;margin:14px 15px 6px}
+  .vz .vz-flow__svg{flex:none;overflow:visible}
+  .vz .vz-flow__band,.vz .vz-flow__head{fill:none;stroke:var(--rose,#C4A2C0);stroke-width:3;
+    stroke-linecap:round;stroke-linejoin:round}
+  .vz .vz-flow span{font-size:.78rem;font-weight:600;color:#8d6a86;line-height:1.35;max-width:64ch}
+  @media (max-width:680px){ .vz .vz-flow{gap:9px} .vz .vz-flow span{font-size:.74rem} }
   /* verze dole */
   .vz .vzver{display:flex;flex-direction:column;align-items:center;gap:4px;margin:44px 0 8px;text-align:center}
   .vz .vzver p{margin:0;color:var(--grey);font-size:.7rem;letter-spacing:.02em}
@@ -997,6 +1013,13 @@
       </tbody>
     </table>
   </div>
+  <div class="vz-flow" role="separator" aria-label="navazuje na další výpočet">
+    <svg class="vz-flow__svg" viewBox="0 0 44 50" width="34" height="39" aria-hidden="true">
+      <path class="vz-flow__band" d="M22 3 C 12 16, 32 30, 22 42"/>
+      <path class="vz-flow__head" d="M14 34 L22 44 L30 34"/>
+    </svg>
+    <span>Celkem uhrazené zálohy (Equita) → snižují částku „Po odečtení záloh zbývá k doplacení</span>
+  </div>
   <h3 class="vz-subhead">Výpočet současné a predikce budoucí kupní ceny Areálu (2023–2038)</h3>
   <div class="vz-matrix" tabindex="0" role="region" aria-label="Výpočet současné a predikce budoucí kupní ceny Areálu (2023–2038) – vodorovně posuvná tabulka">
     <table>
@@ -1317,6 +1340,13 @@
       <div class="lab">Zvolený index meziročního růstu ceny nemovitostí</div>
       <div class="val num is-input">5,00 %</div>
     </div>
+  </div>
+  <div class="vz-flow" role="separator" aria-label="navazuje na další výpočet">
+    <svg class="vz-flow__svg" viewBox="0 0 44 50" width="34" height="39" aria-hidden="true">
+      <path class="vz-flow__band" d="M22 3 C 12 16, 32 30, 22 42"/>
+      <path class="vz-flow__head" d="M14 34 L22 44 L30 34"/>
+    </svg>
+    <span>Tržní nájemné × obsazenost → odhad ročních příjmů po jednotlivých budovách</span>
   </div>
   <h3 class="vz-subhead">Odhad příjmů z pronájmu jednotek (po budovách)</h3>
   <div class="vz-matrix" tabindex="0" role="region" aria-label="Odhad příjmů z pronájmu jednotek (po budovách) – vodorovně posuvná tabulka">
@@ -2082,6 +2112,13 @@
       </tbody>
     </table>
   </div>
+  <div class="vz-flow" role="separator" aria-label="navazuje na další výpočet">
+    <svg class="vz-flow__svg" viewBox="0 0 44 50" width="34" height="39" aria-hidden="true">
+      <path class="vz-flow__band" d="M22 3 C 12 16, 32 30, 22 42"/>
+      <path class="vz-flow__head" d="M14 34 L22 44 L30 34"/>
+    </svg>
+    <span>Akumulované příjmy a tržní cena jednotek → souhrnné ukazatele projektu</span>
+  </div>
   <h3 class="vz-subhead">Souhrn</h3>
   <div class="vz-kv">
     <div class="row">
@@ -2101,9 +2138,13 @@
       <div class="val num">1 322 483 783 Kč</div>
     </div>
   </div>
-  <!-- FIGURE: Vizualizace interiéru: jednotka 1+kk 21 m² ČPP -->
-  <!-- FIGURE: Vizualizace exteriéru: jádro projektu Startovací hub -->
-  <!-- FIGURE: Vizualizace exteriéru: budova D – ateliéry / dílny -->
+  <h3 class="vz-subhead">Vizualizace</h3>
+  <div class="vz-figs" role="group" aria-label="Vizualizace">
+    <figure><img src="assets/images/investori/zaklad/render-jednotka-1kk-interier.jpg" alt="Vizualizace interiéru: jednotka 1+kk o 21 m² ČPP" loading="lazy">
+      <figcaption>Vizualizace interiéru: jednotka 1+kk o 21 m² ČPP</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/render-exterier-jadro-vecer.jpg" alt="Vizualizace exteriéru: jádro projektu Startovací hub" loading="lazy">
+      <figcaption>Vizualizace exteriéru: jádro projektu Startovací hub</figcaption></figure>
+  </div>
 </section>
 <section class="sec" style="--tint:#F1EADF" aria-label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu lůžek">
   <h2 class="sechead">Startovací hub · lůžka ve sdílených pokojích</h2>
@@ -2310,7 +2351,11 @@
       <div class="val num">60 133 632 Kč</div>
     </div>
   </div>
-  <!-- FIGURE: Vizualizace interiéru: sdílený pokoj s lůžky se zvýšenou privátní ochranou -->
+  <h3 class="vz-subhead">Vizualizace</h3>
+  <div class="vz-figs" role="group" aria-label="Vizualizace">
+    <figure><img src="assets/images/investori/zaklad/render-sdileny-pokoj-interier.jpg" alt="Vizualizace interiéru: sdílený pokoj s lůžky se zvýšenou privátní ochranou" loading="lazy">
+      <figcaption>Vizualizace interiéru: sdílený pokoj s lůžky se zvýšenou privátní ochranou</figcaption></figure>
+  </div>
 </section>
 <section class="sec" style="--tint:#E7F0E3" aria-label="Projekt Nová čtvrť — orientační výpočty">
   <h2 class="sechead">Nová čtvrť</h2>
@@ -2602,6 +2647,13 @@
       </tbody>
     </table>
   </div>
+  <div class="vz-flow" role="separator" aria-label="navazuje na další výpočet">
+    <svg class="vz-flow__svg" viewBox="0 0 44 50" width="34" height="39" aria-hidden="true">
+      <path class="vz-flow__band" d="M22 3 C 12 16, 32 30, 22 42"/>
+      <path class="vz-flow__head" d="M14 34 L22 44 L30 34"/>
+    </svg>
+    <span>Prodejní cena všech ČPP − pořizovací cena včetně prací → teoretický hrubý zisk</span>
+  </div>
   <div class="vz-headline">
     <span class="vz-headline__label">Potenciální hrubý zisk před zdaněním z rozprodeje plně rozvinutého Areálu (2038)</span>
     <span class="vz-headline__num">13 942 639 425 Kč</span>
@@ -2741,7 +2793,23 @@
     </table>
   </div>
   <p class="foot">Zdroj: www.creditasre.cz/projekty/klecanska-alej k 22. 9. 2025.</p>
-  <!-- FIGURE: Vizualizace: Nová čtvrť -->
+  <h3 class="vz-subhead">Vizualizace a hmotové studie</h3>
+  <div class="vz-figs" role="group" aria-label="Vizualizace">
+    <figure><img src="assets/images/investori/zaklad/render-exterier-plaza.jpg" alt="Vizualizace exteriéru: Nová čtvrť" loading="lazy">
+      <figcaption>Vizualizace exteriéru: Nová čtvrť</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/schema-hmota-letecky-1.jpg" alt="Hmotová studie – letecký pohled (1)" loading="lazy">
+      <figcaption>Hmotová studie – letecký pohled (1)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/schema-hmota-letecky-2.jpg" alt="Hmotová studie – letecký pohled (2)" loading="lazy">
+      <figcaption>Hmotová studie – letecký pohled (2)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/schema-hmota-letecky-3.jpg" alt="Hmotová studie – letecký pohled (3)" loading="lazy">
+      <figcaption>Hmotová studie – letecký pohled (3)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/schema-zony-zakres.jpg" alt="Schéma zón se zákresem budov" loading="lazy">
+      <figcaption>Schéma zón se zákresem budov</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/schema-ortofoto-zony-1.jpg" alt="Ortofoto se zákresem zón (1)" loading="lazy">
+      <figcaption>Ortofoto se zákresem zón (1)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/schema-ortofoto-zony-2.jpg" alt="Ortofoto se zákresem zón (2)" loading="lazy">
+      <figcaption>Ortofoto se zákresem zón (2)</figcaption></figure>
+  </div>
 </section>
 <section class="sec" style="--tint:#F6E6EC" aria-label="Zdroje a předpoklady">
   <h2 class="sechead">Zdroje a předpoklady</h2>
@@ -2753,6 +2821,21 @@
     <li>Nabídkové ceny bytů v novostavbách: www.creditasre.cz/projekty/klecanska-alej (k 22. 9. 2025).</li>
     <li>Způsob výpočtu navýšení kupní ceny Areálu je uveden v uzavřené Smlouvě (čl. 3).</li>
   </ul>
+  <h3 class="vz-subhead">Podkladové materiály</h3>
+  <div class="vz-figs" role="group" aria-label="Podkladové materiály">
+    <figure><img src="assets/images/investori/zaklad/zdroj-nabidka-bytu-web.jpg" alt="Nabídkové ceny bytů v novostavbě poblíž Areálu (creditasre.cz)" loading="lazy">
+      <figcaption>Nabídkové ceny bytů v novostavbě poblíž Areálu (creditasre.cz)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/zdroj-odhad-najemneho.jpg" alt="Odhad tržního nájemného nemovitosti (oceňovací nástroj)" loading="lazy">
+      <figcaption>Odhad tržního nájemného nemovitosti (oceňovací nástroj)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/zdroj-odhad-prodejni-ceny.jpg" alt="Odhad tržní prodejní ceny nemovitosti (oceňovací nástroj)" loading="lazy">
+      <figcaption>Odhad tržní prodejní ceny nemovitosti (oceňovací nástroj)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/zdroj-cena-ubytovani-luzko.jpg" alt="Odhad ceny ubytování za lůžko ve sdíleném pokoji (model)" loading="lazy">
+      <figcaption>Odhad ceny ubytování za lůžko ve sdíleném pokoji (model)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/zdroj-naklady-luzko.jpg" alt="Odhad provozních nákladů na jedno lůžko (model)" loading="lazy">
+      <figcaption>Odhad provozních nákladů na jedno lůžko (model)</figcaption></figure>
+    <figure><img src="assets/images/investori/zaklad/zdroj-smlouva-vypocet-navyseni.jpg" alt="Způsob výpočtu navýšení kupní ceny Areálu (ze smlouvy)" loading="lazy">
+      <figcaption>Způsob výpočtu navýšení kupní ceny Areálu (ze smlouvy)</figcaption></figure>
+  </div>
 </section>
     <footer class="vzver">
       <p>verze 2p8iaz6 · aktualizace č. 2026-06-15-2p8iaz6</p>

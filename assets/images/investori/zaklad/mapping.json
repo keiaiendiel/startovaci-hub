@@ -1,0 +1,23 @@
+{
+  "_note": "Web verze obrázků z listu Základní údaje & výpočty. Klíč = nový soubor, hodnota = původní image v .fld. Pro výměnu nahraď soubor stejného jména.",
+  "mapping": {
+    "render-jednotka-1kk-interier.jpg": "image001",
+    "render-sdileny-pokoj-interier.jpg": "image002",
+    "render-exterier-jadro-vecer.jpg": "image021",
+    "render-exterier-plaza.jpg": "image030",
+    "schema-hmota-letecky-1.jpg": "image003",
+    "schema-hmota-letecky-2.jpg": "image018",
+    "schema-hmota-letecky-3.jpg": "image028",
+    "schema-zony-zakres.jpg": "image017",
+    "schema-ortofoto-zony-1.jpg": "image020",
+    "schema-ortofoto-zony-2.jpg": "image029",
+    "zdroj-smlouva-vypocet-navyseni.jpg": "image019",
+    "zdroj-nabidka-bytu-web.jpg": "image023",
+    "zdroj-odhad-najemneho.jpg": "image024",
+    "zdroj-odhad-prodejni-ceny.jpg": "image025",
+    "zdroj-cena-ubytovani-luzko.jpg": "image026",
+    "zdroj-naklady-luzko.jpg": "image027",
+    "ikona-a.png": "image032 (=033..058 skupina A)",
+    "ikona-b.png": "image037 (=038..055 skupina B)"
+  }
+}
