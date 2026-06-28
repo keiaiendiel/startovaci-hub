@@ -56,6 +56,8 @@
   .vz .vzver p:last-child{font-weight:700}
   /* section */
   .vz .sec{margin:0}
+  /* trochu vzduchu mezi sekcemi (odsadí nadpis další sekce od předchozí, hl. od poznámky) */
+  .vz .sec + .sec{margin-top:clamp(22px,3.5vw,34px)}
   .vz .sechead{
     margin:0;background:var(--tint);
     border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
