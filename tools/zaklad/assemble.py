@@ -361,7 +361,7 @@ SCRIPTS = """
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
       var c1x = sx + bow, c1y = sy + (ey - sy) * 0.30, c2x = ex + bow, c2y = ey - (ey - sy) * 0.30;
       var d = 'M ' + sx + ' ' + sy + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + ex + ' ' + ey;
-      var a = 9, head = 'M ' + (ex - a) + ' ' + (ey - a) + ' L ' + ex + ' ' + ey + ' L ' + (ex - a) + ' ' + (ey + a);
+      var a = 9, head = 'M ' + (ex + a) + ' ' + (ey - a) + ' L ' + ex + ' ' + ey + ' L ' + (ex + a) + ' ' + (ey + a);
       svg.innerHTML = '<path d="' + d + '"/><path d="' + head + '"/>';
     }
     function wire(block){
@@ -371,9 +371,7 @@ SCRIPTS = """
       function off(){ block.classList.remove('is-flowhot'); row.classList.remove('is-flowmark'); target.classList.remove('is-flowmark'); }
       [row, target].forEach(function(el){
         el.addEventListener('mouseenter', on); el.addEventListener('mouseleave', off);
-        el.addEventListener('focusin', on); el.addEventListener('focusout', off);
       });
-      target.tabIndex = 0;
     }
     var blocks = document.querySelectorAll('.vz-flowblock');
     function all(){ Array.prototype.forEach.call(blocks, draw); }
@@ -388,10 +386,10 @@ SCRIPTS = """
   (function () {
     var imgs = Array.prototype.slice.call(document.querySelectorAll('.vz figure img'));
     if (!imgs.length) return;
-    var overlay, lbImg, lbCap, idx = -1;
+    var overlay, lbImg, lbCap, idx = -1, lastFocus = null;
     function build(){
       overlay = document.createElement('div');
-      overlay.className = 'lbx'; overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
+      overlay.className = 'lbx'; overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true'); overlay.setAttribute('aria-label', 'Náhled obrázku');
       overlay.innerHTML =
         '<button class="lbx__btn lbx__close" aria-label="Zavřít"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>' +
         '<button class="lbx__btn lbx__prev" aria-label="Předchozí"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
@@ -407,11 +405,12 @@ SCRIPTS = """
     }
     function capFor(im){ var f = im.closest('figure'), c = f && f.querySelector('figcaption'); return (c && c.textContent.trim()) || im.alt || ''; }
     function show(i){ idx = (i + imgs.length) % imgs.length; var im = imgs[idx]; lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt || ''; lbCap.textContent = capFor(im); }
-    function open(i){ if (!overlay) build(); show(i); overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
-    function close(){ if (overlay) overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
+    function open(i){ if (!overlay) build(); lastFocus = document.activeElement; show(i); overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; overlay.querySelector('.lbx__close').focus(); }
+    function close(){ if (overlay) overlay.classList.remove('is-open'); document.body.style.overflow = ''; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
     imgs.forEach(function(im, i){
       im.tabIndex = 0; im.setAttribute('role', 'button');
-      if (!im.getAttribute('aria-label')) im.setAttribute('aria-label', 'Zvětšit obrázek');
+      var al = im.getAttribute('alt');
+      im.setAttribute('aria-label', al ? al + ' – zvětšit' : 'Zvětšit obrázek');
       im.addEventListener('click', function(){ open(i); });
       im.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); } });
     });
@@ -420,6 +419,11 @@ SCRIPTS = """
       if (e.key === 'Escape') close();
       else if (e.key === 'ArrowLeft') show(idx - 1);
       else if (e.key === 'ArrowRight') show(idx + 1);
+      else if (e.key === 'Tab') {
+        var f = overlay.querySelectorAll('.lbx__btn'), first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
   })();
 </script>
