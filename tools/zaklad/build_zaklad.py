@@ -9,7 +9,12 @@ GRID = {tuple(int(x) for x in k.split(",")): v
         for k, v in json.load(open(SCRATCH + "/grid_fmt.json")).items()}
 DUMP = json.load(open(SCRATCH + "/zaklad_dump.json"))
 FILL = {(c["row"], c["col"]): c["f"] for c in DUMP["cells"] if c["f"]}
+FONT = {(c["row"], c["col"]): c["fc"] for c in DUMP["cells"] if c.get("fc")}
 ORANGE = "FFEBC08F"
+
+def is_red(r, c):
+    rgb = FONT.get((r, c))
+    return bool(rgb and rgb.upper().endswith("FF0000"))
 
 def col2num(s):
     n = 0
@@ -156,7 +161,7 @@ def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfill
                     v = re.sub(r'\s', '', v)  # roky bez oddělovače tisíců
                 fc = cell_fill_class(r, c) if cellfills else ""
                 if i == 0:
-                    scls = "vz-stickcol" + ((" " + fc) if fc else "")
+                    scls = "vz-stickcol" + ((" " + fc) if fc else "") + (" is-red" if is_red(r, c) else "")
                     w(f'          <th scope="row" class="{scls}">{esc(v)}</th>')
                 else:
                     cls = []
@@ -164,6 +169,8 @@ def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfill
                         cls.append("num")
                     if fc:
                         cls.append(fc)
+                    if is_red(r, c):
+                        cls.append("is-red")
                     clsattr = f' class="{" ".join(cls)}"' if cls else ''
                     w(f'          <td{clsattr}>{esc(v)}</td>')
             w('        </tr>')
@@ -230,6 +237,26 @@ def vzsummary(items, bg="#E7F0E3", bd="#A8CE9F"):
         w('  </div>')
     return _
 
+def vzgrand(items):
+    """Souhrnné boxy s barvou dle zdrojového fillu buňky; volitelně cíl konektoru.
+    items: list (label, coord, is_target?)."""
+    def _():
+        w('  <div class="vz-grand">')
+        for it in items:
+            label, coord = it[0], it[1]
+            tgt = len(it) > 2 and it[2]
+            m = re.match(r'^([A-Z]+)(\d+)$', coord)
+            c, r = col2num(m.group(1)), int(m.group(2))
+            fc = cell_fill_class(r, c)
+            red = " is-red" if is_red(r, c) else ""
+            attr = ' data-flow-target' if tgt else ''
+            w(f'    <div class="vz-gbox {fc}"{attr}>')
+            w(f'      <span class="vz-gbox__label">{esc(label)}</span>')
+            w(f'      <span class="vz-gbox__num{red}">{esc(V(coord))}</span>')
+            w('    </div>')
+        w('  </div>')
+    return _
+
 def zonesection(zonetitle, tint, blocks, label=None, shade=False, band="#D4E6C6", bandbd="#88B673"):
     """Zóna s velkým nadpisem (barevný pruh dle --band) místo běžné sechead."""
     cls = "sec sec--shade" if shade else "sec"
@@ -279,8 +306,9 @@ def paramstrip(items):
             m = re.match(r'^([A-Z]+)(\d+)$', coord)
             c, r = col2num(m.group(1)), int(m.group(2))
             fc = cell_fill_class(r, c)
+            red = " is-red" if is_red(r, c) else ""
             w(f'    <div class="vz-param {fc}"><span class="vz-param__label">{esc(label)}</span>'
-              f'<span class="vz-param__num">{esc(V(coord))}</span></div>')
+              f'<span class="vz-param__num{red}">{esc(V(coord))}</span></div>')
         w('  </div>')
     return _
 
