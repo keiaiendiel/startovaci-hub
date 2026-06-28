@@ -10,6 +10,13 @@ def decimals_from(fmt):
     m=re.search(r'[0#]\.([0#]+)', fmt or "")
     return len(m.group(1)) if m else 0
 
+def literal_suffix(nf):
+    # vrať celý kvótovaný literál, který obsahuje jednotku (Kč / m²)
+    for lit in re.findall(r'"([^"]*)"', nf or ""):
+        if "Kč" in lit or "m2" in lit or "m²" in lit:
+            return lit
+    return None
+
 def fmt_cell(v, nf):
     if v is None: return ""
     if isinstance(v, bool): return "ANO" if v else "NE"
@@ -22,9 +29,7 @@ def fmt_cell(v, nf):
         dec=decimals_from(nf)
         s=f"{v*100:.{dec}f}".replace(".",",")
         return s+NBSP+"%"
-    unit=None
-    if "Kč" in nf: unit="Kč"
-    elif "m2" in nf or "m²" in nf: unit="m²"
+    suffix=literal_suffix(nf)
     if nf=="General":
         dec=0 if float(v).is_integer() else 2
     else:
@@ -32,7 +37,8 @@ def fmt_cell(v, nf):
     neg=v<0; av=abs(v)
     s=f"{av:,.{dec}f}".replace(",","§").replace(".",",").replace("§",NBSP)
     if neg: s="−"+s
-    if unit: s=s+NBSP+unit
+    if suffix:
+        s=s+NBSP+suffix.replace("m2","m²").strip()
     return s
 
 # distinct number formats

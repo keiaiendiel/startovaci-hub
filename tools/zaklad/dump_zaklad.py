@@ -26,8 +26,17 @@ for row in ws.iter_rows():
         bold=False
         try: bold=bool(c.font and c.font.bold)
         except: pass
+        fc=None
+        try:
+            col=c.font.color
+            rgb=getattr(col,"rgb",None) if col is not None else None
+            if isinstance(rgb,str) and rgb.upper().endswith("FF0000"):
+                fc=rgb
+        except: pass
         if v is not None or fill:
-            cells.append({"c":c.coordinate,"row":c.row,"col":c.column,"v":(str(v) if v is not None else None),"f":fill,"b":bold})
+            d={"c":c.coordinate,"row":c.row,"col":c.column,"v":(str(v) if v is not None else None),"f":fill,"b":bold}
+            if fc: d["fc"]=fc
+            cells.append(d)
         if fill:
             fillhist[fill]+=1
             fillsamples.setdefault(fill,[])
