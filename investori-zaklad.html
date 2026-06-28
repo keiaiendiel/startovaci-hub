@@ -259,6 +259,11 @@
     .vz .vz-kv .val.is-input{background:transparent;font-weight:700;color:#9a6a1e}
     .vz .sechead{padding:11px 14px}
     .vz .vz-subhead{margin:18px 14px 6px}
+    /* telefon: textové sloupce smí zalomit do 2 řádků (užší tabulka); čísla drží
+       na řádku díky pevné mezeře (NBSP) a Kč/m² připojené přes NBSP */
+    .vz .vz-matrix td{white-space:normal}
+    .vz .vz-matrix .vz-stickcol{min-width:74px}
+    .vz .vz-matrix thead th{min-width:50px;max-width:124px}
   }
   /* obrázky klikatelné na zvětšení */
   .vz figure img{cursor:zoom-in}
@@ -280,19 +285,28 @@
 <body>
 
 <header class="inv-topbar">
+  <input type="checkbox" id="inv-nav" class="inv-nav" aria-label="Přepnout menu" />
   <div class="inv-topbar__inner">
     <a class="inv-topbar__brand" href="index.html" aria-label="Startovací Hub, na úvod">
       <img src="assets/brand-logo-white.svg" alt="Startovací Hub" />
     </a>
-    <span class="inv-topbar__title">Podklady pro investory</span>
-    <div class="inv-topbar__actions">
-      <nav class="inv-seg" aria-label="Přepnout podklad">
-        <a class="inv-seg__item" href="investori-zamer.html">Investiční záměr</a>
-        <a class="inv-seg__item" href="investori-zaklad.html" aria-current="page">Základní údaje</a>
-      </nav>
-      <button type="button" class="inv-topbar__logout" data-inv-logout>Odhlásit se</button>
-    </div>
+    <label for="inv-nav" class="inv-burger" aria-label="Otevřít menu">
+      <span class="burger"><span></span><span></span><span></span></span>
+    </label>
   </div>
+  <nav class="inv-menu" aria-label="Podklady pro investory">
+    <div class="inv-menu__inner">
+      <a class="inv-menu__brand" href="index.html" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" /></a>
+      <div class="inv-menu__nav">
+        <a class="inv-menu__link" href="investori-zamer.html">Investiční záměr</a>
+        <a class="inv-menu__link" href="investori-zaklad.html" aria-current="page">Základní údaje</a>
+        <a class="inv-menu__link" href="404.html">Základní scénáře</a>
+      </div>
+      <div class="inv-menu__foot">
+        <button type="button" class="inv-menu__logout" data-inv-logout>Odhlásit se</button>
+      </div>
+    </div>
+  </nav>
 </header>
 
 <noscript>

@@ -531,6 +531,66 @@
   @media (max-width: 980px) { .inv-topbar:has(.inv-seg) .inv-topbar__title { display: none; } }
   @media (max-width: 380px) { .inv-seg__item { @apply px-2.5; font-size: 0.7rem; } }
 
+  /* Hamburger menu investorského pod-webu — vizuálně jako landing, ale bez závislosti
+     na landing scroll-animacích. Logo (vlevo) + burger (vpravo); přes celou plochu
+     se otevře tmavé menu: Investiční záměr / Základní údaje / Základní scénáře + Odhlásit. */
+  .inv-nav { @apply sr-only; }
+  .inv-topbar__inner { position: relative; z-index: 60; }
+  .inv-burger { @apply inline-flex h-11 w-11 cursor-pointer items-center justify-center text-white; }
+  .inv-burger .burger { @apply grid w-[22px] gap-[5px]; }
+  .inv-burger .burger > span { @apply block h-[1.5px] origin-center rounded bg-current; }
+  .inv-burger .burger > span:nth-child(1), .inv-burger .burger > span:nth-child(3) { transition: transform 300ms var(--ease-quart); }
+  .inv-burger .burger > span:nth-child(2) { transition: opacity 150ms linear; }
+  .inv-nav:focus-visible ~ .inv-topbar__inner .inv-burger { outline: 2px solid #fff; outline-offset: 3px; border-radius: 6px; }
+
+  .inv-menu {
+    @apply invisible fixed inset-0 -translate-y-2 overflow-y-auto text-white opacity-0;
+    z-index: 50;
+    background:
+      radial-gradient(ellipse at 88% 105%, hsl(calc(var(--hue) + 44) 30% 70% / 0.16) 0%, transparent 50%),
+      linear-gradient(150deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 36% 18%) 100%);
+    transition: opacity 320ms var(--ease-quart), transform 380ms var(--ease-quart), visibility 0s 380ms;
+  }
+  .inv-menu__inner {
+    @apply mx-auto flex min-h-full flex-col gap-7 pb-16 pt-[92px];
+    width: calc(100% - 2 * var(--gutter));
+    max-width: var(--container-wide);
+  }
+  .inv-menu__brand { @apply self-start; }
+  .inv-menu__brand img { @apply block h-[26px] w-auto; }
+  .inv-menu__nav { @apply flex flex-1 flex-col items-start justify-center gap-2; }
+  .inv-menu__link { @apply text-[clamp(1.75rem,5.2vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.02em] text-white no-underline transition-colors; }
+  .inv-menu__link:hover { color: var(--rose); }
+  .inv-menu__link[aria-current="page"] { color: var(--rose); }
+  .inv-menu__foot { @apply mt-2 flex flex-col items-start gap-3 border-t pt-6; border-color: hsl(0 0% 100% / 0.14); }
+  .inv-menu__logout { @apply inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-base font-semibold no-underline transition-colors; color: hsl(0 0% 100% / 0.78); }
+  .inv-menu__logout:hover { color: var(--rose); }
+
+  .inv-nav:checked ~ .inv-menu {
+    @apply visible translate-y-0 opacity-100;
+    transition: opacity 320ms var(--ease-quart), transform 380ms var(--ease-quart), visibility 0s;
+  }
+  .inv-nav:checked ~ .inv-topbar__inner .inv-topbar__brand { opacity: 0; }
+  .inv-nav:checked ~ .inv-topbar__inner .burger > span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .inv-nav:checked ~ .inv-topbar__inner .burger > span:nth-child(2) { opacity: 0; }
+  .inv-nav:checked ~ .inv-topbar__inner .burger > span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  html:has(.inv-nav:checked), html:has(.inv-nav:checked) body { overflow: hidden; }
+
+  /* Slim lišta na telefonu (i na šířku) — menší logo, nižší pruh. */
+  @media (max-width: 640px) {
+    .inv-topbar__inner { @apply min-h-[46px] py-1.5; }
+    .inv-topbar__brand img { @apply h-[18px]; }
+    .inv-burger { @apply h-9 w-9; }
+    .inv-menu__inner { @apply pt-[74px]; }
+  }
+  @media (max-height: 480px) and (orientation: landscape) {
+    .inv-topbar__inner { @apply min-h-[38px] py-1; }
+    .inv-topbar__brand img { @apply h-[16px]; }
+    .inv-menu__inner { @apply gap-3 pb-8 pt-[52px]; }
+    .inv-menu__link { font-size: clamp(1.15rem, 4.4vh, 1.9rem); }
+    .inv-menu__brand img { @apply h-[20px]; }
+  }
+
   .inv-login {
     /* Výška okna minus lišta (60px) → stránka se přesně vejde, žádný scroll. */
     min-height: calc(100svh - 60px); display: grid; place-items: center;
