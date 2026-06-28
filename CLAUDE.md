@@ -21,7 +21,7 @@ promítni změny sem; když klient chce úpravu tady, drž to konzistentní s As
 |---|---|
 | Styly | Tailwind CSS 3.4.17, zdroj `src/input.css` → build do `assets/styles.css` |
 | Tailwind config | `tailwind.config.js`, `content` = `index.html`, `404.html`, `investori.html`, `investori-zamer.html`, `investori-zaklad.html`, `struktura-webu.html`, `galerie.html`; brand barvy mapované na CSS proměnné (`bg-plum-deep`, `text-rose`, …) |
-| Tokeny + komponenty | `src/input.css`: `:root` tokeny + `@layer components` (`.hero-ctas`, `.hero-cta`, `.sec-title/.sec-lede/.sec-cta`, `.ucards/.ucard*`, `.gal/.gallery*`, `.foot-act/.foot-label`, `.hub-404*`, `.menu/.burger`, `.to-top`, `.inv-topbar*/.inv-login*/.inv-btn`, `.inv-seg` přepínač). Pozn.: `.vz*` styly „Základních údajů" (`.vz-matrix/.vz-figs/.vz-flow/.vz-kv/.vz-headline`) žijí **inline** v `investori-zaklad.html`, ne v Tailwindu. |
+| Tokeny + komponenty | `src/input.css`: `:root` tokeny + `@layer components` (`.hero-ctas`, `.hero-cta`, `.sec-title/.sec-lede/.sec-cta`, `.ucards/.ucard*`, `.gal/.gallery*`, `.foot-act/.foot-label`, `.hub-404*`, `.menu/.burger`, `.to-top`, `.inv-topbar*/.inv-login*/.inv-btn`, `.inv-seg` přepínač). Pozn.: `.vz*` styly „Základních údajů" (`.vz-matrix/.vz-map/.vz-summary/.vz-zonehead/.vz-greenband/.vz-quote/.vz-figrow/.sec--shade` aj.) žijí **inline** v `investori-zaklad.html`, ne v Tailwindu. |
 | Fonty | self-hosted Atyp Special (woff2) v `assets/fonts/`, `@font-face` v `input.css` |
 | JS | Landing ŽÁDNÝ: menu = CSS checkbox (`#navtoggle`), galerie = scroll-snap + kotvy + scroll-driven aktivní tečka (`view-timeline`) + `::scroll-button` šipky, hero = `<video autoplay muted loop playsinline>`, „nahoru" = scroll-driven animace. Plynulé přechody = `@view-transition` (cross-document, bez JS). **Výjimka:** investorský pod-web má pár řádků JS (měkká brána heslem). |
 | Média | `assets/images/hub/...` (zrcadlo `sh-web/public/images/hub`), hero video `assets/videos/*.mp4` (H.264, ne `.mov` jako Astro) |
@@ -84,12 +84,24 @@ Mapy vedou ven.
   `.vz`, jen font → Atyp Special, vložené ortofoto a slim top bar (Na úvod /
   Odhlásit). Brána skryje obsah (`html.inv-wait .vz`), bez JS ukáže `<noscript>`.
 - **`investori-zaklad.html`** = podklady „Základní údaje & výpočty". Druhý list
-  z `Záměr VPD1_5.xlsx` (list `Základní údaje & výpočty`), ale narozdíl od záměru
-  **generovaný deterministicky** (openpyxl → grid → HTML; skripty `tools/zaklad/`).
-  5 sekcí pod sebou, široké roční matice = `.vz-matrix` (sticky 1. sloupec + vodorovný
-  posuv), vstupní předpoklady = oranžový accent (`--accent-input`), **ribbony**
-  (`.vz-flow`) místo Excel šipek, galerie (`.vz-figs`). Obrázky v
-  `assets/images/investori/zaklad/` (zmenšené, `mapping.json` pro snadnou výměnu).
+  z `Záměr VPD1_5.xlsx` (list `Základní údaje & výpočty`), **generovaný deterministicky**
+  (openpyxl → grid → HTML; skripty `tools/zaklad/`, data v `tools/zaklad/data/*.json`).
+  **Staví se sekci po sekci dle revizí klienta** (každou tabulku schvaluje zvlášť).
+  Hotové sekce: *Tabulka se zákl. informacemi č. 1* (masterplan mapa + parcely A–H +
+  „Pozemky" breakdowny s ortofoto mapami + souhrnné boxy), *č. 2* (sloupce K–X:
+  stavby/podlažnost/HPP, barevné řádky jádro/zázemí), zóna *Základní údaje a výpočty
+  vyplývající z uzavřených smluv* (zálohy + výpočet/predikce kupní ceny + citace
+  smlouvy čl. 3), zóna *Projekt Startovací hub* (příjmy z pronájmu + vizualizace +
+  benchmark). **Zatím vypnuté** (čekají na revizi — viz `section_draft` v generátoru):
+  lůžka, Nová čtvrť, zdroje. Komponenty (inline `.vz` styly v HTML, NE Tailwind):
+  `.vz-matrix` (sticky 1. sloupec + vodorovný posuv + scroll tlačítka `.vz-mbtn`),
+  `.vz-map`, `.vz-totals/.vz-summary` (hranaté souhrnné boxy), `.vz-zonehead/.vz-greenband`
+  (barevné pásy zóny dle CSS `--band`), `paramstrip`, `.vz-quote` (text smlouvy),
+  `.vz-figrow/.vz-figs`, `.sec--shade` (full-bleed oddělení hlavních sekcí). **Věrné
+  barvení buněk dle zdrojových Excel fillů** (`cellfills`: oranžová = vstupy, zelená,
+  žlutá jádro / zelená zázemí). **Ribbony místo Excel šipek = rozpracováno** (helpery
+  `.vz-flow`/`.vz-flowblock` v generátoru jsou dormantní, vizuál se ještě ladí). Obrázky
+  v `assets/images/investori/zaklad/` (zmenšené, `mapping.json` pro snadnou výměnu).
 - V top baru obou stránek je **segmentový přepínač** (`.inv-seg`) „Investiční záměr
   ↔ Základní údaje" (dva odkazy, bez JS) — po přidání tříd nezapomeň `npm run build`.
 - Když se mění podklady, edituj přímo příslušné HTML (žádné není v Astru);

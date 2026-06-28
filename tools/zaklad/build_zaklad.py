@@ -495,7 +495,8 @@ zonesection(
     "#FBFAF0", [
         greenband("Odhad příjmů z pronájmu jednotek vzniklých pro projekt Startovací hub"),
         hub_params,
-        flowblock([hub_prijem, hub_souhrn]),
+        hub_prijem,
+        hub_souhrn,
         subhead("Vizualizace"),
         figrow([
             ("render-jednotka-1kk-interier.jpg", "Vizualizace interiéru: jednotka 1+kk o 21 m² ČPP"),
