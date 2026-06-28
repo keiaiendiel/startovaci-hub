@@ -35,6 +35,27 @@ def Vrc(r, c):
 def is_orange(r, c):
     return FILL.get((r, c)) == ORANGE
 
+GREEN_FILL = "FFC2DCAE"   # zázemí
+YELLOW_FILL = "FFECE5A3"  # jádro
+# mapování zdrojových fill barev → CSS třídy buněk (věrná reprodukce Excelu)
+FILLCLASS = {
+    "FFEBC08F": "is-input", "FFEED9A0": "is-input",
+    "FFC2DCAE": "is-green", "FFECE5A3": "is-yellow",
+    "FFE6ECF6": "is-blue", "FFB6CDE9": "is-blue2",
+    "FFD9C7A1": "is-tan",
+}
+def cell_fill_class(r, c):
+    return FILLCLASS.get(FILL.get((r, c)), "")
+
+def row_zone(r, c0, c1):
+    """Vrátí třídu řádku podle zónového fillu ve zdroji (žlutá=jádro, zelená=zázemí)."""
+    fills = {FILL.get((r, c)) for c in range(c0, c1 + 1)}
+    if YELLOW_FILL in fills:
+        return "is-jadro"
+    if GREEN_FILL in fills:
+        return "is-zazemi"
+    return ""
+
 def esc(s):
     return _html.escape(str(s), quote=True)
 
@@ -102,10 +123,12 @@ def kv(pairs, inputs=False):
         w('  </div>')
     return _
 
-def matrix(headers, cols, rows, caption=None, foot=None):
+def matrix(headers, cols, rows, caption=None, foot=None, zonecols=None, cellfills=False):
     """headers: list of clean header strings (len == len(cols)).
        cols: list of column letters; first is sticky row-header.
-       rows: list of int row numbers."""
+       rows: list of int row numbers.
+       zonecols: (c0,c1) → obarvit řádky podle zóny (jádro/zázemí) z fillu.
+       cellfills: True → každá buňka dostane třídu dle zdrojového fillu (oranžová/zelená/…)."""
     def _():
         if caption:
             w(f'  <h3 class="vz-subhead">{esc(caption)}</h3>')
@@ -122,18 +145,23 @@ def matrix(headers, cols, rows, caption=None, foot=None):
             first = Vrc(r, col2num(cols[0]))
             if first == "":
                 continue
-            w('        <tr>')
+            zcls = row_zone(r, zonecols[0], zonecols[1]) if zonecols else ""
+            w(f'        <tr class="{zcls}">' if zcls else '        <tr>')
             for i, cl in enumerate(cols):
                 c = col2num(cl)
                 v = Vrc(r, c)
                 if headers[i] == "Rok":
                     v = re.sub(r'\s', '', v)  # roky bez oddělovače tisíců
+                fc = cell_fill_class(r, c) if cellfills else ""
                 if i == 0:
-                    w(f'          <th scope="row" class="vz-stickcol">{esc(v)}</th>')
+                    scls = "vz-stickcol" + ((" " + fc) if fc else "")
+                    w(f'          <th scope="row" class="{scls}">{esc(v)}</th>')
                 else:
                     cls = []
                     if is_num(v):
                         cls.append("num")
+                    if fc:
+                        cls.append(fc)
                     clsattr = f' class="{" ".join(cls)}"' if cls else ''
                     w(f'          <td{clsattr}>{esc(v)}</td>')
             w('        </tr>')
@@ -183,6 +211,46 @@ def breakdown(title, mapfn, area, arealu, sm):
         w('  </div>')
     return _
 
+def vzsummary(items):
+    """Řada zelených souhrnných boxů (auto-fit). items: (label, coord)."""
+    def _():
+        w('  <div class="vz-summary">')
+        for label, coord in items:
+            w(f'    <div class="vz-sbox"><span class="vz-sbox__label">{esc(label)}</span>'
+              f'<span class="vz-sbox__num">{esc(V(coord))}</span></div>')
+        w('  </div>')
+    return _
+
+def zonesection(zonetitle, tint, blocks, label=None):
+    """Zóna s velkým nadpisem (zelený pruh) místo běžné sechead."""
+    w(f'<section class="sec" style="--tint:{tint}" aria-label="{esc(label or zonetitle)}">')
+    w(f'  <h2 class="vz-zonehead">{esc(zonetitle)}</h2>')
+    for b in blocks:
+        b()
+    w('</section>')
+
+def greenband(text, center=False):
+    """Titulní zelený pruh dílčí tabulky."""
+    cls = "vz-greenband" + (" vz-greenband--center" if center else "")
+    return lambda: w(f'  <p class="{cls}">{esc(text)}</p>')
+
+def paramstrip(items):
+    """Vstupní parametry jako boxy; barva dle zdrojového fillu hodnoty. items: (label, value_coord)."""
+    def _():
+        w('  <div class="vz-params">')
+        for label, coord in items:
+            m = re.match(r'^([A-Z]+)(\d+)$', coord)
+            c, r = col2num(m.group(1)), int(m.group(2))
+            fc = cell_fill_class(r, c)
+            w(f'    <div class="vz-param {fc}"><span class="vz-param__label">{esc(label)}</span>'
+              f'<span class="vz-param__num">{esc(V(coord))}</span></div>')
+        w('  </div>')
+    return _
+
+def section_draft(*a, **k):
+    """První pokusy (jednotky/lůžka/Nová čtvrť/zdroje) zatím nerenderujeme — čekají na revizi."""
+    pass
+
 def figs(items, label="Vizualizace"):
     """items: list of (filename, caption). Vodorovně posuvný proužek figur."""
     def _():
@@ -217,8 +285,9 @@ t1_cols = ["C", "D", "E", "F", "G", "H"]
 section("Tabulka se základními informacemi č. 1", "#E6ECF6", [
     vzmap("mapa-arealu-masterplan.jpg",
           "Mapa Areálu se schématickým zákresem 1. developerské fáze investičně-realizačního scénáře S1"),
-    matrix(t1_headers, t1_cols, parcel_rows,
-           foot="Plochy SM = plochy smíšené obytné – městské dle současného ÚP."),
+    matrix(t1_headers, t1_cols, parcel_rows, zonecols=(3, 8),
+           foot="Plochy SM = plochy smíšené obytné – městské dle současného ÚP. "
+                "Žlutě jádro projektu (budovy Startovacího hubu), zeleně zázemí."),
     vztotals([("Celková výměra parcel", "E39"),
               ("Celková výměra ploch SM", "H39")]),
     breakdown("Pozemky: jádro projektu Startovací hub",
@@ -232,74 +301,85 @@ section("Tabulka se základními informacemi č. 1", "#E6ECF6", [
 # ============================================================
 # 2) TABULKA SE ZÁKLADNÍMI INFORMACEMI č. 2  (sloupce K–X: stavby, podlaží, HPP)
 # ============================================================
-t2_headers = ["Číslo parcely", "Účel / název", "Zpevněné plochy", "Zastavěné plochy",
-              "Pozemky jádro", "Nadzemních podlaží", "Podzemních podlaží", "Celkem podlaží",
-              "HPP stávajících", "HPP jádra", "HPP pro 1+kk", "HPP zázemí",
-              "HPP mimo jádro", "HPP jádra + zázemí"]
+t2_headers = ["Číslo parcely",
+              "Předpokládaná kolaudace (stavební dokumentace k Areálu je neúplná):",
+              "Odhad rozsahu všech zpevněných ploch v Areálu",
+              "Současnými stavbami zastavěné plochy v Areálu",
+              "Pozemky: jádro projektu Startovací hub",
+              "Počet nadzemních podlaží", "Počet podzemních podlaží", "Celkem podlaží",
+              "HPP stávajících budov (dle katastru)",
+              "HPP jádra projektu Startovací hub",
+              "HPP jádra projektu Startovací hub určené pro budování jednotek 1+kk",
+              "HPP zázemí projektu Startovací hub",
+              "HPP všech budov netvořících jádro projektu Startovací hub",
+              "HPP jádra i zázemí projektu Startovací hub"]
 t2_cols = ["K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X"]
 
-plochy2 = kv([
-    ("Zpevněné plochy", "M39"),
-    ("Zastavěné plochy", "N39"),
-    ("Pozemky: jádro projektu Startovací hub", "O39"),
-    ("HPP stávajících budov", "S39"),
-    ("HPP jádra projektu Startovací hub", "T39"),
-    ("HPP určené pro jednotky 1+kk", "U39"),
-    ("HPP zázemí projektu Startovací hub", "V39"),
-    ("HPP budov mimo jádro", "W39"),
-    ("HPP jádra i zázemí projektu Startovací hub", "X39"),
-])
-
 section("Tabulka se základními informacemi č. 2", "#E6ECF6", [
-    matrix(t2_headers, t2_cols, parcel_rows,
-           caption="Stavby, podlažnost a hrubé podlažní plochy (HPP) po parcelách"),
+    matrix(t2_headers, t2_cols, parcel_rows, zonecols=(11, 24),
+           caption="Stavby, podlažnost a hrubé podlažní plochy (HPP) po parcelách",
+           foot="Žlutě jádro projektu Startovací hub (budovy A1–A6, štáb, hlavní pozemek), "
+                "zeleně zázemí projektu."),
     subhead("Souhrn ploch a HPP"),
-    plochy2,
-    note("*zastavěné plochy: cca 15 % z ploch SM"),
+    vzsummary([("Zpevněné plochy", "M39"),
+               ("Zastavěné plochy", "N39"),
+               ("Pozemky: jádro projektu SH", "O39")]),
+    note("*celkem z ploch SM: 15 %"),
+    vzsummary([("HPP stávajících budov", "S39"),
+               ("HPP jádra projektu SH", "T39"),
+               ("HPP určené pro jednotky 1+kk (SH)", "U39"),
+               ("HPP zázemí projektu SH", "V39"),
+               ("HPP kolem jádra projektu SH", "W39"),
+               ("HPP jádra i zázemí projektu SH", "X39")]),
 ], label="Tabulka se základními informacemi č. 2 — stavby a HPP")
 
 # ============================================================
-# 2) SMLOUVY — KUPNÍ CENA AREÁLU
+# 3) ZÓNA: Základní údaje a výpočty vyplývající z uzavřených smluv
 # ============================================================
-cena_inputs = kv([
-    ("Maximální míra inflace uvažovaná do roku 2039","AJ6"),
-    ("Sjednaný základ kupní ceny","AN6"),
-    ("Plocha Areálu","AS6"),
-    ("Plochy SM v Areálu","AU6"),
-], inputs=True)
-
 zalohy = matrix(
-    ["Rok","Pořadí","Splatnost zálohy","Výše zálohy","Equita odložená u majitele"],
-    ["AC","AD","AE","AF","AG"], list(range(8,24)),
-    caption="Sjednané zálohy na kupní cenu Areálu")
+    ["Rok", "Pořadí", "Splatnost zálohy", "Výše zálohy k uhrazení",
+     "Equita na odkup Areálu odložená u majitele"],
+    ["AC", "AD", "AE", "AF", "AG"], list(range(8, 24)),
+    cellfills=True)
+
+def mimo_zaloha():
+    w('  <p class="vz-greenband vz-greenband--center">Mimořádná záloha (tzv. příspěvek na příjezdovou cestu)</p>')
+    w('  <div class="vz-kv">')
+    w('    <div class="row"><div class="lab">Splatnost do 90 dní od vydání stavebního povolení na novou '
+      'cestu se smluvně stanovenými parametry, která bude přiléhat k východní části Areálu</div>'
+      f'<div class="val num is-green">{esc(V("AF27"))}</div></div>')
+    w('    <div class="row"><div class="lab">Equita na odkup Areálu odložená u majitele po této záloze</div>'
+      f'<div class="val num">{esc(V("AG27"))}</div></div>')
+    w('  </div>')
+
+cena_params = paramstrip([
+    ("Maximální míra inflace do 2039 na úrovni:", "AJ6"),
+    ("Sjednaný základ kupní ceny", "AN6"),
+    ("Plocha Areálu", "AS6"),
+    ("Plochy SM v Areálu", "AU6"),
+])
 
 cena_calc = matrix(
-    ["Rok","Od","Do","Přírůstek (min. 5 %)","Vypočtené navýšení","Kupní cena za celý Areál",
-     "Záloha splatná v roce","Celkem uhrazené zálohy","Po odečtení záloh zbývá",
-     "Cena/m² všech ploch","Cena/m² k doplacení","Cena/m² SM","Cena/m² SM k doplacení",
-     "Meziroční nárůst","% zálohy z ceny"],
-    ["AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX"],
-    list(range(8,24)),
-    caption="Výpočet současné a predikce budoucí kupní ceny Areálu (2023–2038)",
+    ["Rok", "Od", "Do", "Přírůstek k základu kupní ceny (min. 5 %)*", "Vypočtené navýšení kupní ceny",
+     "Kupní cena za celý Areál", "Záloha splatná v příslušném roce", "Celkem uhrazené zálohy (Equita)",
+     "Po odečtení záloh zbývá k doplacení", "Cena za m² všech ploch", "Cena za m² všech ploch k doplacení",
+     "Cena za m² všech ploch SM", "Cena za m² všech ploch SM k doplacení",
+     "Meziroční nárůst ceny Areálu v %", "Kolik % z ceny Areálu uhradit formou zálohy"],
+    ["AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX"],
+    list(range(8, 24)), cellfills=True,
     foot="*sjednaná kupní cena Areálu se každoročně k 10. 3. navyšuje v souladu s čl. 3 Smlouvy "
          "o 19 250 000 Kč, pokud inflace CPI za předchozí rok nepřekročí 5 %.")
 
-def mimo_zaloha():
-    w('  <h3 class="vz-subhead">Mimořádná záloha</h3>')
-    w('  <div class="vz-kv"><div class="row">'
-      f'<div class="lab">{esc("Mimořádná záloha (příspěvek na příjezdovou cestu) — splatnost do 90 dní od vydání stavebního povolení na novou cestu se smluvně stanovenými parametry přiléhající k východní části Areálu")}</div>'
-      f'<div class="val num">{esc(V("AF27"))}</div></div>'
-      f'<div class="row"><div class="lab">Equita odložená u majitele po této záloze</div>'
-      f'<div class="val num">{esc(V("AG27"))}</div></div></div>')
-
-section("Smlouvy · kupní cena Areálu", "#ECE6F6", [
-    legend_input(),
-    subhead("Vstupní parametry"),
-    cena_inputs,
+zonesection("Základní údaje a výpočty vyplývající z uzavřených smluv", "#EEF1F6", [
+    greenband("Sjednané zálohy na kupní cenu Areálu"),
     zalohy,
-    flow("Celkem uhrazené zálohy (Equita) → snižují částku „Po odečtení záloh zbývá k doplacení"),
-    cena_calc,
     mimo_zaloha,
+    greenband("Výpočet současné kupní ceny Areálu + predikce budoucí kupní ceny Areálu "
+              "na základě uzavřené smlouvy"),
+    cena_params,
+    cena_calc,
+    greenband("↓↓↓ Způsob výpočtu navýšení kupní ceny Areálu uvedený v uzavřené Smlouvě ↓↓↓", center=True),
+    vzmap("zdroj-smlouva-vypocet-navyseni.jpg"),
 ], label="Základní údaje a výpočty vyplývající z uzavřených smluv")
 
 # ============================================================
@@ -349,7 +429,7 @@ j_souhrn = kv([
     ("Odhadovaný rozdíl mezi prodejní cenou jednotek a doplatkem (2038)","CX39"),
 ])
 
-section("Startovací hub · jednotky 1+kk", "#E7F0E3", [
+section_draft("Startovací hub · jednotky 1+kk", "#E7F0E3", [
     subhead("Vstupní parametry"),
     j_inputs,
     flow("Tržní nájemné × obsazenost → odhad ročních příjmů po jednotlivých budovách"),
@@ -390,7 +470,7 @@ l_souhrn = kv([
     ("Odhadovaný roční příjem","DV39"),
 ])
 
-section("Startovací hub · lůžka ve sdílených pokojích", "#F1EADF", [
+section_draft("Startovací hub · lůžka ve sdílených pokojích", "#F1EADF", [
     subhead("Vstupní parametry"),
     l_inputs,
     l_prijem,
@@ -436,7 +516,7 @@ bench = matrix(
     caption="Nabídkové ceny bytů v novostavbách poblíž Areálu (benchmark)",
     foot="Zdroj: www.creditasre.cz/projekty/klecanska-alej k 22. 9. 2025.")
 
-section("Nová čtvrť", "#E7F0E3", [
+section_draft("Nová čtvrť", "#E7F0E3", [
     subhead("Vstupní parametry"),
     n_inputs,
     n_matrix,
@@ -478,7 +558,7 @@ zdroje_figs = figs([
     ("zdroj-smlouva-vypocet-navyseni.jpg", "Způsob výpočtu navýšení kupní ceny Areálu (ze smlouvy)"),
 ], label="Podkladové materiály")
 
-section("Zdroje a předpoklady", "#F6E6EC", [
+section_draft("Zdroje a předpoklady", "#F6E6EC", [
     zdroje,
     subhead("Podkladové materiály"),
     zdroje_figs,

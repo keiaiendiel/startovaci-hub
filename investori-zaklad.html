@@ -94,6 +94,19 @@
   .vz .vz-matrix tbody tr:nth-child(even) td.is-input{background:var(--accent-input)}
   .vz .vz-matrix tbody tr:hover td{background:#F0F0FA}
   .vz .vz-matrix tbody tr:hover .vz-stickcol{background:#F0F0FA}
+  /* zónové obarvení řádků parcel (žlutá=jádro, zelená=zázemí) — přebíjí zebru */
+  .vz .vz-matrix tbody tr.is-jadro td,.vz .vz-matrix tbody tr.is-jadro .vz-stickcol{background:#F2ECC9}
+  .vz .vz-matrix tbody tr.is-zazemi td,.vz .vz-matrix tbody tr.is-zazemi .vz-stickcol{background:#E2EFD9}
+  .vz .vz-matrix tbody tr.is-jadro:hover td,.vz .vz-matrix tbody tr.is-jadro:hover .vz-stickcol{background:#ECE4B4}
+  .vz .vz-matrix tbody tr.is-zazemi:hover td,.vz .vz-matrix tbody tr.is-zazemi:hover .vz-stickcol{background:#D4E7C7}
+  /* věrné barvení buněk dle zdrojového Excelu (vstup oranžová, zelená, modrá…) */
+  .vz .vz-matrix td.is-input,.vz .vz-matrix .vz-stickcol.is-input{background:#F0CFA0 !important}
+  .vz .vz-matrix td.is-green,.vz .vz-matrix .vz-stickcol.is-green{background:#D4E6C6 !important}
+  .vz .vz-matrix td.is-blue,.vz .vz-matrix .vz-stickcol.is-blue{background:#E6ECF6 !important}
+  .vz .vz-matrix td.is-blue2,.vz .vz-matrix .vz-stickcol.is-blue2{background:#CBDDF1 !important}
+  .vz .vz-matrix td.is-yellow,.vz .vz-matrix .vz-stickcol.is-yellow{background:#F2ECC9 !important}
+  .vz .vz-matrix td.is-tan,.vz .vz-matrix .vz-stickcol.is-tan{background:#E6D9BF !important}
+  .vz .val.is-green{background:#D4E6C6}
   .vz .vz-matrix::after{content:"";position:absolute;top:0;right:0;width:24px;height:100%;
     pointer-events:none;background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.85))}
   /* headline číslo */
@@ -136,6 +149,26 @@
   .vz .vz-bm--area{background:#E7F0E3;border-color:#A8CE9F}
   .vz .vz-bm__label{display:block;font-size:.74rem;color:var(--grey);line-height:1.3}
   .vz .vz-bm__num{display:block;margin-top:5px;font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums}
+  /* zelené souhrnné boxy (auto-fit řada) */
+  .vz .vz-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:12px 0 2px}
+  .vz .vz-sbox{background:#E7F0E3;border:1px solid #A8CE9F;border-radius:7px;padding:11px 13px}
+  .vz .vz-sbox__label{display:block;font-size:.76rem;color:#3a3a52;line-height:1.3}
+  .vz .vz-sbox__num{display:block;margin-top:5px;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+  /* zóna: velký nadpis + zelené title bandy dílčích tabulek */
+  .vz .vz-zonehead{margin:clamp(38px,5.5vw,64px) 0 0;background:#D4E6C6;border-top:2px solid #88B673;
+    border-bottom:2px solid #88B673;padding:18px 16px;font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;
+    line-height:1.25;color:var(--ink);text-wrap:balance}
+  .vz .vz-greenband{margin:22px 0 0;background:#D4E6C6;padding:11px 15px;font-size:clamp(1rem,2vw,1.18rem);
+    font-weight:700;line-height:1.3;color:var(--ink);text-wrap:balance}
+  .vz .vz-greenband--center{text-align:center}
+  /* vstupní parametry jako barevné boxy */
+  .vz .vz-params{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px}
+  .vz .vz-param{flex:1 1 165px;background:#EEF1F6;border:1px solid var(--hair);border-radius:7px;padding:11px 13px}
+  .vz .vz-param.is-input{background:#F0CFA0;border-color:#D9B57E}
+  .vz .vz-param.is-green{background:#D4E6C6;border-color:#A8CE9F}
+  .vz .vz-param.is-blue{background:#E6ECF6;border-color:#B6CDE9}
+  .vz .vz-param__label{display:block;font-size:.76rem;color:#3a3a52;line-height:1.3}
+  .vz .vz-param__num{display:block;margin-top:5px;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
   @media (max-width:680px){ .vz .vz-totals{grid-template-columns:1fr} .vz .vz-bmetrics{grid-template-columns:1fr} }
   /* verze dole */
   .vz .vzver{display:flex;flex-direction:column;align-items:center;gap:4px;margin:44px 0 8px;text-align:center}
@@ -218,7 +251,7 @@
           <td class="num">2</td>
           <td class="num">119 m²</td>
         </tr>
-        <tr>
+        <tr class="is-zazemi">
           <th scope="row" class="vz-stickcol">st. 987</th>
           <td>S</td>
           <td class="num">207 m²</td>
@@ -234,7 +267,7 @@
           <td class="num">2</td>
           <td class="num">209 m²</td>
         </tr>
-        <tr>
+        <tr class="is-zazemi">
           <th scope="row" class="vz-stickcol">st. 989</th>
           <td>E, F</td>
           <td class="num">465 m²</td>
@@ -242,7 +275,7 @@
           <td class="num">2</td>
           <td class="num">465 m²</td>
         </tr>
-        <tr>
+        <tr class="is-zazemi">
           <th scope="row" class="vz-stickcol">st. 991</th>
           <td></td>
           <td class="num">23 m²</td>
@@ -250,7 +283,7 @@
           <td class="num">2</td>
           <td class="num">23 m²</td>
         </tr>
-        <tr>
+        <tr class="is-zazemi">
           <th scope="row" class="vz-stickcol">st. 992</th>
           <td>B</td>
           <td class="num">959 m²</td>
@@ -258,7 +291,7 @@
           <td class="num">2</td>
           <td class="num">959 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 990</th>
           <td>C</td>
           <td class="num">693 m²</td>
@@ -266,7 +299,7 @@
           <td class="num">2</td>
           <td class="num">693 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 993</th>
           <td class="num">A1</td>
           <td class="num">751 m²</td>
@@ -274,7 +307,7 @@
           <td class="num">2</td>
           <td class="num">751 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 994</th>
           <td class="num">A2</td>
           <td class="num">747 m²</td>
@@ -282,7 +315,7 @@
           <td class="num">2</td>
           <td class="num">747 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 995</th>
           <td class="num">A3</td>
           <td class="num">746 m²</td>
@@ -290,7 +323,7 @@
           <td class="num">2</td>
           <td class="num">746 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 996</th>
           <td class="num">A4</td>
           <td class="num">632 m²</td>
@@ -298,7 +331,7 @@
           <td class="num">2</td>
           <td class="num">632 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 997</th>
           <td class="num">A5</td>
           <td class="num">745 m²</td>
@@ -306,7 +339,7 @@
           <td class="num">2</td>
           <td class="num">745 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 998</th>
           <td class="num">A6</td>
           <td class="num">758 m²</td>
@@ -437,7 +470,7 @@
       </tbody>
     </table>
   </div>
-  <p class="foot">Plochy SM = plochy smíšené obytné – městské dle současného ÚP.</p>
+  <p class="foot">Plochy SM = plochy smíšené obytné – městské dle současného ÚP. Žlutě jádro projektu (budovy Startovacího hubu), zeleně zázemí.</p>
   <div class="vz-totals">
     <div class="vz-total">
       <span class="vz-total__label">Celková výměra parcel</span>
@@ -476,19 +509,19 @@
     <table>
       <thead><tr>
         <th scope="col" class="vz-stickcol">Číslo parcely</th>
-        <th scope="col">Účel / název</th>
-        <th scope="col">Zpevněné plochy</th>
-        <th scope="col">Zastavěné plochy</th>
-        <th scope="col">Pozemky jádro</th>
-        <th scope="col">Nadzemních podlaží</th>
-        <th scope="col">Podzemních podlaží</th>
+        <th scope="col">Předpokládaná kolaudace (stavební dokumentace k Areálu je neúplná):</th>
+        <th scope="col">Odhad rozsahu všech zpevněných ploch v Areálu</th>
+        <th scope="col">Současnými stavbami zastavěné plochy v Areálu</th>
+        <th scope="col">Pozemky: jádro projektu Startovací hub</th>
+        <th scope="col">Počet nadzemních podlaží</th>
+        <th scope="col">Počet podzemních podlaží</th>
         <th scope="col">Celkem podlaží</th>
-        <th scope="col">HPP stávajících</th>
-        <th scope="col">HPP jádra</th>
-        <th scope="col">HPP pro 1+kk</th>
-        <th scope="col">HPP zázemí</th>
-        <th scope="col">HPP mimo jádro</th>
-        <th scope="col">HPP jádra + zázemí</th>
+        <th scope="col">HPP stávajících budov (dle katastru)</th>
+        <th scope="col">HPP jádra projektu Startovací hub</th>
+        <th scope="col">HPP jádra projektu Startovací hub určené pro budování jednotek 1+kk</th>
+        <th scope="col">HPP zázemí projektu Startovací hub</th>
+        <th scope="col">HPP všech budov netvořících jádro projektu Startovací hub</th>
+        <th scope="col">HPP jádra i zázemí projektu Startovací hub</th>
       </tr></thead>
       <tbody>
         <tr>
@@ -523,7 +556,7 @@
           <td class="num">119 m²</td>
           <td></td>
         </tr>
-        <tr>
+        <tr class="is-zazemi">
           <th scope="row" class="vz-stickcol">st. 987</th>
           <td>strážnice</td>
           <td class="num">207 m²</td>
@@ -555,7 +588,7 @@
           <td class="num">209 m²</td>
           <td></td>
         </tr>
-        <tr>
+        <tr class="is-zazemi">
           <th scope="row" class="vz-stickcol">st. 989</th>
           <td>kotelna LTO, sauna</td>
           <td class="num">465 m²</td>
@@ -571,7 +604,7 @@
           <td class="num">465 m²</td>
           <td class="num">465 m²</td>
         </tr>
-        <tr>
+        <tr class="is-zazemi">
           <th scope="row" class="vz-stickcol">st. 991</th>
           <td>kuchyňský sklad – zbořeniště</td>
           <td class="num">23 m²</td>
@@ -587,7 +620,7 @@
           <td class="num">0 m²</td>
           <td class="num">23 m²</td>
         </tr>
-        <tr>
+        <tr class="is-zazemi">
           <th scope="row" class="vz-stickcol">st. 992</th>
           <td>kuchyňský blok</td>
           <td class="num">959 m²</td>
@@ -603,7 +636,7 @@
           <td class="num">1 247 m²</td>
           <td class="num">1 247 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 990</th>
           <td>štáb (multifunkční budova se shromažďovacím sálem)</td>
           <td class="num">693 m²</td>
@@ -619,7 +652,7 @@
           <td></td>
           <td class="num">2 079 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 993</th>
           <td>ubytovna</td>
           <td class="num">751 m²</td>
@@ -635,7 +668,7 @@
           <td></td>
           <td class="num">1 502 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 994</th>
           <td>ubytovna</td>
           <td class="num">747 m²</td>
@@ -651,7 +684,7 @@
           <td></td>
           <td class="num">1 494 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 995</th>
           <td>ubytovna</td>
           <td class="num">746 m²</td>
@@ -667,7 +700,7 @@
           <td></td>
           <td class="num">1 492 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 996</th>
           <td>ubytovna</td>
           <td class="num">632 m²</td>
@@ -683,7 +716,7 @@
           <td></td>
           <td class="num">1 264 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 997</th>
           <td>ubytovna</td>
           <td class="num">745 m²</td>
@@ -699,7 +732,7 @@
           <td></td>
           <td class="num">1 490 m²</td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">st. 998</th>
           <td>velitelská budova (s byty velitelů)</td>
           <td class="num">758 m²</td>
@@ -827,7 +860,7 @@
           <td class="num">105 m²</td>
           <td></td>
         </tr>
-        <tr>
+        <tr class="is-jadro">
           <th scope="row" class="vz-stickcol">463/8</th>
           <td>hlavní pozemek v areálu</td>
           <td class="num">38 770 m²</td>
@@ -958,298 +991,258 @@
       </tbody>
     </table>
   </div>
+  <p class="foot">Žlutě jádro projektu Startovací hub (budovy A1–A6, štáb, hlavní pozemek), zeleně zázemí projektu.</p>
   <h3 class="vz-subhead">Souhrn ploch a HPP</h3>
-  <div class="vz-kv">
-    <div class="row">
-      <div class="lab">Zpevněné plochy</div>
-      <div class="val num">50 600 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">Zastavěné plochy</div>
-      <div class="val num">11 807 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">Pozemky: jádro projektu Startovací hub</div>
-      <div class="val num">16 496 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">HPP stávajících budov</div>
-      <div class="val num">18 707 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">HPP jádra projektu Startovací hub</div>
-      <div class="val num">10 837 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">HPP určené pro jednotky 1+kk</div>
-      <div class="val num">10 490 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">HPP zázemí projektu Startovací hub</div>
-      <div class="val num">2 126 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">HPP budov mimo jádro</div>
-      <div class="val num">7 847 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">HPP jádra i zázemí projektu Startovací hub</div>
-      <div class="val num">12 986 m²</div>
-    </div>
+  <div class="vz-summary">
+    <div class="vz-sbox"><span class="vz-sbox__label">Zpevněné plochy</span><span class="vz-sbox__num">50 600 m²</span></div>
+    <div class="vz-sbox"><span class="vz-sbox__label">Zastavěné plochy</span><span class="vz-sbox__num">11 807 m²</span></div>
+    <div class="vz-sbox"><span class="vz-sbox__label">Pozemky: jádro projektu SH</span><span class="vz-sbox__num">16 496 m²</span></div>
   </div>
-  <p class="foot">*zastavěné plochy: cca 15 % z ploch SM</p>
+  <p class="foot">*celkem z ploch SM: 15 %</p>
+  <div class="vz-summary">
+    <div class="vz-sbox"><span class="vz-sbox__label">HPP stávajících budov</span><span class="vz-sbox__num">18 707 m²</span></div>
+    <div class="vz-sbox"><span class="vz-sbox__label">HPP jádra projektu SH</span><span class="vz-sbox__num">10 837 m²</span></div>
+    <div class="vz-sbox"><span class="vz-sbox__label">HPP určené pro jednotky 1+kk (SH)</span><span class="vz-sbox__num">10 490 m²</span></div>
+    <div class="vz-sbox"><span class="vz-sbox__label">HPP zázemí projektu SH</span><span class="vz-sbox__num">2 126 m²</span></div>
+    <div class="vz-sbox"><span class="vz-sbox__label">HPP kolem jádra projektu SH</span><span class="vz-sbox__num">7 847 m²</span></div>
+    <div class="vz-sbox"><span class="vz-sbox__label">HPP jádra i zázemí projektu SH</span><span class="vz-sbox__num">12 986 m²</span></div>
+  </div>
 </section>
-<section class="sec" style="--tint:#ECE6F6" aria-label="Základní údaje a výpočty vyplývající z uzavřených smluv">
-  <h2 class="sechead">Smlouvy · kupní cena Areálu</h2>
-  <p class="vz-legend-input"><span class="vz-swatch"></span>hodnoty se žluto-oranžovým podkladem jsou vstupní předpoklady / odhady</p>
-  <h3 class="vz-subhead">Vstupní parametry</h3>
-  <div class="vz-kv">
-    <div class="row">
-      <div class="lab">Maximální míra inflace uvažovaná do roku 2039</div>
-      <div class="val num is-input">5 %</div>
-    </div>
-    <div class="row">
-      <div class="lab">Sjednaný základ kupní ceny</div>
-      <div class="val num is-input">385 000 000 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Plocha Areálu</div>
-      <div class="val num is-input">83 327 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">Plochy SM v Areálu</div>
-      <div class="val num is-input">77 210 m²</div>
-    </div>
-  </div>
-  <h3 class="vz-subhead">Sjednané zálohy na kupní cenu Areálu</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Sjednané zálohy na kupní cenu Areálu – vodorovně posuvná tabulka">
+<section class="sec" style="--tint:#EEF1F6" aria-label="Základní údaje a výpočty vyplývající z uzavřených smluv">
+  <h2 class="vz-zonehead">Základní údaje a výpočty vyplývající z uzavřených smluv</h2>
+  <p class="vz-greenband">Sjednané zálohy na kupní cenu Areálu</p>
+  <div class="vz-matrix" tabindex="0" role="region" aria-label="tabulka – vodorovně posuvná tabulka">
     <table>
       <thead><tr>
         <th scope="col" class="vz-stickcol">Rok</th>
         <th scope="col">Pořadí</th>
         <th scope="col">Splatnost zálohy</th>
-        <th scope="col">Výše zálohy</th>
-        <th scope="col">Equita odložená u majitele</th>
+        <th scope="col">Výše zálohy k uhrazení</th>
+        <th scope="col">Equita na odkup Areálu odložená u majitele</th>
       </tr></thead>
       <tbody>
         <tr>
-          <th scope="row" class="vz-stickcol">2023</th>
-          <td class="num">0 rok</td>
-          <td class="num">10.6.2023</td>
-          <td class="num">10 000 000 Kč</td>
-          <td class="num">10 000 000 Kč</td>
+          <th scope="row" class="vz-stickcol is-input">2023</th>
+          <td class="num is-input">0 rok</td>
+          <td class="num is-input">10.6.2023</td>
+          <td class="num is-input">10 000 000 Kč</td>
+          <td class="num is-green">10 000 000 Kč</td>
         </tr>
         <tr>
-          <th scope="row" class="vz-stickcol">2024</th>
-          <td class="num">1 rok</td>
-          <td>-</td>
-          <td class="num">0 Kč</td>
-          <td class="num">10 000 000 Kč</td>
+          <th scope="row" class="vz-stickcol is-input">2024</th>
+          <td class="num is-input">1 rok</td>
+          <td class="is-input">-</td>
+          <td class="num is-input">0 Kč</td>
+          <td class="num is-green">10 000 000 Kč</td>
         </tr>
         <tr>
-          <th scope="row" class="vz-stickcol">2025</th>
-          <td class="num">2 rok</td>
-          <td class="num">24.2.2025</td>
-          <td class="num">3 000 000 Kč</td>
-          <td class="num">13 000 000 Kč</td>
+          <th scope="row" class="vz-stickcol is-input">2025</th>
+          <td class="num is-input">2 rok</td>
+          <td class="num is-input">24.2.2025</td>
+          <td class="num is-input">3 000 000 Kč</td>
+          <td class="num is-green">13 000 000 Kč</td>
         </tr>
         <tr>
-          <th scope="row" class="vz-stickcol">2026</th>
-          <td class="num">3 rok</td>
-          <td class="num">24.2.2026</td>
-          <td class="num">3 000 000 Kč</td>
-          <td class="num">16 000 000 Kč</td>
+          <th scope="row" class="vz-stickcol is-green">2026</th>
+          <td class="num is-green">3 rok</td>
+          <td class="num is-green">24.2.2026</td>
+          <td class="num is-green">3 000 000 Kč</td>
+          <td class="num is-green">16 000 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2027</th>
           <td class="num">4 rok</td>
-          <td class="num">24.2.2027</td>
-          <td class="num">3 000 000 Kč</td>
+          <td class="num is-green">24.2.2027</td>
+          <td class="num is-green">3 000 000 Kč</td>
           <td class="num">19 000 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2028</th>
           <td class="num">5 rok</td>
-          <td class="num">24.2.2028</td>
-          <td class="num">12 500 000 Kč</td>
+          <td class="num is-green">24.2.2028</td>
+          <td class="num is-green">12 500 000 Kč</td>
           <td class="num">31 500 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2029</th>
           <td class="num">6 rok</td>
-          <td class="num">24.2.2029</td>
-          <td class="num">14 000 000 Kč</td>
+          <td class="num is-green">24.2.2029</td>
+          <td class="num is-green">14 000 000 Kč</td>
           <td class="num">45 500 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2030</th>
           <td class="num">7 rok</td>
-          <td class="num">24.2.2030</td>
-          <td class="num">16 000 000 Kč</td>
+          <td class="num is-green">24.2.2030</td>
+          <td class="num is-green">16 000 000 Kč</td>
           <td class="num">61 500 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2031</th>
           <td class="num">8 rok</td>
-          <td class="num">24.2.2031</td>
-          <td class="num">19 250 000 Kč</td>
+          <td class="num is-green">24.2.2031</td>
+          <td class="num is-green">19 250 000 Kč</td>
           <td class="num">80 750 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2032</th>
           <td class="num">9 rok</td>
-          <td class="num">24.2.2032</td>
-          <td class="num">19 250 000 Kč</td>
+          <td class="num is-green">24.2.2032</td>
+          <td class="num is-green">19 250 000 Kč</td>
           <td class="num">100 000 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2033</th>
           <td class="num">10 rok</td>
-          <td class="num">24.2.2033</td>
-          <td class="num">23 785 000 Kč</td>
+          <td class="num is-green">24.2.2033</td>
+          <td class="num is-green">23 785 000 Kč</td>
           <td class="num">123 785 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2034</th>
           <td class="num">11 rok</td>
-          <td class="num">24.2.2034</td>
-          <td class="num">23 785 000 Kč</td>
+          <td class="num is-green">24.2.2034</td>
+          <td class="num is-green">23 785 000 Kč</td>
           <td class="num">147 570 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2035</th>
           <td class="num">12 rok</td>
-          <td class="num">24.2.2035</td>
-          <td class="num">23 785 000 Kč</td>
+          <td class="num is-green">24.2.2035</td>
+          <td class="num is-green">23 785 000 Kč</td>
           <td class="num">171 355 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2036</th>
           <td class="num">13 rok</td>
-          <td class="num">24.2.2036</td>
-          <td class="num">23 785 000 Kč</td>
+          <td class="num is-green">24.2.2036</td>
+          <td class="num is-green">23 785 000 Kč</td>
           <td class="num">195 140 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2037</th>
           <td class="num">14 rok</td>
-          <td class="num">24.2.2037</td>
-          <td class="num">23 785 000 Kč</td>
+          <td class="num is-green">24.2.2037</td>
+          <td class="num is-green">23 785 000 Kč</td>
           <td class="num">218 925 000 Kč</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2038</th>
           <td class="num">15 rok</td>
-          <td class="num">24.2.2038</td>
-          <td class="num">23 785 000 Kč</td>
+          <td class="num is-green">24.2.2038</td>
+          <td class="num is-green">23 785 000 Kč</td>
           <td class="num">242 710 000 Kč</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="vz-flow" role="separator" aria-label="navazuje na další výpočet">
-    <svg class="vz-flow__svg" viewBox="0 0 44 50" width="34" height="39" aria-hidden="true">
-      <path class="vz-flow__band" d="M22 3 C 12 16, 32 30, 22 42"/>
-      <path class="vz-flow__head" d="M14 34 L22 44 L30 34"/>
-    </svg>
-    <span>Celkem uhrazené zálohy (Equita) → snižují částku „Po odečtení záloh zbývá k doplacení</span>
+  <p class="vz-greenband vz-greenband--center">Mimořádná záloha (tzv. příspěvek na příjezdovou cestu)</p>
+  <div class="vz-kv">
+    <div class="row"><div class="lab">Splatnost do 90 dní od vydání stavebního povolení na novou cestu se smluvně stanovenými parametry, která bude přiléhat k východní části Areálu</div><div class="val num is-green">7 500 000 Kč</div></div>
+    <div class="row"><div class="lab">Equita na odkup Areálu odložená u majitele po této záloze</div><div class="val num">250 210 000 Kč</div></div>
   </div>
-  <h3 class="vz-subhead">Výpočet současné a predikce budoucí kupní ceny Areálu (2023–2038)</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Výpočet současné a predikce budoucí kupní ceny Areálu (2023–2038) – vodorovně posuvná tabulka">
+  <p class="vz-greenband">Výpočet současné kupní ceny Areálu + predikce budoucí kupní ceny Areálu na základě uzavřené smlouvy</p>
+  <div class="vz-params">
+    <div class="vz-param is-blue"><span class="vz-param__label">Maximální míra inflace do 2039 na úrovni:</span><span class="vz-param__num">5 %</span></div>
+    <div class="vz-param is-green"><span class="vz-param__label">Sjednaný základ kupní ceny</span><span class="vz-param__num">385 000 000 Kč</span></div>
+    <div class="vz-param is-blue"><span class="vz-param__label">Plocha Areálu</span><span class="vz-param__num">83 327 m²</span></div>
+    <div class="vz-param is-blue"><span class="vz-param__label">Plochy SM v Areálu</span><span class="vz-param__num">77 210 m²</span></div>
+  </div>
+  <div class="vz-matrix" tabindex="0" role="region" aria-label="tabulka – vodorovně posuvná tabulka">
     <table>
       <thead><tr>
         <th scope="col" class="vz-stickcol">Rok</th>
         <th scope="col">Od</th>
         <th scope="col">Do</th>
-        <th scope="col">Přírůstek (min. 5 %)</th>
-        <th scope="col">Vypočtené navýšení</th>
+        <th scope="col">Přírůstek k základu kupní ceny (min. 5 %)*</th>
+        <th scope="col">Vypočtené navýšení kupní ceny</th>
         <th scope="col">Kupní cena za celý Areál</th>
-        <th scope="col">Záloha splatná v roce</th>
-        <th scope="col">Celkem uhrazené zálohy</th>
-        <th scope="col">Po odečtení záloh zbývá</th>
-        <th scope="col">Cena/m² všech ploch</th>
-        <th scope="col">Cena/m² k doplacení</th>
-        <th scope="col">Cena/m² SM</th>
-        <th scope="col">Cena/m² SM k doplacení</th>
-        <th scope="col">Meziroční nárůst</th>
-        <th scope="col">% zálohy z ceny</th>
+        <th scope="col">Záloha splatná v příslušném roce</th>
+        <th scope="col">Celkem uhrazené zálohy (Equita)</th>
+        <th scope="col">Po odečtení záloh zbývá k doplacení</th>
+        <th scope="col">Cena za m² všech ploch</th>
+        <th scope="col">Cena za m² všech ploch k doplacení</th>
+        <th scope="col">Cena za m² všech ploch SM</th>
+        <th scope="col">Cena za m² všech ploch SM k doplacení</th>
+        <th scope="col">Meziroční nárůst ceny Areálu v %</th>
+        <th scope="col">Kolik % z ceny Areálu uhradit formou zálohy</th>
       </tr></thead>
       <tbody>
         <tr>
-          <th scope="row" class="vz-stickcol">2023</th>
-          <td class="num">24.2.2023</td>
-          <td class="num">9.3.2024</td>
-          <td class="num">10,70 %</td>
-          <td class="num">0</td>
-          <td class="num">385 000 000 Kč</td>
-          <td class="num">10 000 000 Kč</td>
-          <td class="num">10 000 000 Kč</td>
-          <td class="num">375 000 000 Kč</td>
-          <td class="num">4 620 Kč</td>
-          <td class="num">4 500 Kč</td>
-          <td class="num">4 986 Kč</td>
-          <td class="num">4 857 Kč</td>
-          <td>-</td>
-          <td>-</td>
+          <th scope="row" class="vz-stickcol is-input">2023</th>
+          <td class="num is-input">24.2.2023</td>
+          <td class="num is-input">9.3.2024</td>
+          <td class="num is-input">10,70 %</td>
+          <td class="num is-input">0</td>
+          <td class="num is-input">385 000 000 Kč</td>
+          <td class="num is-input">10 000 000 Kč</td>
+          <td class="num is-input">10 000 000 Kč</td>
+          <td class="num is-input">375 000 000 Kč</td>
+          <td class="num is-input">4 620 Kč</td>
+          <td class="num is-input">4 500 Kč</td>
+          <td class="num is-input">4 986 Kč</td>
+          <td class="num is-input">4 857 Kč</td>
+          <td class="is-input">-</td>
+          <td class="is-input">-</td>
         </tr>
         <tr>
-          <th scope="row" class="vz-stickcol">2024</th>
-          <td class="num">10.3.2024</td>
-          <td class="num">9.3.2025</td>
-          <td class="num">5 %</td>
-          <td class="num">34 329 167 Kč</td>
-          <td class="num">419 329 167 Kč</td>
-          <td class="num">0 Kč</td>
-          <td class="num">10 000 000 Kč</td>
-          <td class="num">409 329 167 Kč</td>
-          <td class="num">5 032 Kč</td>
-          <td class="num">4 912 Kč</td>
-          <td class="num">5 431 Kč</td>
-          <td class="num">5 302 Kč</td>
-          <td>-</td>
-          <td>-</td>
+          <th scope="row" class="vz-stickcol is-input">2024</th>
+          <td class="num is-input">10.3.2024</td>
+          <td class="num is-input">9.3.2025</td>
+          <td class="num is-input">5 %</td>
+          <td class="num is-input">34 329 167 Kč</td>
+          <td class="num is-input">419 329 167 Kč</td>
+          <td class="num is-input">0 Kč</td>
+          <td class="num is-input">10 000 000 Kč</td>
+          <td class="num is-input">409 329 167 Kč</td>
+          <td class="num is-input">5 032 Kč</td>
+          <td class="num is-input">4 912 Kč</td>
+          <td class="num is-input">5 431 Kč</td>
+          <td class="num is-input">5 302 Kč</td>
+          <td class="is-input">-</td>
+          <td class="is-input">-</td>
         </tr>
         <tr>
-          <th scope="row" class="vz-stickcol">2025</th>
-          <td class="num">10.3.2025</td>
-          <td class="num">9.3.2026</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">438 579 167 Kč</td>
-          <td class="num">3 000 000 Kč</td>
-          <td class="num">13 000 000 Kč</td>
-          <td class="num">425 579 167 Kč</td>
-          <td class="num">5 263 Kč</td>
-          <td class="num">5 107 Kč</td>
-          <td class="num">5 680 Kč</td>
-          <td class="num">5 512 Kč</td>
-          <td>-</td>
-          <td>-</td>
+          <th scope="row" class="vz-stickcol is-input">2025</th>
+          <td class="num is-input">10.3.2025</td>
+          <td class="num is-input">9.3.2026</td>
+          <td class="num is-input">5 %</td>
+          <td class="num is-input">19 250 000 Kč</td>
+          <td class="num is-input">438 579 167 Kč</td>
+          <td class="num is-input">3 000 000 Kč</td>
+          <td class="num is-input">13 000 000 Kč</td>
+          <td class="num is-input">425 579 167 Kč</td>
+          <td class="num is-input">5 263 Kč</td>
+          <td class="num is-input">5 107 Kč</td>
+          <td class="num is-input">5 680 Kč</td>
+          <td class="num is-input">5 512 Kč</td>
+          <td class="is-input">-</td>
+          <td class="is-input">-</td>
         </tr>
         <tr>
-          <th scope="row" class="vz-stickcol">2026</th>
-          <td class="num">10.3.2026</td>
-          <td class="num">9.3.2027</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">457 829 167 Kč</td>
-          <td class="num">3 000 000 Kč</td>
-          <td class="num">16 000 000 Kč</td>
-          <td class="num">441 829 167 Kč</td>
-          <td class="num">5 494 Kč</td>
-          <td class="num">5 302 Kč</td>
-          <td class="num">5 930 Kč</td>
-          <td class="num">5 722 Kč</td>
-          <td class="num">4,20 %</td>
-          <td class="num">0,66 %</td>
+          <th scope="row" class="vz-stickcol is-green">2026</th>
+          <td class="num is-green">10.3.2026</td>
+          <td class="num is-green">9.3.2027</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">457 829 167 Kč</td>
+          <td class="num is-green">3 000 000 Kč</td>
+          <td class="num is-green">16 000 000 Kč</td>
+          <td class="num is-green">441 829 167 Kč</td>
+          <td class="num is-green">5 494 Kč</td>
+          <td class="num is-green">5 302 Kč</td>
+          <td class="num is-green">5 930 Kč</td>
+          <td class="num is-green">5 722 Kč</td>
+          <td class="num is-green">4,20 %</td>
+          <td class="num is-green">0,66 %</td>
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2027</th>
-          <td class="num">10.3.2027</td>
-          <td class="num">9.3.2028</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">477 079 167 Kč</td>
+          <td class="num is-green">10.3.2027</td>
+          <td class="num is-green">9.3.2028</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">477 079 167 Kč</td>
           <td class="num">3 000 000 Kč</td>
           <td class="num">19 000 000 Kč</td>
           <td class="num">458 079 167 Kč</td>
@@ -1262,11 +1255,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2028</th>
-          <td class="num">10.3.2028</td>
-          <td class="num">9.3.2029</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">496 329 167 Kč</td>
+          <td class="num is-green">10.3.2028</td>
+          <td class="num is-green">9.3.2029</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">496 329 167 Kč</td>
           <td class="num">12 500 000 Kč</td>
           <td class="num">31 500 000 Kč</td>
           <td class="num">464 829 167 Kč</td>
@@ -1279,11 +1272,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2029</th>
-          <td class="num">10.3.2029</td>
-          <td class="num">9.3.2030</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">515 579 167 Kč</td>
+          <td class="num is-green">10.3.2029</td>
+          <td class="num is-green">9.3.2030</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">515 579 167 Kč</td>
           <td class="num">14 000 000 Kč</td>
           <td class="num">45 500 000 Kč</td>
           <td class="num">470 079 167 Kč</td>
@@ -1296,11 +1289,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2030</th>
-          <td class="num">10.3.2030</td>
-          <td class="num">9.3.2031</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">534 829 167 Kč</td>
+          <td class="num is-green">10.3.2030</td>
+          <td class="num is-green">9.3.2031</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">534 829 167 Kč</td>
           <td class="num">16 000 000 Kč</td>
           <td class="num">61 500 000 Kč</td>
           <td class="num">473 329 167 Kč</td>
@@ -1313,11 +1306,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2031</th>
-          <td class="num">10.3.2031</td>
-          <td class="num">9.3.2032</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">554 079 167 Kč</td>
+          <td class="num is-green">10.3.2031</td>
+          <td class="num is-green">9.3.2032</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">554 079 167 Kč</td>
           <td class="num">19 250 000 Kč</td>
           <td class="num">80 750 000 Kč</td>
           <td class="num">473 329 167 Kč</td>
@@ -1330,11 +1323,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2032</th>
-          <td class="num">10.3.2032</td>
-          <td class="num">9.3.2033</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">573 329 167 Kč</td>
+          <td class="num is-green">10.3.2032</td>
+          <td class="num is-green">9.3.2033</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">573 329 167 Kč</td>
           <td class="num">19 250 000 Kč</td>
           <td class="num">100 000 000 Kč</td>
           <td class="num">473 329 167 Kč</td>
@@ -1347,11 +1340,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2033</th>
-          <td class="num">10.3.2033</td>
-          <td class="num">9.3.2034</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">592 579 167 Kč</td>
+          <td class="num is-green">10.3.2033</td>
+          <td class="num is-green">9.3.2034</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">592 579 167 Kč</td>
           <td class="num">23 785 000 Kč</td>
           <td class="num">123 785 000 Kč</td>
           <td class="num">468 794 167 Kč</td>
@@ -1364,11 +1357,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2034</th>
-          <td class="num">10.3.2034</td>
-          <td class="num">9.3.2035</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">611 829 167 Kč</td>
+          <td class="num is-green">10.3.2034</td>
+          <td class="num is-green">9.3.2035</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">611 829 167 Kč</td>
           <td class="num">23 785 000 Kč</td>
           <td class="num">147 570 000 Kč</td>
           <td class="num">464 259 167 Kč</td>
@@ -1381,11 +1374,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2035</th>
-          <td class="num">10.3.2035</td>
-          <td class="num">9.3.2036</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">631 079 167 Kč</td>
+          <td class="num is-green">10.3.2035</td>
+          <td class="num is-green">9.3.2036</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">631 079 167 Kč</td>
           <td class="num">23 785 000 Kč</td>
           <td class="num">171 355 000 Kč</td>
           <td class="num">459 724 167 Kč</td>
@@ -1398,11 +1391,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2036</th>
-          <td class="num">10.3.2036</td>
-          <td class="num">9.3.2037</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">650 329 167 Kč</td>
+          <td class="num is-green">10.3.2036</td>
+          <td class="num is-green">9.3.2037</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">650 329 167 Kč</td>
           <td class="num">23 785 000 Kč</td>
           <td class="num">195 140 000 Kč</td>
           <td class="num">455 189 167 Kč</td>
@@ -1415,11 +1408,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2037</th>
-          <td class="num">10.3.2037</td>
-          <td class="num">9.3.2038</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">669 579 167 Kč</td>
+          <td class="num is-green">10.3.2037</td>
+          <td class="num is-green">9.3.2038</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">669 579 167 Kč</td>
           <td class="num">23 785 000 Kč</td>
           <td class="num">218 925 000 Kč</td>
           <td class="num">450 654 167 Kč</td>
@@ -1432,11 +1425,11 @@
         </tr>
         <tr>
           <th scope="row" class="vz-stickcol">2038</th>
-          <td class="num">10.3.2038</td>
-          <td class="num">24.2.2039</td>
-          <td class="num">5 %</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">688 829 167 Kč</td>
+          <td class="num is-green">10.3.2038</td>
+          <td class="num is-green">24.2.2039</td>
+          <td class="num is-green">5 %</td>
+          <td class="num is-green">19 250 000 Kč</td>
+          <td class="num is-green">688 829 167 Kč</td>
           <td class="num">23 785 000 Kč</td>
           <td class="num">242 710 000 Kč</td>
           <td class="num">446 119 167 Kč</td>
@@ -1451,1525 +1444,10 @@
     </table>
   </div>
   <p class="foot">*sjednaná kupní cena Areálu se každoročně k 10. 3. navyšuje v souladu s čl. 3 Smlouvy o 19 250 000 Kč, pokud inflace CPI za předchozí rok nepřekročí 5 %.</p>
-  <h3 class="vz-subhead">Mimořádná záloha</h3>
-  <div class="vz-kv"><div class="row"><div class="lab">Mimořádná záloha (příspěvek na příjezdovou cestu) — splatnost do 90 dní od vydání stavebního povolení na novou cestu se smluvně stanovenými parametry přiléhající k východní části Areálu</div><div class="val num">7 500 000 Kč</div></div><div class="row"><div class="lab">Equita odložená u majitele po této záloze</div><div class="val num">250 210 000 Kč</div></div></div>
-</section>
-<section class="sec" style="--tint:#E7F0E3" aria-label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu jednotek 1+kk">
-  <h2 class="sechead">Startovací hub · jednotky 1+kk</h2>
-  <h3 class="vz-subhead">Vstupní parametry</h3>
-  <div class="vz-kv">
-    <div class="row">
-      <div class="lab">Odhadované tržní nájemné za jednotku 1+kk (21 m² ČPP) měsíčně</div>
-      <div class="val num is-input">13 800 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Obsazenost</div>
-      <div class="val num is-input">95 %</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhadovaná prodejní cena jedné jednotky 1+kk (2026)</div>
-      <div class="val num is-input">2 975 300 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Zvolený index meziročního růstu ceny nemovitostí</div>
-      <div class="val num is-input">5,00 %</div>
-    </div>
-  </div>
-  <div class="vz-flow" role="separator" aria-label="navazuje na další výpočet">
-    <svg class="vz-flow__svg" viewBox="0 0 44 50" width="34" height="39" aria-hidden="true">
-      <path class="vz-flow__band" d="M22 3 C 12 16, 32 30, 22 42"/>
-      <path class="vz-flow__head" d="M14 34 L22 44 L30 34"/>
-    </svg>
-    <span>Tržní nájemné × obsazenost → odhad ročních příjmů po jednotlivých budovách</span>
-  </div>
-  <h3 class="vz-subhead">Odhad příjmů z pronájmu jednotek (po budovách)</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Odhad příjmů z pronájmu jednotek (po budovách) – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Parcela</th>
-        <th scope="col">Označení</th>
-        <th scope="col">Název</th>
-        <th scope="col">1.NP</th>
-        <th scope="col">2.NP</th>
-        <th scope="col">3.NP</th>
-        <th scope="col">Počet jednotek</th>
-        <th scope="col">Měsíční příjem</th>
-        <th scope="col">Roční příjem</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 987</th>
-          <td>S</td>
-          <td>strážnice</td>
-          <td class="num">7</td>
-          <td class="num">7</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 989</th>
-          <td>E, F</td>
-          <td>kotelna LTO, sauna</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 991</th>
-          <td></td>
-          <td>kuchyňský sklad – zbořeniště</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 992</th>
-          <td>B</td>
-          <td>kuchyňský blok</td>
-          <td class="num">11</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 990</th>
-          <td>C</td>
-          <td>multifunkční budova</td>
-          <td class="num">7</td>
-          <td class="num">25</td>
-          <td class="num">25</td>
-          <td class="num">57</td>
-          <td class="num">747 270 Kč</td>
-          <td class="num">8 967 240 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 993</th>
-          <td class="num">A1</td>
-          <td>ubytovna</td>
-          <td class="num">22</td>
-          <td class="num">23</td>
-          <td></td>
-          <td class="num">45</td>
-          <td class="num">589 950 Kč</td>
-          <td class="num">7 079 400 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 994</th>
-          <td class="num">A2</td>
-          <td>ubytovna</td>
-          <td class="num">22</td>
-          <td class="num">23</td>
-          <td></td>
-          <td class="num">45</td>
-          <td class="num">589 950 Kč</td>
-          <td class="num">7 079 400 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 995</th>
-          <td class="num">A3</td>
-          <td>ubytovna</td>
-          <td class="num">22</td>
-          <td class="num">23</td>
-          <td></td>
-          <td class="num">45</td>
-          <td class="num">589 950 Kč</td>
-          <td class="num">7 079 400 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 996</th>
-          <td class="num">A4</td>
-          <td>ubytovna</td>
-          <td class="num">21</td>
-          <td class="num">20</td>
-          <td></td>
-          <td class="num">41</td>
-          <td class="num">537 510 Kč</td>
-          <td class="num">6 450 120 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 997</th>
-          <td class="num">A5</td>
-          <td>ubytovna</td>
-          <td class="num">24</td>
-          <td class="num">25</td>
-          <td></td>
-          <td class="num">49</td>
-          <td class="num">642 390 Kč</td>
-          <td class="num">7 708 680 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 998</th>
-          <td class="num">A6</td>
-          <td>budova s byty velitelů</td>
-          <td class="num">24</td>
-          <td class="num">25</td>
-          <td></td>
-          <td class="num">49</td>
-          <td class="num">642 390 Kč</td>
-          <td class="num">7 708 680 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 1002</th>
-          <td>U</td>
-          <td>Učebny (1.NP), Sklady (2.NP)</td>
-          <td class="num">22</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 1003</th>
-          <td>D</td>
-          <td>Dílny</td>
-          <td class="num">14</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <h3 class="vz-subhead">Odhadovaný meziroční nárůst příjmů z pronájmu</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Odhadovaný meziroční nárůst příjmů z pronájmu – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Rok</th>
-        <th scope="col">Meziroční růst</th>
-        <th scope="col">Příjem v daném roce</th>
-        <th scope="col">Akumulované příjmy</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">2023</th>
-          <td></td>
-          <td class="num">0 Kč</td>
-          <td class="num">0 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2024</th>
-          <td></td>
-          <td class="num">0 Kč</td>
-          <td class="num">0 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2025</th>
-          <td></td>
-          <td class="num">0 Kč</td>
-          <td class="num">0 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2026</th>
-          <td class="num">1</td>
-          <td class="num">52 072 920 Kč</td>
-          <td class="num">0 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2027</th>
-          <td class="num">5,00 %</td>
-          <td class="num">54 676 566 Kč</td>
-          <td class="num">0 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2028</th>
-          <td class="num">5,00 %</td>
-          <td class="num">57 410 394 Kč</td>
-          <td class="num">0 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2029</th>
-          <td class="num">5,00 %</td>
-          <td class="num">60 280 914 Kč</td>
-          <td class="num">60 280 914 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2030</th>
-          <td class="num">5,00 %</td>
-          <td class="num">63 294 960 Kč</td>
-          <td class="num">123 575 874 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2031</th>
-          <td class="num">5,00 %</td>
-          <td class="num">66 459 708 Kč</td>
-          <td class="num">190 035 581 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2032</th>
-          <td class="num">5,00 %</td>
-          <td class="num">69 782 693 Kč</td>
-          <td class="num">259 818 275 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2033</th>
-          <td class="num">5,00 %</td>
-          <td class="num">73 271 828 Kč</td>
-          <td class="num">333 090 102 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2034</th>
-          <td class="num">5,00 %</td>
-          <td class="num">76 935 419 Kč</td>
-          <td class="num">410 025 521 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2035</th>
-          <td class="num">5,00 %</td>
-          <td class="num">80 782 190 Kč</td>
-          <td class="num">490 807 711 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2036</th>
-          <td class="num">5,00 %</td>
-          <td class="num">84 821 300 Kč</td>
-          <td class="num">575 629 011 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2037</th>
-          <td class="num">5,00 %</td>
-          <td class="num">89 062 365 Kč</td>
-          <td class="num">664 691 376 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2038</th>
-          <td class="num">5,00 %</td>
-          <td class="num">93 515 483 Kč</td>
-          <td class="num">758 206 858 Kč</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <h3 class="vz-subhead">Hrubé porovnání hlavních provozních příjmů a nákladů</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Hrubé porovnání hlavních provozních příjmů a nákladů – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Rok</th>
-        <th scope="col">Příjem v roce</th>
-        <th scope="col">Záloha na kupní cenu</th>
-        <th scope="col">Rozdíl příjmů a nákladů</th>
-        <th scope="col">Akumulovaný rozdíl</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">2023</th>
-          <td class="num">0 Kč</td>
-          <td class="num">10 000 000 Kč</td>
-          <td class="num">−10 000 000 Kč</td>
-          <td class="num">−10 000 000 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2024</th>
-          <td class="num">0 Kč</td>
-          <td class="num">0 Kč</td>
-          <td class="num">0 Kč</td>
-          <td class="num">−10 000 000 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2025</th>
-          <td class="num">0 Kč</td>
-          <td class="num">3 000 000 Kč</td>
-          <td class="num">−3 000 000 Kč</td>
-          <td class="num">−13 000 000 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2026</th>
-          <td class="num">0 Kč</td>
-          <td class="num">3 000 000 Kč</td>
-          <td class="num">−3 000 000 Kč</td>
-          <td class="num">−16 000 000 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2027</th>
-          <td class="num">0 Kč</td>
-          <td class="num">3 000 000 Kč</td>
-          <td class="num">−3 000 000 Kč</td>
-          <td class="num">−19 000 000 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2028</th>
-          <td class="num">0 Kč</td>
-          <td class="num">12 500 000 Kč</td>
-          <td class="num">−12 500 000 Kč</td>
-          <td class="num">−31 500 000 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2029</th>
-          <td class="num">60 280 914 Kč</td>
-          <td class="num">14 000 000 Kč</td>
-          <td class="num">46 280 914 Kč</td>
-          <td class="num">14 780 914 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2030</th>
-          <td class="num">63 294 960 Kč</td>
-          <td class="num">16 000 000 Kč</td>
-          <td class="num">47 294 960 Kč</td>
-          <td class="num">62 075 874 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2031</th>
-          <td class="num">66 459 708 Kč</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">47 209 708 Kč</td>
-          <td class="num">109 285 581 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2032</th>
-          <td class="num">69 782 693 Kč</td>
-          <td class="num">19 250 000 Kč</td>
-          <td class="num">50 532 693 Kč</td>
-          <td class="num">159 818 275 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2033</th>
-          <td class="num">73 271 828 Kč</td>
-          <td class="num">23 785 000 Kč</td>
-          <td class="num">49 486 828 Kč</td>
-          <td class="num">209 305 102 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2034</th>
-          <td class="num">76 935 419 Kč</td>
-          <td class="num">23 785 000 Kč</td>
-          <td class="num">53 150 419 Kč</td>
-          <td class="num">262 455 521 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2035</th>
-          <td class="num">80 782 190 Kč</td>
-          <td class="num">23 785 000 Kč</td>
-          <td class="num">56 997 190 Kč</td>
-          <td class="num">319 452 711 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2036</th>
-          <td class="num">84 821 300 Kč</td>
-          <td class="num">23 785 000 Kč</td>
-          <td class="num">61 036 300 Kč</td>
-          <td class="num">380 489 011 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2037</th>
-          <td class="num">89 062 365 Kč</td>
-          <td class="num">23 785 000 Kč</td>
-          <td class="num">65 277 365 Kč</td>
-          <td class="num">445 766 376 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2038</th>
-          <td class="num">93 515 483 Kč</td>
-          <td class="num">23 785 000 Kč</td>
-          <td class="num">69 730 483 Kč</td>
-          <td class="num">515 496 858 Kč</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <h3 class="vz-subhead">Odhad tržní ceny jednotek (po budovách, 2026)</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Odhad tržní ceny jednotek (po budovách, 2026) – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Parcela</th>
-        <th scope="col">Označení</th>
-        <th scope="col">Název</th>
-        <th scope="col">Celkem podlaží</th>
-        <th scope="col">Podlaží pro rekonstrukci</th>
-        <th scope="col">Počet jednotek</th>
-        <th scope="col">Tržní cena jednotek v budově</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 987</th>
-          <td>S</td>
-          <td>strážnice</td>
-          <td class="num">2</td>
-          <td class="num">2</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 989</th>
-          <td>E, F</td>
-          <td>kotelna LTO, sauna</td>
-          <td class="num">1</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 991</th>
-          <td></td>
-          <td>kuchyňská sklad - zbořeniště</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 992</th>
-          <td>B</td>
-          <td>kuchyňský blok</td>
-          <td class="num">1,30</td>
-          <td class="num">1</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 990</th>
-          <td>C</td>
-          <td>štáb</td>
-          <td class="num">3</td>
-          <td class="num">2,30</td>
-          <td class="num">57</td>
-          <td class="num">169 592 100 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 993</th>
-          <td class="num">A1</td>
-          <td>ubytovna</td>
-          <td class="num">2</td>
-          <td class="num">2</td>
-          <td class="num">45</td>
-          <td class="num">133 888 500 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 994</th>
-          <td class="num">A2</td>
-          <td>ubytovna</td>
-          <td class="num">2</td>
-          <td class="num">2</td>
-          <td class="num">45</td>
-          <td class="num">133 888 500 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 995</th>
-          <td class="num">A3</td>
-          <td>ubytovna</td>
-          <td class="num">2</td>
-          <td class="num">2</td>
-          <td class="num">45</td>
-          <td class="num">133 888 500 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 996</th>
-          <td class="num">A4</td>
-          <td>ubytovna</td>
-          <td class="num">2</td>
-          <td class="num">2</td>
-          <td class="num">41</td>
-          <td class="num">121 987 300 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 997</th>
-          <td class="num">A5</td>
-          <td>ubytovna</td>
-          <td class="num">2</td>
-          <td class="num">2</td>
-          <td class="num">49</td>
-          <td class="num">145 789 700 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 998</th>
-          <td class="num">A6</td>
-          <td>ubytovna</td>
-          <td class="num">2</td>
-          <td class="num">2</td>
-          <td class="num">49</td>
-          <td class="num">145 789 700 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 1002</th>
-          <td>U</td>
-          <td>Učebny (1.NP), Sklady (2.NP)</td>
-          <td class="num">2</td>
-          <td class="num">1</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 1003</th>
-          <td>D</td>
-          <td>Dílny</td>
-          <td class="num">1</td>
-          <td class="num">1</td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <h3 class="vz-subhead">Odhadovaný nárůst tržní ceny jednotek</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Odhadovaný nárůst tržní ceny jednotek – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Rok</th>
-        <th scope="col">Index růstu</th>
-        <th scope="col">Odhadovaná tržní cena všech jednotek</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">2023</th>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2024</th>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2025</th>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2026</th>
-          <td class="num">1</td>
-          <td class="num">984 824 300 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2027</th>
-          <td class="num">0,05</td>
-          <td class="num">1 034 065 515 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2028</th>
-          <td class="num">0,05</td>
-          <td class="num">1 085 768 791 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2029</th>
-          <td class="num">0,05</td>
-          <td class="num">1 140 057 230 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2030</th>
-          <td class="num">0,05</td>
-          <td class="num">1 197 060 092 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2031</th>
-          <td class="num">0,05</td>
-          <td class="num">1 256 913 096 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2032</th>
-          <td class="num">0,05</td>
-          <td class="num">1 319 758 751 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2033</th>
-          <td class="num">0,05</td>
-          <td class="num">1 385 746 689 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2034</th>
-          <td class="num">0,05</td>
-          <td class="num">1 455 034 023 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2035</th>
-          <td class="num">0,05</td>
-          <td class="num">1 527 785 724 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2036</th>
-          <td class="num">0,05</td>
-          <td class="num">1 604 175 011 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2037</th>
-          <td class="num">0,05</td>
-          <td class="num">1 684 383 761 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2038</th>
-          <td class="num">0,05</td>
-          <td class="num">1 768 602 949 Kč</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <h3 class="vz-subhead">Rozdíl mezi kupní cenou Areálu a tržní cenou jednotek</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Rozdíl mezi kupní cenou Areálu a tržní cenou jednotek – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Rok</th>
-        <th scope="col">Přírůstek prodejní ceny</th>
-        <th scope="col">Prodejní cena jednotek</th>
-        <th scope="col">Kupní cena Areálu</th>
-        <th scope="col">K doplacení po zálohách</th>
-        <th scope="col">Rozdíl (trh − doplatek)</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">2023</th>
-          <td></td>
-          <td></td>
-          <td class="num">385 000 000 Kč</td>
-          <td class="num">375 000 000 Kč</td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2024</th>
-          <td></td>
-          <td></td>
-          <td class="num">419 329 167 Kč</td>
-          <td class="num">409 329 167 Kč</td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2025</th>
-          <td></td>
-          <td></td>
-          <td class="num">438 579 167 Kč</td>
-          <td class="num">425 579 167 Kč</td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2026</th>
-          <td class="num">0 %</td>
-          <td class="num">984 824 300 Kč</td>
-          <td class="num">457 829 167 Kč</td>
-          <td class="num">441 829 167 Kč</td>
-          <td class="num">542 995 133 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2027</th>
-          <td class="num">5 %</td>
-          <td class="num">1 034 065 515 Kč</td>
-          <td class="num">477 079 167 Kč</td>
-          <td class="num">458 079 167 Kč</td>
-          <td class="num">575 986 348 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2028</th>
-          <td class="num">5 %</td>
-          <td class="num">1 085 768 791 Kč</td>
-          <td class="num">496 329 167 Kč</td>
-          <td class="num">464 829 167 Kč</td>
-          <td class="num">620 939 624 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2029</th>
-          <td class="num">5 %</td>
-          <td class="num">1 140 057 230 Kč</td>
-          <td class="num">515 579 167 Kč</td>
-          <td class="num">470 079 167 Kč</td>
-          <td class="num">669 978 064 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2030</th>
-          <td class="num">5 %</td>
-          <td class="num">1 197 060 092 Kč</td>
-          <td class="num">534 829 167 Kč</td>
-          <td class="num">473 329 167 Kč</td>
-          <td class="num">723 730 925 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2031</th>
-          <td class="num">5 %</td>
-          <td class="num">1 256 913 096 Kč</td>
-          <td class="num">554 079 167 Kč</td>
-          <td class="num">473 329 167 Kč</td>
-          <td class="num">783 583 930 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2032</th>
-          <td class="num">5 %</td>
-          <td class="num">1 319 758 751 Kč</td>
-          <td class="num">573 329 167 Kč</td>
-          <td class="num">473 329 167 Kč</td>
-          <td class="num">846 429 585 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2033</th>
-          <td class="num">5 %</td>
-          <td class="num">1 385 746 689 Kč</td>
-          <td class="num">592 579 167 Kč</td>
-          <td class="num">468 794 167 Kč</td>
-          <td class="num">916 952 522 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2034</th>
-          <td class="num">5 %</td>
-          <td class="num">1 455 034 023 Kč</td>
-          <td class="num">611 829 167 Kč</td>
-          <td class="num">464 259 167 Kč</td>
-          <td class="num">990 774 857 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2035</th>
-          <td class="num">5 %</td>
-          <td class="num">1 527 785 724 Kč</td>
-          <td class="num">631 079 167 Kč</td>
-          <td class="num">459 724 167 Kč</td>
-          <td class="num">1 068 061 558 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2036</th>
-          <td class="num">5 %</td>
-          <td class="num">1 604 175 011 Kč</td>
-          <td class="num">650 329 167 Kč</td>
-          <td class="num">455 189 167 Kč</td>
-          <td class="num">1 148 985 844 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2037</th>
-          <td class="num">5 %</td>
-          <td class="num">1 684 383 761 Kč</td>
-          <td class="num">669 579 167 Kč</td>
-          <td class="num">450 654 167 Kč</td>
-          <td class="num">1 233 729 594 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2038</th>
-          <td class="num">5 %</td>
-          <td class="num">1 768 602 949 Kč</td>
-          <td class="num">688 829 167 Kč</td>
-          <td class="num">446 119 167 Kč</td>
-          <td class="num">1 322 483 783 Kč</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="vz-flow" role="separator" aria-label="navazuje na další výpočet">
-    <svg class="vz-flow__svg" viewBox="0 0 44 50" width="34" height="39" aria-hidden="true">
-      <path class="vz-flow__band" d="M22 3 C 12 16, 32 30, 22 42"/>
-      <path class="vz-flow__head" d="M14 34 L22 44 L30 34"/>
-    </svg>
-    <span>Akumulované příjmy a tržní cena jednotek → souhrnné ukazatele projektu</span>
-  </div>
-  <h3 class="vz-subhead">Souhrn</h3>
-  <div class="vz-kv">
-    <div class="row">
-      <div class="lab">Odhadované příjmy z pronájmu jednotek do konce roku 2038</div>
-      <div class="val num">758 206 858 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Cena Areálu po odečtení uhrazených záloh (konec 2038)</div>
-      <div class="val num">446 119 167 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Hlavní příjmy projektu Startovací hub do konce 2038</div>
-      <div class="val num">515 496 858 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhadovaný rozdíl mezi prodejní cenou jednotek a doplatkem (2038)</div>
-      <div class="val num">1 322 483 783 Kč</div>
-    </div>
-  </div>
-  <h3 class="vz-subhead">Vizualizace</h3>
-  <div class="vz-figs" role="group" aria-label="Vizualizace">
-    <figure><img src="assets/images/investori/zaklad/render-jednotka-1kk-interier.jpg" alt="Vizualizace interiéru: jednotka 1+kk o 21 m² ČPP" loading="lazy">
-      <figcaption>Vizualizace interiéru: jednotka 1+kk o 21 m² ČPP</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/render-exterier-jadro-vecer.jpg" alt="Vizualizace exteriéru: jádro projektu Startovací hub" loading="lazy">
-      <figcaption>Vizualizace exteriéru: jádro projektu Startovací hub</figcaption></figure>
-  </div>
-</section>
-<section class="sec" style="--tint:#F1EADF" aria-label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu lůžek">
-  <h2 class="sechead">Startovací hub · lůžka ve sdílených pokojích</h2>
-  <h3 class="vz-subhead">Vstupní parametry</h3>
-  <div class="vz-kv">
-    <div class="row">
-      <div class="lab">Index převodu HPP na ČPP pokojů s lůžky</div>
-      <div class="val num is-input">0,65</div>
-    </div>
-    <div class="row">
-      <div class="lab">Počet ČPP na jedno lůžko</div>
-      <div class="val num is-input">6,50 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhad tržního nájemného za jedno lůžko (měsíčně)</div>
-      <div class="val num is-input">7 000 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhadované náklady na služby na jedno lůžko (měsíčně)</div>
-      <div class="val num is-input">1 800 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Obsazenost</div>
-      <div class="val num is-input">95 %</div>
-    </div>
-  </div>
-  <h3 class="vz-subhead">Odhad příjmů z pronájmu lůžek ve sdílených pokojích (po budovách)</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Odhad příjmů z pronájmu lůžek ve sdílených pokojích (po budovách) – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Parcela</th>
-        <th scope="col">Označení</th>
-        <th scope="col">Název</th>
-        <th scope="col">HPP budovy</th>
-        <th scope="col">ČPP pokojů</th>
-        <th scope="col">Počet lůžek</th>
-        <th scope="col">Měsíční příjem</th>
-        <th scope="col">Měsíční náklad na služby</th>
-        <th scope="col">Roční příjem očištěný o služby</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 987</th>
-          <td>S</td>
-          <td>strážnice</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 989</th>
-          <td>E, F</td>
-          <td>kotelna LTO, sauna</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 991</th>
-          <td></td>
-          <td>kuchyňský sklad – zbořeniště</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 992</th>
-          <td>B</td>
-          <td>kuchyňský blok</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 990</th>
-          <td>C</td>
-          <td>multifunkční budova</td>
-          <td class="num">1 386</td>
-          <td class="num">901</td>
-          <td class="num">139</td>
-          <td class="num">921 690 Kč</td>
-          <td class="num">237 006 Kč</td>
-          <td class="num">8 216 208 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 993</th>
-          <td class="num">A1</td>
-          <td>ubytovna</td>
-          <td class="num">1 502</td>
-          <td class="num">976</td>
-          <td class="num">150</td>
-          <td class="num">998 830 Kč</td>
-          <td class="num">256 842 Kč</td>
-          <td class="num">8 903 856 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 994</th>
-          <td class="num">A2</td>
-          <td>ubytovna</td>
-          <td class="num">1 494</td>
-          <td class="num">971</td>
-          <td class="num">149</td>
-          <td class="num">993 510 Kč</td>
-          <td class="num">255 474 Kč</td>
-          <td class="num">8 856 432 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 995</th>
-          <td class="num">A3</td>
-          <td>ubytovna</td>
-          <td class="num">1 492</td>
-          <td class="num">970</td>
-          <td class="num">149</td>
-          <td class="num">992 180 Kč</td>
-          <td class="num">255 132 Kč</td>
-          <td class="num">8 844 576 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 996</th>
-          <td class="num">A4</td>
-          <td>ubytovna</td>
-          <td class="num">1 264</td>
-          <td class="num">822</td>
-          <td class="num">126</td>
-          <td class="num">840 560 Kč</td>
-          <td class="num">216 144 Kč</td>
-          <td class="num">7 492 992 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 997</th>
-          <td class="num">A5</td>
-          <td>ubytovna</td>
-          <td class="num">1 490</td>
-          <td class="num">968</td>
-          <td class="num">149</td>
-          <td class="num">990 850 Kč</td>
-          <td class="num">254 790 Kč</td>
-          <td class="num">8 832 720 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 998</th>
-          <td class="num">A6</td>
-          <td>budova s byty velitelů</td>
-          <td class="num">1 516</td>
-          <td class="num">985</td>
-          <td class="num">152</td>
-          <td class="num">1 008 140 Kč</td>
-          <td class="num">259 236 Kč</td>
-          <td class="num">8 986 848 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 1002</th>
-          <td>U</td>
-          <td>Učebny (1.NP), Sklady (2.NP)</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">st. 1003</th>
-          <td>D</td>
-          <td>Dílny</td>
-          <td class="num">0</td>
-          <td class="num">0</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <h3 class="vz-subhead">Souhrn</h3>
-  <div class="vz-kv">
-    <div class="row">
-      <div class="lab">Celkový počet lůžek</div>
-      <div class="val num">1 014</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhadovaná výše měsíčních příjmů</div>
-      <div class="val num">6 745 760 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhadovaná výše měsíčních nákladů na služby</div>
-      <div class="val num">1 734 624 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhadovaný roční příjem</div>
-      <div class="val num">60 133 632 Kč</div>
-    </div>
-  </div>
-  <h3 class="vz-subhead">Vizualizace</h3>
-  <div class="vz-figs" role="group" aria-label="Vizualizace">
-    <figure><img src="assets/images/investori/zaklad/render-sdileny-pokoj-interier.jpg" alt="Vizualizace interiéru: sdílený pokoj s lůžky se zvýšenou privátní ochranou" loading="lazy">
-      <figcaption>Vizualizace interiéru: sdílený pokoj s lůžky se zvýšenou privátní ochranou</figcaption></figure>
-  </div>
-</section>
-<section class="sec" style="--tint:#E7F0E3" aria-label="Projekt Nová čtvrť — orientační výpočty">
-  <h2 class="sechead">Nová čtvrť</h2>
-  <h3 class="vz-subhead">Vstupní parametry</h3>
-  <div class="vz-kv">
-    <div class="row">
-      <div class="lab">Zastavitelnost Areálu</div>
-      <div class="val num is-input">40 %</div>
-    </div>
-    <div class="row">
-      <div class="lab">Podlažnost pro plochy SM</div>
-      <div class="val num is-input">3,60</div>
-    </div>
-    <div class="row">
-      <div class="lab">Plochy SM v Areálu</div>
-      <div class="val num is-input">77 210 m²</div>
-    </div>
-    <div class="row">
-      <div class="lab">Kolik % z maxima HPP dle ÚP se podaří zrealizovat</div>
-      <div class="val num is-input">100 %</div>
-    </div>
-    <div class="row">
-      <div class="lab">Index pro převod HPP na ČPP</div>
-      <div class="val num is-input">0,80</div>
-    </div>
-    <div class="row">
-      <div class="lab">Index meziročního nárůstu cen stavebních prací</div>
-      <div class="val num is-input">1,05</div>
-    </div>
-    <div class="row">
-      <div class="lab">Podíl projekčních / přípravných prací</div>
-      <div class="val num is-input">7 %</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhadovaná cena za vybudování 1 m² ČPP (2026)</div>
-      <div class="val num is-input">48 000 Kč</div>
-    </div>
-    <div class="row">
-      <div class="lab">Index meziročního nárůstu prodejní ceny bytů</div>
-      <div class="val num is-input">1,05</div>
-    </div>
-    <div class="row">
-      <div class="lab">Odhadovaná tržní cena m² ČPP (2026, novostavby)</div>
-      <div class="val num is-input">140 393 Kč</div>
-    </div>
-  </div>
-  <h3 class="vz-subhead">Odhad hrubých příjmů a nákladů developerského rozvoje Areálu (2023–2038)</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Odhad hrubých příjmů a nákladů developerského rozvoje Areálu (2023–2038) – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Rok</th>
-        <th scope="col">Kupní cena areálu</th>
-        <th scope="col">Nárůst cen bytů</th>
-        <th scope="col">HPP</th>
-        <th scope="col">ČPP</th>
-        <th scope="col">Index stav. prací</th>
-        <th scope="col">Náklad na výstavbu ČPP</th>
-        <th scope="col">Projekční / přípravné práce</th>
-        <th scope="col">Index prodejních cen</th>
-        <th scope="col">Prodejní cena všech ČPP</th>
-        <th scope="col">Pořizovací cena vč. prací</th>
-        <th scope="col">Teoretický hrubý zisk</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">2023</th>
-          <td class="num">385 000 000 Kč</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2024</th>
-          <td class="num">419 329 167 Kč</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2025</th>
-          <td class="num">438 579 167 Kč</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2026</th>
-          <td class="num">457 829 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,00</td>
-          <td class="num">4 269 404 160 Kč</td>
-          <td class="num">298 858 291 Kč</td>
-          <td class="num">1,00</td>
-          <td class="num">12 487 356 218 Kč</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2027</th>
-          <td class="num">477 079 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">4 482 874 368 Kč</td>
-          <td class="num">313 801 206 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">13 111 724 029 Kč</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2028</th>
-          <td class="num">496 329 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">4 707 018 086 Kč</td>
-          <td class="num">329 491 266 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">13 767 310 231 Kč</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2029</th>
-          <td class="num">515 579 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">4 942 368 991 Kč</td>
-          <td class="num">345 965 829 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">14 455 675 742 Kč</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2030</th>
-          <td class="num">534 829 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">5 189 487 440 Kč</td>
-          <td class="num">363 264 121 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">15 178 459 529 Kč</td>
-          <td class="num">6 087 580 728 Kč</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2031</th>
-          <td class="num">554 079 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">5 448 961 812 Kč</td>
-          <td class="num">381 427 327 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">15 937 382 506 Kč</td>
-          <td class="num">6 384 468 306 Kč</td>
-          <td class="num">9 849 801 778 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2032</th>
-          <td class="num">573 329 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">5 721 409 903 Kč</td>
-          <td class="num">400 498 693 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">16 734 251 631 Kč</td>
-          <td class="num">6 695 237 763 Kč</td>
-          <td class="num">10 349 783 325 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2033</th>
-          <td class="num">592 579 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">6 007 480 398 Kč</td>
-          <td class="num">420 523 628 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">17 570 964 213 Kč</td>
-          <td class="num">7 020 583 193 Kč</td>
-          <td class="num">10 875 726 450 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2034</th>
-          <td class="num">611 829 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">6 307 854 418 Kč</td>
-          <td class="num">441 549 809 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">18 449 512 423 Kč</td>
-          <td class="num">7 361 233 394 Kč</td>
-          <td class="num">11 428 929 231 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2035</th>
-          <td class="num">631 079 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">6 623 247 139 Kč</td>
-          <td class="num">463 627 300 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">19 371 988 044 Kč</td>
-          <td class="num">7 717 953 605 Kč</td>
-          <td class="num">12 010 754 651 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2036</th>
-          <td class="num">650 329 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">6 954 409 496 Kč</td>
-          <td class="num">486 808 665 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">20 340 587 447 Kč</td>
-          <td class="num">8 091 547 327 Kč</td>
-          <td class="num">12 622 633 841 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2037</th>
-          <td class="num">669 579 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">7 302 129 971 Kč</td>
-          <td class="num">511 149 098 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">21 357 616 819 Kč</td>
-          <td class="num">8 482 858 235 Kč</td>
-          <td class="num">13 266 069 492 Kč</td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">2038</th>
-          <td class="num">688 829 167 Kč</td>
-          <td class="num">5 %</td>
-          <td class="num">111 182 m²</td>
-          <td class="num">88 946 m²</td>
-          <td class="num">1,05</td>
-          <td class="num">7 667 236 469 Kč</td>
-          <td class="num">536 706 553 Kč</td>
-          <td class="num">1,05</td>
-          <td class="num">22 425 497 660 Kč</td>
-          <td class="num">8 892 772 189 Kč</td>
-          <td class="num">13 942 639 425 Kč</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="vz-flow" role="separator" aria-label="navazuje na další výpočet">
-    <svg class="vz-flow__svg" viewBox="0 0 44 50" width="34" height="39" aria-hidden="true">
-      <path class="vz-flow__band" d="M22 3 C 12 16, 32 30, 22 42"/>
-      <path class="vz-flow__head" d="M14 34 L22 44 L30 34"/>
-    </svg>
-    <span>Prodejní cena všech ČPP − pořizovací cena včetně prací → teoretický hrubý zisk</span>
-  </div>
-  <div class="vz-headline">
-    <span class="vz-headline__label">Potenciální hrubý zisk před zdaněním z rozprodeje plně rozvinutého Areálu (2038)</span>
-    <span class="vz-headline__num">13 942 639 425 Kč</span>
-    <span class="vz-headline__sub">Průměrná cena za m²: 140 393 Kč</span>
-  </div>
-  <h3 class="vz-subhead">Nabídkové ceny bytů v novostavbách poblíž Areálu (benchmark)</h3>
-  <div class="vz-matrix" tabindex="0" role="region" aria-label="Nabídkové ceny bytů v novostavbách poblíž Areálu (benchmark) – vodorovně posuvná tabulka">
-    <table>
-      <thead><tr>
-        <th scope="col" class="vz-stickcol">Název</th>
-        <th scope="col">Dispozice</th>
-        <th scope="col">Plocha</th>
-        <th scope="col">Podlaží</th>
-        <th scope="col">Cena</th>
-        <th scope="col">Vybavení</th>
-        <th scope="col">Dostupnost</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <th scope="row" class="vz-stickcol">A11</th>
-          <td class="num">3kk</td>
-          <td class="num">81</td>
-          <td class="num">1. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A12</th>
-          <td class="num">1kk</td>
-          <td class="num">35</td>
-          <td class="num">1. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A13</th>
-          <td class="num">2kk</td>
-          <td class="num">59</td>
-          <td class="num">1. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A14</th>
-          <td class="num">2kk</td>
-          <td class="num">59</td>
-          <td class="num">1. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A15</th>
-          <td class="num">3kk</td>
-          <td class="num">82</td>
-          <td class="num">1. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A21</th>
-          <td class="num">3kk</td>
-          <td class="num">81</td>
-          <td class="num">2. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A22</th>
-          <td class="num">1kk</td>
-          <td class="num">35</td>
-          <td class="num">2. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A23</th>
-          <td class="num">2kk</td>
-          <td class="num">59</td>
-          <td class="num">2. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A24</th>
-          <td class="num">2kk</td>
-          <td class="num">59</td>
-          <td class="num">2. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A25</th>
-          <td class="num">3kk</td>
-          <td class="num">82</td>
-          <td class="num">2. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A31</th>
-          <td class="num">3kk</td>
-          <td class="num">82</td>
-          <td class="num">3. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A32</th>
-          <td class="num">4kk</td>
-          <td class="num">94</td>
-          <td class="num">3. np</td>
-          <td>-</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row" class="vz-stickcol">A33</th>
-          <td class="num">3kk</td>
-          <td class="num">81</td>
-          <td class="num">3. np</td>
-          <td class="num">11 274 054</td>
-          <td></td>
-          <td class="num">139 186 Kč</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="foot">Zdroj: www.creditasre.cz/projekty/klecanska-alej k 22. 9. 2025.</p>
-  <h3 class="vz-subhead">Vizualizace a hmotové studie</h3>
-  <div class="vz-figs" role="group" aria-label="Vizualizace">
-    <figure><img src="assets/images/investori/zaklad/render-exterier-plaza.jpg" alt="Vizualizace exteriéru: Nová čtvrť" loading="lazy">
-      <figcaption>Vizualizace exteriéru: Nová čtvrť</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/schema-hmota-letecky-1.jpg" alt="Hmotová studie – letecký pohled (1)" loading="lazy">
-      <figcaption>Hmotová studie – letecký pohled (1)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/schema-hmota-letecky-2.jpg" alt="Hmotová studie – letecký pohled (2)" loading="lazy">
-      <figcaption>Hmotová studie – letecký pohled (2)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/schema-hmota-letecky-3.jpg" alt="Hmotová studie – letecký pohled (3)" loading="lazy">
-      <figcaption>Hmotová studie – letecký pohled (3)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/schema-zony-zakres.jpg" alt="Schéma zón se zákresem budov" loading="lazy">
-      <figcaption>Schéma zón se zákresem budov</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/schema-ortofoto-zony-1.jpg" alt="Ortofoto se zákresem zón (1)" loading="lazy">
-      <figcaption>Ortofoto se zákresem zón (1)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/schema-ortofoto-zony-2.jpg" alt="Ortofoto se zákresem zón (2)" loading="lazy">
-      <figcaption>Ortofoto se zákresem zón (2)</figcaption></figure>
-  </div>
-</section>
-<section class="sec" style="--tint:#F6E6EC" aria-label="Zdroje a předpoklady">
-  <h2 class="sechead">Zdroje a předpoklady</h2>
-  <p class="sec-lede">Orientační výpočty stojí na níže uvedených předpokladech a externích zdrojích.</p>
-  <ul class="vz-sources">
-    <li>Odhad tržního nájemného pro jednotku 1+kk (21 m² ČPP) vychází z nabídek v příslušné lokalitě.</li>
-    <li>Odhad tržní ceny jedné jednotky 1+kk (21 m² ČPP) vychází z porovnání s lokalitou.</li>
-    <li>Část odhadů (zejm. pronájem lůžek) byla vytvořena pro projekt aplikací ChatGPT (1. 5. 2026).</li>
-    <li>Nabídkové ceny bytů v novostavbách: www.creditasre.cz/projekty/klecanska-alej (k 22. 9. 2025).</li>
-    <li>Způsob výpočtu navýšení kupní ceny Areálu je uveden v uzavřené Smlouvě (čl. 3).</li>
-  </ul>
-  <h3 class="vz-subhead">Podkladové materiály</h3>
-  <div class="vz-figs" role="group" aria-label="Podkladové materiály">
-    <figure><img src="assets/images/investori/zaklad/zdroj-nabidka-bytu-web.jpg" alt="Nabídkové ceny bytů v novostavbě poblíž Areálu (creditasre.cz)" loading="lazy">
-      <figcaption>Nabídkové ceny bytů v novostavbě poblíž Areálu (creditasre.cz)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/zdroj-odhad-najemneho.jpg" alt="Odhad tržního nájemného nemovitosti (oceňovací nástroj)" loading="lazy">
-      <figcaption>Odhad tržního nájemného nemovitosti (oceňovací nástroj)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/zdroj-odhad-prodejni-ceny.jpg" alt="Odhad tržní prodejní ceny nemovitosti (oceňovací nástroj)" loading="lazy">
-      <figcaption>Odhad tržní prodejní ceny nemovitosti (oceňovací nástroj)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/zdroj-cena-ubytovani-luzko.jpg" alt="Odhad ceny ubytování za lůžko ve sdíleném pokoji (model)" loading="lazy">
-      <figcaption>Odhad ceny ubytování za lůžko ve sdíleném pokoji (model)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/zdroj-naklady-luzko.jpg" alt="Odhad provozních nákladů na jedno lůžko (model)" loading="lazy">
-      <figcaption>Odhad provozních nákladů na jedno lůžko (model)</figcaption></figure>
-    <figure><img src="assets/images/investori/zaklad/zdroj-smlouva-vypocet-navyseni.jpg" alt="Způsob výpočtu navýšení kupní ceny Areálu (ze smlouvy)" loading="lazy">
-      <figcaption>Způsob výpočtu navýšení kupní ceny Areálu (ze smlouvy)</figcaption></figure>
-  </div>
+  <p class="vz-greenband vz-greenband--center">↓↓↓ Způsob výpočtu navýšení kupní ceny Areálu uvedený v uzavřené Smlouvě ↓↓↓</p>
+  <figure class="vz-map">
+    <img src="assets/images/investori/zaklad/zdroj-smlouva-vypocet-navyseni.jpg" alt="Mapa Areálu" loading="lazy">
+  </figure>
 </section>
     <footer class="vzver">
       <p>verze 2p8iaz6 · aktualizace č. 2026-06-15-2p8iaz6</p>

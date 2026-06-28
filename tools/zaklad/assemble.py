@@ -68,6 +68,19 @@ STYLE = r"""<style>
   .vz .vz-matrix tbody tr:nth-child(even) td.is-input{background:var(--accent-input)}
   .vz .vz-matrix tbody tr:hover td{background:#F0F0FA}
   .vz .vz-matrix tbody tr:hover .vz-stickcol{background:#F0F0FA}
+  /* zónové obarvení řádků parcel (žlutá=jádro, zelená=zázemí) — přebíjí zebru */
+  .vz .vz-matrix tbody tr.is-jadro td,.vz .vz-matrix tbody tr.is-jadro .vz-stickcol{background:#F2ECC9}
+  .vz .vz-matrix tbody tr.is-zazemi td,.vz .vz-matrix tbody tr.is-zazemi .vz-stickcol{background:#E2EFD9}
+  .vz .vz-matrix tbody tr.is-jadro:hover td,.vz .vz-matrix tbody tr.is-jadro:hover .vz-stickcol{background:#ECE4B4}
+  .vz .vz-matrix tbody tr.is-zazemi:hover td,.vz .vz-matrix tbody tr.is-zazemi:hover .vz-stickcol{background:#D4E7C7}
+  /* věrné barvení buněk dle zdrojového Excelu (vstup oranžová, zelená, modrá…) */
+  .vz .vz-matrix td.is-input,.vz .vz-matrix .vz-stickcol.is-input{background:#F0CFA0 !important}
+  .vz .vz-matrix td.is-green,.vz .vz-matrix .vz-stickcol.is-green{background:#D4E6C6 !important}
+  .vz .vz-matrix td.is-blue,.vz .vz-matrix .vz-stickcol.is-blue{background:#E6ECF6 !important}
+  .vz .vz-matrix td.is-blue2,.vz .vz-matrix .vz-stickcol.is-blue2{background:#CBDDF1 !important}
+  .vz .vz-matrix td.is-yellow,.vz .vz-matrix .vz-stickcol.is-yellow{background:#F2ECC9 !important}
+  .vz .vz-matrix td.is-tan,.vz .vz-matrix .vz-stickcol.is-tan{background:#E6D9BF !important}
+  .vz .val.is-green{background:#D4E6C6}
   .vz .vz-matrix::after{content:"";position:absolute;top:0;right:0;width:24px;height:100%;
     pointer-events:none;background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.85))}
   /* headline číslo */
@@ -110,6 +123,26 @@ STYLE = r"""<style>
   .vz .vz-bm--area{background:#E7F0E3;border-color:#A8CE9F}
   .vz .vz-bm__label{display:block;font-size:.74rem;color:var(--grey);line-height:1.3}
   .vz .vz-bm__num{display:block;margin-top:5px;font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums}
+  /* zelené souhrnné boxy (auto-fit řada) */
+  .vz .vz-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:12px 0 2px}
+  .vz .vz-sbox{background:#E7F0E3;border:1px solid #A8CE9F;border-radius:7px;padding:11px 13px}
+  .vz .vz-sbox__label{display:block;font-size:.76rem;color:#3a3a52;line-height:1.3}
+  .vz .vz-sbox__num{display:block;margin-top:5px;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+  /* zóna: velký nadpis + zelené title bandy dílčích tabulek */
+  .vz .vz-zonehead{margin:clamp(38px,5.5vw,64px) 0 0;background:#D4E6C6;border-top:2px solid #88B673;
+    border-bottom:2px solid #88B673;padding:18px 16px;font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;
+    line-height:1.25;color:var(--ink);text-wrap:balance}
+  .vz .vz-greenband{margin:22px 0 0;background:#D4E6C6;padding:11px 15px;font-size:clamp(1rem,2vw,1.18rem);
+    font-weight:700;line-height:1.3;color:var(--ink);text-wrap:balance}
+  .vz .vz-greenband--center{text-align:center}
+  /* vstupní parametry jako barevné boxy */
+  .vz .vz-params{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px}
+  .vz .vz-param{flex:1 1 165px;background:#EEF1F6;border:1px solid var(--hair);border-radius:7px;padding:11px 13px}
+  .vz .vz-param.is-input{background:#F0CFA0;border-color:#D9B57E}
+  .vz .vz-param.is-green{background:#D4E6C6;border-color:#A8CE9F}
+  .vz .vz-param.is-blue{background:#E6ECF6;border-color:#B6CDE9}
+  .vz .vz-param__label{display:block;font-size:.76rem;color:#3a3a52;line-height:1.3}
+  .vz .vz-param__num{display:block;margin-top:5px;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
   @media (max-width:680px){ .vz .vz-totals{grid-template-columns:1fr} .vz .vz-bmetrics{grid-template-columns:1fr} }
   /* verze dole */
   .vz .vzver{display:flex;flex-direction:column;align-items:center;gap:4px;margin:44px 0 8px;text-align:center}
