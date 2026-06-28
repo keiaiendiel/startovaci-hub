@@ -124,8 +124,8 @@ Mapy vedou ven.
 - **Top bar všech tří podkladů** (`.inv-*` v `input.css`): logo + 3 sekce „Investiční
   záměr / Základní údaje / Základní scénáře" + „Odhlásit se". **Na desktopu** sekce
   inline v liště (`.inv-topnav`, ≥ 820 px), **na telefonu/tabletu** (< 820 px) jen
-  **hamburger uprostřed lišty** → tmavé centrované menu (`.inv-menu`, jako landing) +
-  dole „Odhlásit se". Toggle přes checkbox `#inv-nav.inv-nav` (`:checked ~ .inv-menu`).
+  **hamburger vpravo nahoře** → tmavé menu (`.inv-menu`, jako landing) s **centrovanými
+  položkami** + dole „Odhlásit se". Toggle přes checkbox `#inv-nav.inv-nav` (`:checked ~ .inv-menu`).
   Aktivní sekce = `aria-current="page"`. Lišta na telefonu (i landscape) užší. Po změně
   `.inv-*` tříd `npm run build`. V `investori-zamer.html` jsou na telefonu skryta 3
   zónová tlačítka pod mapou (stačí 3 barevné sekce v legendě).
@@ -136,6 +136,13 @@ Mapy vedou ven.
   Měkká brána + top bar + Atyp Special jako ostatní podklady. Statická (ne z generátoru).
 - Když se mění podklady, edituj přímo příslušné HTML (žádné není v Astru);
   „Základní údaje" lze i regenerovat z xlsx přes `tools/zaklad/`.
+- ⚠️ **Zdroj pravdy = tabulka (xlsx). Drž se jí.** Čísla, propojení (konektory) i
+  zvýraznění (hover) musí PŘESNĚ odpovídat zdroji — **needituj zobrazené hodnoty kvůli
+  čitelnosti**, i když něco působí nejednotně (např. „1" / „5,00 %" vs „0,05" v indexových
+  sloupcích je věrné zdroji → nech být). Jediná povolená výjimka jsou **obvious textové
+  překlepy nekonzistentní uvnitř zdroje** (stejný název jinde správně) — ty sjednoť přes
+  `TEXT_FIX` v `build_zaklad.py` (jen názvy, nikdy ne čísla). Auditní ověření: viz
+  10-agentní cross-check (čísla 1:1 ve všech zónách potvrzeno 2026-06-28).
 
 ## Workflow úprav
 
