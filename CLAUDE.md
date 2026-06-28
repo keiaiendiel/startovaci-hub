@@ -94,8 +94,13 @@ Mapy vedou ven.
   smlouvy čl. 3), zóna *Projekt Startovací hub* (příjmy z pronájmu + vizualizace +
   benchmark + **finále: 5 tabulek** — meziroční nárůst příjmů, hrubé porovnání příjmů/nákladů,
   odhad tržní ceny jednotek + benchmark prodejní ceny, nárůst tržní ceny, rozdíl
-  kupní vs. tržní cena; sloupce BS–CZ). **Zatím vypnuté** (čekají na revizi — viz
-  `section_draft` v generátoru): lůžka, Nová čtvrť, zdroje. Komponenty (inline `.vz`
+  kupní vs. tržní cena; sloupce BS–CZ), zóna *Projekt Startovací hub | lůžka ve sdílených
+  pokojích* (sloupce DM–DV: vstupní parametry + matice po budovách A1–A6+C + souhrn
+  1 014 lůžek / 60 133 632 Kč rok + vizualizace + pracovní modely ceny/nákladů na lůžko),
+  zóna *Projekt Nová čtvrť* (sloupce EH–ES: developerská matice 2023–2038 + grand
+  „potenciální hrubý zisk 13 942 639 425 Kč" + hmotové studie + benchmark cen bytů
+  creditasre, řádky 188–214). **Zatím vypnuté** (viz `section_draft`): už jen *zdroje*.
+  Komponenty (inline `.vz`
   styly v HTML, NE Tailwind): `.vz-matrix` (sticky 1. sloupec + vodorovný posuv + scroll
   tlačítka `.vz-mbtn`), `.vz-map`, `.vz-totals/.vz-summary/.vz-grand` (hranaté souhrnné boxy;
   `vz-grand` = barva dle fillu + cíl konektoru), `.vz-zonehead/.vz-greenband`
@@ -103,14 +108,25 @@ Mapy vedou ven.
   `.vz-figrow/.vz-figs`, `.sec--shade` (full-bleed oddělení hlavních sekcí). **Věrné
   barvení buněk dle zdrojových Excel fillů** (`cellfills`: oranžová = vstupy, zelená,
   žlutá jádro / zelená zázemí) + **červená čísla** dle font color z Excelu (`is_red`,
-  zachyceno v `dump_zaklad.py` jako `fc`). **Konektor místo Excel šipek = hotovo**
-  (`flowblock` + `.vz-bigribbon`: trvalá jemná linka tabulka→souhrnný box, na hover/focus
-  zesílí a rozsvítí poslední řádek + cílový box; < 820 px skrytá). **Hover řádků** ztmaví
-  i barevné buňky (inset box-shadow overlay, ne background). **Lightbox** (`.lbx`, JS):
-  klik na obsahový obrázek → zvětšení, ‹ ›/←→/Esc, modální focus trap. Obrázky
-  v `assets/images/investori/zaklad/` (zmenšené, `mapping.json` pro snadnou výměnu).
-- V top baru obou stránek je **segmentový přepínač** (`.inv-seg`) „Investiční záměr
-  ↔ Základní údaje" (dva odkazy, bez JS) — po přidání tříd nezapomeň `npm run build`.
+  zachyceno v `dump_zaklad.py` jako `fc`). **Konektor místo Excel šipek** (`flowblock`
+  + `.vz-bigribbon`): jemná linka od **vstupního parametru** (`data-flow-source` v
+  `paramstrip`) k **cílovému souhrnu** (`data-flow-target` ve `vzgrand`) — věrně dle
+  původní tabulky (např. CX6→CX39, DV6→DV39, ER6→EQ39). Vede po pravém okraji a volně
+  přesahuje do margenu webu (`.vz{overflow-x:clip}`); tabulky drží plnou šířku; hrot dle
+  tečny míří do boxu; hover/focus linku zesílí a rozsvítí oba boxy; < 820 px skrytá.
+  **Hover souhrnného boxu** (`data-hl-col` ↔ `data-col` na buňkách) rozsvítí celý
+  zdrojový sloupec v tabulce a je-li mimo viditelnou oblast, tabulku k němu posune.
+  **Matice zarovnané vlevo**; levý bílý fade jen u tabulek bez sticky sloupce (`.has-stick`).
+  **Hover řádků** ztmaví i barevné buňky (inset box-shadow overlay). **Lightbox** (`.lbx`,
+  JS): klik na obrázek → zvětšení, ‹ ›/←→/Esc, modální focus trap. Obrázky v
+  `assets/images/investori/zaklad/` (zmenšené, `mapping.json`).
+- **Top bar obou podkladů = hamburger menu** (`.inv-*` v `input.css`, vizuálně jako
+  landing): logo + burger (na desktopu i mobilu), tmavé menu „Investiční záměr /
+  Základní údaje / Základní scénáře (zatím 404)" + dole „Odhlásit se". Toggle přes
+  checkbox `#inv-nav.inv-nav` (`:checked ~ .inv-menu`). Nahradil segmentový přepínač
+  `.inv-seg`. Lišta na telefonu (i landscape) užší. Po změně `.inv-*` tříd `npm run build`.
+  V `investori-zamer.html` jsou na telefonu skryta 3 zónová tlačítka pod mapou (stačí
+  3 barevné sekce v legendě).
 - Když se mění podklady, edituj přímo příslušné HTML (žádné není v Astru);
   „Základní údaje" lze i regenerovat z xlsx přes `tools/zaklad/`.
 
