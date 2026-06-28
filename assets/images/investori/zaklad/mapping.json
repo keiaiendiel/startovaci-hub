@@ -1,14 +1,14 @@
 {
   "_note": "Web verze obrázků z listu Základní údaje & výpočty. Klíč = nový soubor, hodnota = původní image v .fld. Pro výměnu nahraď soubor stejného jména.",
   "mapping": {
-    "render-jednotka-1kk-interier.jpg": "image001 (aktualizováno z ref. exportu 28. 6. 2026 – studio 1+kk)",
+    "render-jednotka-1kk-interier.jpg": "_SH_WEB_IMAGE_UPDATE/.../Xtra/pokoj-doplneno.jpeg (studio 1+kk)",
     "render-sdileny-pokoj-interier.jpg": "image002 (sdílený pokoj s lůžky)",
-    "render-exterier-jadro-vecer.jpg": "image021 (aktualizováno – dvůr s břízami, jádro)",
-    "render-exterier-plaza.jpg": "image031 (aktualizováno – budova D, ateliéry/dílny)",
+    "render-exterier-jadro-vecer.jpg": "_SH_WEB_IMAGE_UPDATE/.../Xtra/evening-chill-2.jpeg (dvůr s břízami, jádro)",
+    "render-exterier-plaza.jpg": "_SH_WEB_IMAGE_UPDATE/.../Xtra/d.jpeg (budova D, ateliéry/dílny)",
     "schema-hmota-letecky-1.jpg": "image003",
     "schema-hmota-letecky-2.jpg": "image018",
     "schema-hmota-letecky-3.jpg": "image028",
-    "schema-zony-zakres.jpg": "image017",
+    "schema-zony-zakres.jpg": "15 Map/combined2.jpg (masterplan s barevným zákresem zón)",
     "schema-ortofoto-zony-1.jpg": "15 Map/_jadro-projektu.JPG = Pozemky: jádro (16 496,28 m²)",
     "schema-ortofoto-zony-2.jpg": "15 Map/_zazemi-celek.JPG = Pozemky: jádro + zázemí (34 769,61 m²)",
     "zdroj-smlouva-vypocet-navyseni.jpg": "image019",

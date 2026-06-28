@@ -58,7 +58,9 @@ STYLE = r"""<style>
   .vz .vz-matrix table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;
     font-size:.8rem;line-height:1.3}
   .vz .vz-matrix th,.vz .vz-matrix td{padding:7px 10px;border-bottom:1px solid var(--hair);
-    border-right:1px solid #ECECF3;text-align:left;white-space:nowrap;vertical-align:top}
+    border-right:1px solid #ECECF3;text-align:left;white-space:nowrap;vertical-align:top;
+    transition:box-shadow .25s ease}
+  @media (prefers-reduced-motion:reduce){ .vz .vz-matrix th,.vz .vz-matrix td{transition:none} }
   .vz .vz-matrix thead th{background:var(--tint);font-weight:700;border-bottom:1px solid var(--rule);
     white-space:normal;min-width:62px;max-width:150px}
   /* velké matice: vše zarovnané vlevo (sjednoceno; tabular-nums drží šířku číslic) */
@@ -81,7 +83,7 @@ STYLE = r"""<style>
   .vz .vz-matrix .is-colhot{box-shadow:inset 0 0 0 999px rgba(118,168,96,.36)}
   .vz .vz-matrix .vz-stickcol.is-colhot{box-shadow:1px 0 0 0 var(--rule),inset 0 0 0 999px rgba(118,168,96,.36)}
   .vz .vz-matrix thead .is-colhot{box-shadow:inset 0 0 0 999px rgba(118,168,96,.30)}
-  .vz .is-colsrc{outline:2px solid #6F9E57;outline-offset:-2px}
+  .vz .is-colsrc{outline-color:#6F9E57 !important}
   .vz [data-hl-col]{cursor:default}
   /* zónové obarvení řádků parcel (žlutá=jádro, zelená=zázemí) — přebíjí zebru */
   .vz .vz-matrix tbody tr.is-jadro td,.vz .vz-matrix tbody tr.is-jadro .vz-stickcol{background:#F2ECC9}
@@ -174,7 +176,9 @@ STYLE = r"""<style>
   .vz .vz-gbox.is-input{background:#F0CFA0;border-color:#D9B57E}
   .vz .vz-gbox__label{display:block;font-size:.82rem;color:#3a3a52;line-height:1.3}
   .vz .vz-gbox__num{display:block;margin-top:5px;font-size:clamp(1.3rem,3.2vw,1.85rem);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-  .vz .vz-gbox.is-flowmark,.vz .vz-param.is-flowmark{outline:2px solid var(--rose,#C4A2C0);outline-offset:-2px}
+  /* souhrnné / parametrické boxy: průhledný outline → plynulý náběh zvýraznění (delight) */
+  .vz .vz-gbox,.vz .vz-param,.vz .vz-total,.vz .vz-sbox{outline:2px solid transparent;outline-offset:-2px;transition:outline-color .22s ease}
+  .vz .vz-gbox.is-flowmark,.vz .vz-param.is-flowmark{outline-color:var(--rose,#C4A2C0)}
   /* zóna: velký nadpis + zelené title bandy dílčích tabulek */
   .vz .vz-zonehead{margin:clamp(38px,5.5vw,64px) 0 0;background:var(--band,#D4E6C6);
     border-top:2px solid var(--band-bd,#88B673);border-bottom:2px solid var(--band-bd,#88B673);
@@ -215,7 +219,7 @@ STYLE = r"""<style>
   .vz .vz-quote__list{margin:0;display:flex;flex-direction:column;gap:10px}
   .vz .vz-quote__list>div{display:grid;grid-template-columns:44px 1fr;gap:4px}
   .vz .vz-quote__list dt{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
-  .vz .vz-quote__list dd{margin:0}
+  .vz .vz-quote__list dd{margin:0;max-width:60ch;text-wrap:pretty}
   .vz .vz-quote__formula{display:block;text-align:center;font-style:italic;font-weight:700;font-size:1.05rem;margin:9px 0}
   .vz .vz-quote__where{display:block;margin-top:6px;padding-left:16px;color:#444}
   @media (max-width:680px){ .vz .vz-totals{grid-template-columns:1fr} .vz .vz-bmetrics{grid-template-columns:1fr} .vz .vz-quote__list>div{grid-template-columns:34px 1fr} }

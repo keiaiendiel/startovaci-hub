@@ -679,14 +679,13 @@ zonesection(
         figs([("render-sdileny-pokoj-interier.jpg",
                "Vizualizace interiéru: sdílený pokoj vybavený lůžky se zvýšenou privátní ochranou")],
              label="Vizualizace sdíleného pokoje"),
-        greenband("Odhad tržní ceny ubytování za jedno lůžko ve sdíleném pokoji "
-                  "(pracovní model pro investiční záměr, k 1. 5. 2026)", center=True),
-        vzmap("zdroj-cena-ubytovani-luzko.jpg",
-              "Odhad ceny ubytování za jedno lůžko ve sdíleném pokoji (pracovní model)"),
-        greenband("Odhad provozních nákladů (voda, elektřina, teplo) na jedno lůžko "
-                  "(pracovní model, k 1. 5. 2026)", center=True),
-        vzmap("zdroj-naklady-luzko.jpg",
-              "Odhad provozních nákladů na jedno lůžko v přepočtu na měsíc (pracovní model)"),
+        greenband("Odhad tržní ceny ubytování a provozních nákladů na jedno lůžko ve sdíleném "
+                  "pokoji (pracovní model pro investiční záměr, k 1. 5. 2026)", center=True),
+        figs([("zdroj-cena-ubytovani-luzko.jpg",
+               "Odhad ceny ubytování za jedno lůžko ve sdíleném pokoji (pracovní model)"),
+              ("zdroj-naklady-luzko.jpg",
+               "Odhad provozních nákladů na jedno lůžko v přepočtu na měsíc (pracovní model)")],
+             label="Pracovní modely ceny a nákladů na lůžko – klikni pro zvětšení"),
     ],
     label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu lůžek ve sdílených pokojích",
     band="#E9E2A8", bandbd="#CDBF6E")
@@ -740,8 +739,9 @@ zonesection(
              label="Hmotové studie Nové čtvrti"),
         greenband("Nabídkové ceny bytů v novostavbách v příslušné lokalitě (benchmark tržní ceny m² ČPP)"),
         nc_bench,
-        vzmap("zdroj-nabidka-bytu-web.jpg",
-              "Nabídkové ceny bytů v novostavbě poblíž Areálu (www.creditasre.cz, k 22. 9. 2025)"),
+        figs([("zdroj-nabidka-bytu-web.jpg",
+               "Nabídkové ceny bytů v novostavbě poblíž Areálu (www.creditasre.cz, k 22. 9. 2025)")],
+             label="Zdroj benchmarku cen bytů – klikni pro zvětšení"),
     ],
     label="Projekt Nová čtvrť — orientační výpočty developerského rozvoje Areálu",
     shade=True, band="#CBDDF1", bandbd="#8BB9E4")
