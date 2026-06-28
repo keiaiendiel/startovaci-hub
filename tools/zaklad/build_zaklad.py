@@ -22,6 +22,15 @@ def col2num(s):
         n = n * 26 + (ord(ch.upper()) - 64)
     return n
 
+# Sjednocení překlepů, které jsou ve zdroji NEKONZISTENTNÍ (stejný název jinde správně).
+# Týká se jen textových názvů, NE čísel/výpočtů — ty jdou ze zdroje 1:1.
+TEXT_FIX = {
+    # CI13 má „kuchyňská sklad - zbořeniště"; L13/BK13/DO13 mají správně:
+    "kuchyňská sklad - zbořeniště": "kuchyňský sklad – zbořeniště",
+}
+def fix_text(v):
+    return TEXT_FIX.get(v, v) if isinstance(v, str) else v
+
 def V(coord):
     """coord like 'AJ6' -> formatted string or '' (suppress #VALUE!)."""
     m = re.match(r'^([A-Z]+)(\d+)$', coord)
@@ -29,13 +38,13 @@ def V(coord):
     v = GRID.get((r, c), "")
     if v is None or v == "" or "#VALUE!" in v:
         return ""
-    return v
+    return fix_text(v)
 
 def Vrc(r, c):
     v = GRID.get((r, c), "")
     if v is None or "#VALUE!" in (v or ""):
         return ""
-    return v or ""
+    return fix_text(v or "")
 
 def is_orange(r, c):
     return FILL.get((r, c)) == ORANGE
@@ -564,7 +573,7 @@ t22_matrix = matrix(
     cellfills=True, zonecols=(85, 93))
 t22_grand = vzgrand([
     ("Počet jednotek 1+kk vzniklých pro Startovací hub:", "CL39", False),
-    ("Odhadovaná tržní ceny všech jednotek pro rok 2026:", "CM39", True),
+    ("Odhadovaná tržní cena všech jednotek pro rok 2026:", "CM39", True),
 ])
 t22_bench = matrix(
     ["Odhadovaná tržní cena jednotky 1+kk", "Plocha (ČPP)", "Cena za m²"],
