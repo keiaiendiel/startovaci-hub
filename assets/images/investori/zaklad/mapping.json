@@ -1,10 +1,10 @@
 {
   "_note": "Web verze obrázků z listu Základní údaje & výpočty. Klíč = nový soubor, hodnota = původní image v .fld. Pro výměnu nahraď soubor stejného jména.",
   "mapping": {
-    "render-jednotka-1kk-interier.jpg": "image001",
-    "render-sdileny-pokoj-interier.jpg": "image002",
-    "render-exterier-jadro-vecer.jpg": "image021",
-    "render-exterier-plaza.jpg": "image030",
+    "render-jednotka-1kk-interier.jpg": "image001 (aktualizováno z ref. exportu 28. 6. 2026 – studio 1+kk)",
+    "render-sdileny-pokoj-interier.jpg": "image002 (sdílený pokoj s lůžky)",
+    "render-exterier-jadro-vecer.jpg": "image021 (aktualizováno – dvůr s břízami, jádro)",
+    "render-exterier-plaza.jpg": "image031 (aktualizováno – budova D, ateliéry/dílny)",
     "schema-hmota-letecky-1.jpg": "image003",
     "schema-hmota-letecky-2.jpg": "image018",
     "schema-hmota-letecky-3.jpg": "image028",
