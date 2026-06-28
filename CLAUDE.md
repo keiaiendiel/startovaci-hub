@@ -34,6 +34,7 @@ index.html              # landing
 investori.html          # přihlášení do podkladů (login heslem, měkká brána)
 investori-zamer.html    # podklady „Investiční záměr" = věrný port „Záměr VPD1_5 - web.html" (gated)
 investori-zaklad.html   # podklady „Základní údaje & výpočty" = generovaný 1:1 port listu z xlsx (gated)
+investori-scenare.html  # podklady „Základní scénáře" = ruční port listu „Základní scénáře" (S1/S2/S3/Sk/Sx), gated
 struktura-webu.html     # mapa webu (strom se statusy: v provozu/ve výrobě/na heslo)
 src/input.css           # zdroj stylů (edituj tady, ne styles.css)
 assets/styles.css       # zkompilovaný Tailwind (commit-nutý, funguje bez buildu)
@@ -120,13 +121,19 @@ Mapy vedou ven.
   **Hover řádků** ztmaví i barevné buňky (inset box-shadow overlay). **Lightbox** (`.lbx`,
   JS): klik na obrázek → zvětšení, ‹ ›/←→/Esc, modální focus trap. Obrázky v
   `assets/images/investori/zaklad/` (zmenšené, `mapping.json`).
-- **Top bar obou podkladů = hamburger menu** (`.inv-*` v `input.css`, vizuálně jako
-  landing): logo + burger (na desktopu i mobilu), tmavé menu „Investiční záměr /
-  Základní údaje / Základní scénáře (zatím 404)" + dole „Odhlásit se". Toggle přes
-  checkbox `#inv-nav.inv-nav` (`:checked ~ .inv-menu`). Nahradil segmentový přepínač
-  `.inv-seg`. Lišta na telefonu (i landscape) užší. Po změně `.inv-*` tříd `npm run build`.
-  V `investori-zamer.html` jsou na telefonu skryta 3 zónová tlačítka pod mapou (stačí
-  3 barevné sekce v legendě).
+- **Top bar všech tří podkladů** (`.inv-*` v `input.css`): logo + 3 sekce „Investiční
+  záměr / Základní údaje / Základní scénáře" + „Odhlásit se". **Na desktopu** sekce
+  inline v liště (`.inv-topnav`, ≥ 820 px), **na telefonu/tabletu** (< 820 px) jen
+  **hamburger uprostřed lišty** → tmavé centrované menu (`.inv-menu`, jako landing) +
+  dole „Odhlásit se". Toggle přes checkbox `#inv-nav.inv-nav` (`:checked ~ .inv-menu`).
+  Aktivní sekce = `aria-current="page"`. Lišta na telefonu (i landscape) užší. Po změně
+  `.inv-*` tříd `npm run build`. V `investori-zamer.html` jsou na telefonu skryta 3
+  zónová tlačítka pod mapou (stačí 3 barevné sekce v legendě).
+- **`investori-scenare.html`** = podklady „Základní scénáře". Ruční port listu
+  `Základní scénáře` z `Záměr VPD1_5.xlsx` (5 scénářů S1/S2/S3/Sk/Sx; barevné řádky
+  dle Excel fillů: S1 žlutá, S2 tan, S3 oranžová). Vodorovně posuvná tabulka
+  (`.scn-table`, sticky 1. sloupec se scénářem). „Detail (zde)" zatím → `404.html`.
+  Měkká brána + top bar + Atyp Special jako ostatní podklady. Statická (ne z generátoru).
 - Když se mění podklady, edituj přímo příslušné HTML (žádné není v Astru);
   „Základní údaje" lze i regenerovat z xlsx přes `tools/zaklad/`.
 

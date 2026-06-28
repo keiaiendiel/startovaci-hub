@@ -536,7 +536,17 @@
      se otevře tmavé menu: Investiční záměr / Základní údaje / Základní scénáře + Odhlásit. */
   .inv-nav { @apply sr-only; }
   .inv-topbar__inner { position: relative; z-index: 60; }
-  .inv-burger { @apply inline-flex h-11 w-11 cursor-pointer items-center justify-center text-white; }
+  /* Desktop: 3 sekce přímo v liště (bez hamburgeru). */
+  .inv-topnav { @apply ml-auto inline-flex items-center gap-1; }
+  .inv-topnav__link {
+    @apply inline-flex items-center whitespace-nowrap rounded-[7px] px-3 py-2 text-sm font-semibold no-underline transition;
+    color: hsl(0 0% 100% / 0.74);
+  }
+  .inv-topnav__link:hover { color: #fff; background: hsl(var(--hue) 24% 42% / 0.30); }
+  .inv-topnav__link[aria-current="page"] { color: #fff; background: hsl(var(--hue) 24% 42% / 0.42); }
+  .inv-topnav__link:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+  /* Burger jen na telefonu (níže ve @media); na desktopu skrytý. */
+  .inv-burger { @apply h-11 w-11 cursor-pointer items-center justify-center text-white; display: none; }
   .inv-burger .burger { @apply grid w-[22px] gap-[5px]; }
   .inv-burger .burger > span { @apply block h-[1.5px] origin-center rounded bg-current; }
   .inv-burger .burger > span:nth-child(1), .inv-burger .burger > span:nth-child(3) { transition: transform 300ms var(--ease-quart); }
@@ -556,13 +566,13 @@
     width: calc(100% - 2 * var(--gutter));
     max-width: var(--container-wide);
   }
-  .inv-menu__brand { @apply self-start; }
+  .inv-menu__brand { @apply self-center; }
   .inv-menu__brand img { @apply block h-[26px] w-auto; }
-  .inv-menu__nav { @apply flex flex-1 flex-col items-start justify-center gap-2; }
-  .inv-menu__link { @apply text-[clamp(1.75rem,5.2vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.02em] text-white no-underline transition-colors; }
+  .inv-menu__nav { @apply flex flex-1 flex-col items-center justify-center gap-2 text-center; }
+  .inv-menu__link { @apply text-center text-[clamp(1.75rem,5.2vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.02em] text-white no-underline transition-colors; }
   .inv-menu__link:hover { color: var(--rose); }
   .inv-menu__link[aria-current="page"] { color: var(--rose); }
-  .inv-menu__foot { @apply mt-2 flex flex-col items-start gap-3 border-t pt-6; border-color: hsl(0 0% 100% / 0.14); }
+  .inv-menu__foot { @apply mt-2 flex flex-col items-center gap-3 border-t pt-6; border-color: hsl(0 0% 100% / 0.14); }
   .inv-menu__logout { @apply inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-base font-semibold no-underline transition-colors; color: hsl(0 0% 100% / 0.78); }
   .inv-menu__logout:hover { color: var(--rose); }
 
@@ -576,6 +586,12 @@
   .inv-nav:checked ~ .inv-topbar__inner .burger > span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
   html:has(.inv-nav:checked), html:has(.inv-nav:checked) body { overflow: hidden; }
 
+  /* Telefon/tablet: 3 sekce zmizí z lišty, ovládá je hamburger uprostřed lišty. */
+  @media (max-width: 819px) {
+    .inv-topnav { display: none; }
+    .inv-topbar__inner > .inv-topbar__logout { display: none; }
+    .inv-burger { display: inline-flex; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  }
   /* Slim lišta na telefonu (i na šířku) — menší logo, nižší pruh. */
   @media (max-width: 640px) {
     .inv-topbar__inner { @apply min-h-[46px] py-1.5; }

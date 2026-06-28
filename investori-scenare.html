@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="cs" class="inv-wait">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex, nofollow">
+<style>html{background:#14142f}</style>
+<meta name="description" content="Základní investičně-strategické scénáře transformace areálu Horních kasáren v Klecanech (VPD1). Podklady pro investory.">
+<title>Základní scénáře &middot; VPD1 &middot; podklady pro investory</title>
+
+<!-- Měkká brána: bez platného otisku zpět na login (jako ostatní podklady). -->
+<style>html.inv-wait .vz{visibility:hidden}</style>
+<script>
+  (function () {
+    var ALLOW = ['2250c0a01e81a5c7c27c6a9632b9f92faed24cfba6868421b7311472982a1b06'];
+    var ok = false;
+    try { ok = ALLOW.indexOf(localStorage.getItem('vpd1-auth')) !== -1; } catch (e) {}
+    if (!ok) { location.replace('investori.html'); }
+    else { document.documentElement.classList.remove('inv-wait'); }
+  })();
+</script>
+
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin>
+<link rel="stylesheet" href="assets/styles.css">
+
+<!--
+  Základní scénáře VPD1 — web verze listu „Základní scénáře" z tabulky Záměr VPD1_5.xlsx
+  (verze 2p8iaz6, 15. 6. 2026). Sourozenec investori-zamer / investori-zaklad: stejná
+  měkká brána, top bar (s navigací), Atyp Special. Data 1:1 z Excelu.
+-->
+<style>
+  .vz,.vz *{box-sizing:border-box}
+  .vz{
+    --ink:#2A2A60; --hair:#9696B9; --rule:#2A2A60; --grey:#7F7F7F; --link:#4351AD;
+    margin:0; background:#fff; color:var(--ink);
+    font-family:'Atyp Special',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+    font-variant-numeric:tabular-nums lining-nums;
+    -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  .vz .wrap{width:calc(100% - 2 * var(--gutter));max-width:var(--container-wide);margin:0 auto;padding:34px 0 72px}
+  .vz a{color:var(--link)}
+  .vz .cover{margin:0 0 26px}
+  .vz .kicker{font-size:clamp(1.05rem,2.4vw,1.35rem);font-weight:700;margin:0;letter-spacing:.005em}
+  .vz .vpd{font-size:clamp(2.9rem,11vw,5rem);font-weight:700;line-height:.92;margin:.04em 0 .14em;letter-spacing:-.01em}
+  .vz .upd{font-size:clamp(.85rem,1.6vw,1rem);margin:0;color:var(--ink)}
+  .vz .sec{margin:0}
+  .vz .sechead{margin:0;background:#E6ECF6;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    font-size:clamp(1.05rem,2.1vw,1.2rem);font-weight:700;line-height:1.3;padding:13px 15px;text-wrap:balance}
+  .vz .sec-lede{margin:12px 15px 0;font-size:clamp(.8rem,1.4vw,.9rem);line-height:1.5;color:#6b6b80;font-weight:700;letter-spacing:.02em}
+  .vz .foot{font-style:italic;font-size:.8rem;line-height:1.45;color:#444;margin:14px 15px 0;max-width:110ch}
+  /* ---- scénáře: vodorovně posuvná barevná tabulka, ukotvený 1. sloupec ---- */
+  .vz .scn-wrap{position:relative;overflow-x:auto;margin:14px 0 0;border:1px solid var(--hair);
+    -webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .vz .scn-table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-size:.82rem;line-height:1.4}
+  .vz .scn-table th,.vz .scn-table td{padding:12px 13px;border-bottom:1px solid var(--hair);
+    border-right:1px solid #ECECF3;text-align:left;vertical-align:top;white-space:normal}
+  .vz .scn-table thead th{background:#E6ECF6;font-weight:700;border-bottom:2px solid var(--rule);
+    min-width:150px;max-width:230px;position:sticky;top:0;z-index:2}
+  .vz .scn-table tbody td{min-width:160px;max-width:260px}
+  /* ukotvený 1. sloupec (název scénáře) */
+  .vz .scn-name{position:sticky;left:0;z-index:1;min-width:210px;max-width:240px;
+    border-right:1px solid var(--rule);box-shadow:1px 0 0 0 var(--rule)}
+  .vz .scn-table thead .scn-name{z-index:3}
+  .vz .scn-name strong{display:block;font-size:.98rem;margin:0 0 6px}
+  .vz .scn-goal,.vz .scn-phases{display:block;font-size:.78rem;line-height:1.4;color:#3a3a52;margin-top:4px}
+  .vz .scn-phases{font-weight:600}
+  /* barvy scénářů dle zdrojových Excel fillů */
+  .vz .scn-row--s1 .scn-name,.vz .scn-row--s1 td{background:#F4EFB6}
+  .vz .scn-row--s2 .scn-name,.vz .scn-row--s2 td{background:#E6D9BF}
+  .vz .scn-row--s3 .scn-name,.vz .scn-row--s3 td{background:#F0CFA0}
+  .vz .scn-row--alt .scn-name,.vz .scn-row--alt td{background:#F4F4F8;color:#55556b}
+  .vz .scn-base{font-weight:700;white-space:nowrap}
+  .vz .scn-detail{color:var(--link);text-decoration:underline;text-underline-offset:2px;font-weight:600}
+  .vz .scn-dash{color:var(--grey)}
+  .vz .scn-fin{display:block;font-size:.76rem;color:#3a3a52}
+  .vz .scn-amt{display:block;font-size:.95rem;margin:4px 0 3px}
+  .vz .scn-note{display:block;font-style:italic;color:#555;margin-top:3px}
+  .vz .scn-hint{margin:8px 15px 0;font-size:.74rem;color:var(--grey)}
+  /* verze dole */
+  .vz .vzver{display:flex;flex-direction:column;align-items:center;gap:4px;margin:44px 0 8px;text-align:center}
+  .vz .vzver p{margin:0;color:var(--grey);font-size:.7rem;letter-spacing:.02em}
+  .vz .vzver p:last-child{font-weight:700}
+  @media (max-width:680px){
+    .vz .wrap{padding:22px 0 44px}
+    .vz .sechead{padding:11px 14px}
+    .vz .scn-name{min-width:168px;max-width:180px}
+    .vz .scn-table thead th,.vz .scn-table tbody td{min-width:148px}
+  }
+</style>
+</head>
+<body>
+
+<header class="inv-topbar">
+  <input type="checkbox" id="inv-nav" class="inv-nav" aria-label="Přepnout menu" />
+  <div class="inv-topbar__inner">
+    <a class="inv-topbar__brand" href="index.html" aria-label="Startovací Hub, na úvod">
+      <img src="assets/brand-logo-white.svg" alt="Startovací Hub" />
+    </a>
+    <nav class="inv-topnav" aria-label="Podklady pro investory">
+      <a class="inv-topnav__link" href="investori-zamer.html">Investiční záměr</a>
+      <a class="inv-topnav__link" href="investori-zaklad.html">Základní údaje</a>
+      <a class="inv-topnav__link" href="investori-scenare.html" aria-current="page">Základní scénáře</a>
+    </nav>
+    <button type="button" class="inv-topbar__logout" data-inv-logout>Odhlásit se</button>
+    <label for="inv-nav" class="inv-burger" aria-label="Otevřít menu">
+      <span class="burger"><span></span><span></span><span></span></span>
+    </label>
+  </div>
+  <nav class="inv-menu" aria-label="Podklady pro investory">
+    <div class="inv-menu__inner">
+      <a class="inv-menu__brand" href="index.html" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" /></a>
+      <div class="inv-menu__nav">
+        <a class="inv-menu__link" href="investori-zamer.html">Investiční záměr</a>
+        <a class="inv-menu__link" href="investori-zaklad.html">Základní údaje</a>
+        <a class="inv-menu__link" href="investori-scenare.html" aria-current="page">Základní scénáře</a>
+      </div>
+      <div class="inv-menu__foot">
+        <button type="button" class="inv-menu__logout" data-inv-logout>Odhlásit se</button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<noscript>
+  <p style="max-width:680px;margin:48px auto;padding:0 20px;font:500 1rem/1.6 'Atyp Special',system-ui,-apple-system,sans-serif;color:#2A2A60;text-align:center">
+    Podklady pro investory se zobrazí jen se zapnutým JavaScriptem.
+  </p>
+</noscript>
+
+<div class="vz">
+  <main class="wrap">
+    <header class="cover">
+      <p class="kicker">Základní scénáře</p>
+      <h1 class="vpd">VPD1</h1>
+      <p class="upd">areál Horních kasáren v Klecanech u Prahy (dále jen „Areál")</p>
+    </header>
+
+    <section class="sec" aria-label="Analýza základních investičně-strategických možností transformace Areálu">
+      <h2 class="sechead">Analýza základních investičně-strategických možností transformace areálu Horních kasáren v Klecanech u Prahy (dále jen „Areál")</h2>
+      <p class="sec-lede">[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
+      <p class="scn-hint">Tabulku lze posouvat vodorovně; první sloupec (scénář) zůstává ukotvený.</p>
+
+      <div class="scn-wrap">
+        <table class="scn-table">
+          <thead>
+            <tr>
+              <th scope="col" class="scn-name">Název | cíl | hlavní developerské fáze</th>
+              <th scope="col">První developerská fáze<br>(první transformační fáze)</th>
+              <th scope="col">Název základního scénáře</th>
+              <th scope="col">Detail základního scénáře</th>
+              <th scope="col">První dějství základního scénáře</th>
+              <th scope="col">Realizace odkupu Areálu v rámci základního scénáře</th>
+              <th scope="col">Odhad kapitálové náročnosti prvního dějství na vlastní kapitál realizačního podniku</th>
+              <th scope="col">Název alternativního scénáře, odhad kapitálové náročnosti a základní popis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="scn-row--s1">
+              <th scope="row" class="scn-name">
+                <strong>Scénář S1</strong>
+                <span class="scn-goal">CÍL: transformace Areálu do podoby nové městské čtvrti</span>
+                <span class="scn-phases">TŘI FÁZE: 1) komplexní rekonstrukce, 2) provoz &amp; lobbing, 3) nová výstavba</span>
+              </th>
+              <td>Komplexní rekonstrukce stávajících budov na základě stavebního povolení, a to způsobem, který nebude považován za změnu v území (tj. bez změny účelu užívání či změny původních kapacit)</td>
+              <td><span class="scn-base">S1 (base)</span></td>
+              <td><a class="scn-detail" href="404.html">zde</a></td>
+              <td>Komplexní rekonstrukce A1 až A6 + C, na základě stavebního povolení, pro potřeby projektu <strong>Startovací hub</strong></td>
+              <td>Po pravomocném povolení komplexní rekonstrukce, tj. v rámci prvního transformačního kroku, a to za pomoci bankovního úvěru</td>
+              <td>
+                <span class="scn-fin">„Equity-like" finance (kreditní linka):</span>
+                <strong class="scn-amt">310+ mil. Kč</strong>
+                na bankou spolufinancovaný odkup Areálu v okamžiku získání stavebního povolení pro komplexní rekonstrukci A1 až A6 + C
+                <span class="scn-note">(primárně)</span>
+              </td>
+              <td>
+                <strong class="scn-amt">S1 (low): 50+ mil. Kč</strong>
+                Scénář S1 (low) je založen na financování odkupu Areálu i komplexní rekonstrukce za pomoci klientů – např. družstevníků či kvalifikovaných investorů; odkup Areálu v tomto scénáři nastane po kolaudaci komplexní rekonstrukce.
+              </td>
+            </tr>
+            <tr class="scn-row--s2">
+              <th scope="row" class="scn-name">
+                <strong>Scénář S2</strong>
+                <span class="scn-goal">CÍL: transformace Areálu do podoby nové městské čtvrti</span>
+                <span class="scn-phases">TŘI FÁZE: 1) dílčí rekonstrukce, 2) provoz &amp; lobbing, 3) nová výstavba</span>
+              </th>
+              <td>Dílčí rekonstrukce stávajících budov v režimu drobné stavby – bez stavebního povolení, tj. například bez zásahu do nosných konstrukcí (dílčí rekonstrukce zachová společné sociální zázemí v původních ubytovnách)</td>
+              <td><span class="scn-base">S2 (base)</span></td>
+              <td><a class="scn-detail" href="404.html">zde</a></td>
+              <td>Dílčí rekonstrukce A1 až A6 v režimu drobné stavby bez stavebního povolení, pro potřeby projektu <strong>Startovací hub</strong></td>
+              <td>Například: (1) jakmile se bankovní úvěr na odkup Areálu, získatelný na základě provozních příjmů z dílčí rekonstrukce, stane výhodnějším než odkládání odkupu; (2) po pravomocném povolení zastavět Areál novými stavbami; (3) před propadnutím práva na odkup Areálu v roce 2039</td>
+              <td>
+                <span class="scn-fin">„Equity-like" finance (kreditní linka):</span>
+                <strong class="scn-amt">50+ mil. Kč</strong>
+                na postupnou dílčí rekonstrukci A1 až A6, ze které poplynou příjmy na úhradu sjednaných záloh a bonita na odkup areálu
+                <span class="scn-note">(primárně)</span>
+              </td>
+              <td><span class="scn-dash">—</span></td>
+            </tr>
+            <tr class="scn-row--s3">
+              <th scope="row" class="scn-name">
+                <strong>Scénář S3</strong>
+                <span class="scn-goal">CÍL: transformace Areálu do podoby nové městské čtvrti</span>
+                <span class="scn-phases">DVĚ FÁZE: 1) lobbing, 2) nová výstavba</span>
+              </th>
+              <td>Uzavření plánovací smlouvy s městem, na jejímž základě dojde k úpravě etapizace ÚP a k následným krokům umožňujícím zastavět Areál novými stavbami bez mezikroku spočívajícího v dílčí či komplexní rekonstrukci</td>
+              <td><span class="scn-base">S3 (base)</span></td>
+              <td><a class="scn-detail" href="404.html">zde</a></td>
+              <td>Vyjednávání s městem za účelem uzavření plánovací smlouvy</td>
+              <td>Po pravomocném povolení zastavět Areál novými stavbami, nejpozději však před propadnutím práva na odkup Areálu v roce 2039</td>
+              <td>
+                <span class="scn-fin">„Equity-like" finance (kreditní linka):</span>
+                <strong class="scn-amt">3 až 24 mil. Kč p. a.</strong>
+                na úhradu záloh na kupní cenu Areálu
+                <span class="scn-note">(primárně)</span>
+              </td>
+              <td><span class="scn-dash">—</span></td>
+            </tr>
+            <tr class="scn-row--alt">
+              <th scope="row" class="scn-name"><strong>Scénář Sk</strong></th>
+              <td>[kombinace výše uvedeného]</td>
+              <td><span class="scn-base">Sk (base)</span></td>
+              <td><span class="scn-dash">—</span></td>
+              <td>[kombinace výše uvedeného]</td>
+              <td>[kombinace výše uvedeného]</td>
+              <td>[kombinace výše uvedeného]</td>
+              <td><span class="scn-dash">—</span></td>
+            </tr>
+            <tr class="scn-row--alt">
+              <th scope="row" class="scn-name"><strong>Scénář Sx</strong></th>
+              <td>[bude doplněno]</td>
+              <td><span class="scn-base">Sx (base)</span></td>
+              <td><span class="scn-dash">—</span></td>
+              <td>[bude doplněno]</td>
+              <td>[bude doplněno]</td>
+              <td>[bude doplněno]</td>
+              <td>[bude doplněno]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="foot">*Pokud je použito slovní spojení „odkup Areálu" či „kupní cena Areálu", je tím myšlen odkup 100 % obchodního podílu ve společnosti FTV Klecany s.r.o., respektive kupní cena za tento podíl.</p>
+    </section>
+
+    <footer class="vzver">
+      <p>verze 2p8iaz6 · aktualizace č. 2026-06-15-2p8iaz6</p>
+      <p>[PRACOVNÍ VERZE 2p8iaz6 z 15. 6. 2026]</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  /* Odhlášení: smaž otisk a zpět na login. */
+  (function () {
+    var btns = document.querySelectorAll('[data-inv-logout]');
+    Array.prototype.forEach.call(btns, function (btn) {
+      btn.addEventListener('click', function () {
+        try { localStorage.removeItem('vpd1-auth'); } catch (e) {}
+        location.href = 'investori.html';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

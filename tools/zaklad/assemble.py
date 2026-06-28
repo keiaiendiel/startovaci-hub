@@ -266,6 +266,12 @@ TOPBAR = """<header class="inv-topbar">
     <a class="inv-topbar__brand" href="index.html" aria-label="Startovací Hub, na úvod">
       <img src="assets/brand-logo-white.svg" alt="Startovací Hub" />
     </a>
+    <nav class="inv-topnav" aria-label="Podklady pro investory">
+      <a class="inv-topnav__link" href="investori-zamer.html">Investiční záměr</a>
+      <a class="inv-topnav__link" href="investori-zaklad.html" aria-current="page">Základní údaje</a>
+      <a class="inv-topnav__link" href="investori-scenare.html">Základní scénáře</a>
+    </nav>
+    <button type="button" class="inv-topbar__logout" data-inv-logout>Odhlásit se</button>
     <label for="inv-nav" class="inv-burger" aria-label="Otevřít menu">
       <span class="burger"><span></span><span></span><span></span></span>
     </label>
@@ -276,7 +282,7 @@ TOPBAR = """<header class="inv-topbar">
       <div class="inv-menu__nav">
         <a class="inv-menu__link" href="investori-zamer.html">Investiční záměr</a>
         <a class="inv-menu__link" href="investori-zaklad.html" aria-current="page">Základní údaje</a>
-        <a class="inv-menu__link" href="404.html">Základní scénáře</a>
+        <a class="inv-menu__link" href="investori-scenare.html">Základní scénáře</a>
       </div>
       <div class="inv-menu__foot">
         <button type="button" class="inv-menu__logout" data-inv-logout>Odhlásit se</button>
