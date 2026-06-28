@@ -69,13 +69,15 @@ STYLE = r"""<style>
   .vz .vz-matrix tbody tr:nth-child(even) td{background:var(--zebra)}
   .vz .vz-matrix tbody tr:nth-child(even) .vz-stickcol{background:var(--zebra)}
   .vz .vz-matrix tbody tr:nth-child(even) td.is-input{background:var(--accent-input)}
-  .vz .vz-matrix tbody tr:hover td{background:#F0F0FA}
-  .vz .vz-matrix tbody tr:hover .vz-stickcol{background:#F0F0FA}
+  /* hover ztmavení překryvnou vrstvou — funguje i přes barevné (cellfills) buňky */
+  .vz .vz-matrix tbody tr:hover td{box-shadow:inset 0 0 0 999px rgba(42,42,96,.06)}
+  .vz .vz-matrix tbody tr:hover .vz-stickcol{box-shadow:1px 0 0 0 var(--hair),inset 0 0 0 999px rgba(42,42,96,.06)}
+  /* zvýraznění konektoru (rose) na hover/focus zdroje nebo cíle */
+  .vz .vz-matrix tbody tr.is-flowmark td{box-shadow:inset 0 0 0 999px rgba(196,162,192,.30)}
+  .vz .vz-matrix tbody tr.is-flowmark .vz-stickcol{box-shadow:1px 0 0 0 var(--hair),inset 0 0 0 999px rgba(196,162,192,.30)}
   /* zónové obarvení řádků parcel (žlutá=jádro, zelená=zázemí) — přebíjí zebru */
   .vz .vz-matrix tbody tr.is-jadro td,.vz .vz-matrix tbody tr.is-jadro .vz-stickcol{background:#F2ECC9}
   .vz .vz-matrix tbody tr.is-zazemi td,.vz .vz-matrix tbody tr.is-zazemi .vz-stickcol{background:#E2EFD9}
-  .vz .vz-matrix tbody tr.is-jadro:hover td,.vz .vz-matrix tbody tr.is-jadro:hover .vz-stickcol{background:#ECE4B4}
-  .vz .vz-matrix tbody tr.is-zazemi:hover td,.vz .vz-matrix tbody tr.is-zazemi:hover .vz-stickcol{background:#D4E7C7}
   /* věrné barvení buněk dle zdrojového Excelu (vstup oranžová, zelená, modrá…) */
   .vz .vz-matrix td.is-input,.vz .vz-matrix .vz-stickcol.is-input{background:#F0CFA0 !important}
   .vz .vz-matrix td.is-green,.vz .vz-matrix .vz-stickcol.is-green{background:#D4E6C6 !important}
@@ -84,6 +86,9 @@ STYLE = r"""<style>
   .vz .vz-matrix td.is-yellow,.vz .vz-matrix .vz-stickcol.is-yellow{background:#F2ECC9 !important}
   .vz .vz-matrix td.is-tan,.vz .vz-matrix .vz-stickcol.is-tan{background:#E6D9BF !important}
   .vz .val.is-green{background:#D4E6C6}
+  /* červená čísla (font color z Excelu) */
+  .vz .is-red,.vz .vz-matrix td.is-red,.vz .vz-matrix .vz-stickcol.is-red,
+  .vz .vz-param__num.is-red,.vz .vz-gbox__num.is-red{color:#C8102E !important}
   /* obal posuvné tabulky: fade + scroll tlačítka zůstávají na hraně viditelné oblasti (ne uvnitř scrollu) */
   .vz .vz-mwrap{position:relative}
   .vz .vz-mwrap::before,.vz .vz-mwrap::after{content:"";position:absolute;top:0;bottom:0;width:34px;
@@ -150,6 +155,16 @@ STYLE = r"""<style>
   .vz .vz-sbox{background:var(--sbox-bg,#E7F0E3);border:1px solid var(--sbox-bd,#A8CE9F);border-radius:7px;padding:11px 13px}
   .vz .vz-sbox__label{display:block;font-size:.76rem;color:#3a3a52;line-height:1.3}
   .vz .vz-sbox__num{display:block;margin-top:5px;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+  /* souhrnné boxy finále (barva dle zdrojového fillu, volitelně cíl konektoru) */
+  .vz .vz-grand{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0 4px}
+  .vz .vz-gbox{background:var(--tint);border:1px solid var(--hair);padding:14px 16px;position:relative}
+  .vz .vz-gbox.is-green{background:#D4E6C6;border-color:#A8CE9F}
+  .vz .vz-gbox.is-yellow{background:#F2ECC9;border-color:#D8CD7E}
+  .vz .vz-gbox.is-blue{background:#E6ECF6;border-color:#B6CDE9}
+  .vz .vz-gbox.is-input{background:#F0CFA0;border-color:#D9B57E}
+  .vz .vz-gbox__label{display:block;font-size:.82rem;color:#3a3a52;line-height:1.3}
+  .vz .vz-gbox__num{display:block;margin-top:5px;font-size:clamp(1.3rem,3.2vw,1.85rem);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .vz .vz-gbox.is-flowmark{outline:2px solid var(--rose,#C4A2C0);outline-offset:-2px}
   /* zóna: velký nadpis + zelené title bandy dílčích tabulek */
   .vz .vz-zonehead{margin:clamp(38px,5.5vw,64px) 0 0;background:var(--band,#D4E6C6);
     border-top:2px solid var(--band-bd,#88B673);border-bottom:2px solid var(--band-bd,#88B673);
@@ -169,10 +184,11 @@ STYLE = r"""<style>
   /* velký pravý ribbon (náhrada původní zahnuté šipky) — kreslí JS dle pozic.
      Tabulka i souhrn dostanou pravý okraj, kam se oblouk vejde. */
   .vz .vz-flowblock{position:relative}
-  .vz .vz-flowblock > .vz-mwrap, .vz .vz-flowblock > .vz-summary{margin-right:78px}
+  .vz .vz-flowblock > .vz-mwrap, .vz .vz-flowblock > .vz-grand{margin-right:84px}
   .vz .vz-bigribbon{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
-  .vz .vz-bigribbon path{fill:none;stroke:var(--rose,#C4A2C0);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
-  @media (max-width:820px){ .vz .vz-flowblock > .vz-mwrap, .vz .vz-flowblock > .vz-summary{margin-right:0} .vz .vz-bigribbon{display:none} }
+  .vz .vz-bigribbon path{fill:none;stroke:var(--rose,#C4A2C0);stroke-width:1.6;opacity:.55;stroke-linecap:round;stroke-linejoin:round;transition:stroke-width .15s,opacity .15s}
+  .vz .vz-flowblock.is-flowhot .vz-bigribbon path{stroke-width:3.4;opacity:1}
+  @media (max-width:820px){ .vz .vz-flowblock > .vz-mwrap, .vz .vz-flowblock > .vz-grand{margin-right:0} .vz .vz-bigribbon{display:none} }
   /* vstupní parametry jako barevné boxy */
   .vz .vz-params{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px}
   .vz .vz-param{flex:1 1 165px;background:#EEF1F6;border:1px solid var(--hair);border-radius:7px;padding:11px 13px}
@@ -209,6 +225,21 @@ STYLE = r"""<style>
     .vz .sechead{padding:11px 14px}
     .vz .vz-subhead{margin:18px 14px 6px}
   }
+  /* obrázky klikatelné na zvětšení */
+  .vz figure img{cursor:zoom-in}
+  /* lightbox (overlay na body, mimo .vz scope) */
+  .lbx{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(16,16,38,.92);padding:clamp(12px,4vw,48px)}
+  .lbx.is-open{display:flex}
+  .lbx__img{max-width:100%;max-height:88vh;width:auto;height:auto;object-fit:contain;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#0c0c1e}
+  .lbx__cap{position:absolute;left:0;right:0;bottom:max(12px,env(safe-area-inset-bottom));text-align:center;color:#e8e8f4;font-size:.85rem;padding:0 16px;line-height:1.4;margin:0}
+  .lbx__btn{position:absolute;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;width:46px;height:46px;border-radius:9999px;display:flex;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .lbx__btn:hover{background:rgba(255,255,255,.22)}
+  .lbx__btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+  .lbx__close{top:18px;right:18px}
+  .lbx__prev{left:18px;top:50%;transform:translateY(-50%)}
+  .lbx__next{right:18px;top:50%;transform:translateY(-50%)}
+  .lbx__btn svg{display:block}
+  @media (max-width:680px){ .lbx__prev{left:8px} .lbx__next{right:8px} .lbx__btn{width:40px;height:40px} }
 </style>"""
 
 TOPBAR = """<header class="inv-topbar">
@@ -309,36 +340,87 @@ SCRIPTS = """
     });
   })();
 
-  /* Velký pravý ribbon: oblouk od posledního sloupce tabulky k poslednímu souhrnnému boxu
-     (náhrada původní zahnuté šipky; zvýrazňuje „roční příjem → roční výše příjmů"). */
+  /* Konektor (náhrada Excel šipek): trvalá jemná linka tabulka → cílový souhrnný box;
+     hover/focus na posledním řádku nebo boxu linku zvýrazní a obě hodnoty rozsvítí. */
   (function () {
+    function lastRow(block){ var r = block.querySelectorAll('.vz-matrix tbody tr'); return r.length ? r[r.length - 1] : null; }
     function draw(block) {
       var svg = block.querySelector('.vz-bigribbon');
       var wrap = block.querySelector('.vz-mwrap');
-      var boxes = block.querySelectorAll('.vz-sbox');
-      if (!svg || !wrap || !boxes.length) return;
+      var target = block.querySelector('[data-flow-target]');
+      if (!svg || !wrap || !target) return;
       if (window.innerWidth < 820) { svg.innerHTML = ''; return; }
-      var end = boxes[boxes.length - 1];
       var b = block.getBoundingClientRect();
       var t = wrap.getBoundingClientRect();
-      var e = end.getBoundingClientRect();
+      var e = target.getBoundingClientRect();
+      var row = lastRow(block), r = row ? row.getBoundingClientRect() : t;
       var W = b.width, H = b.height;
-      var sx = t.right - b.left, sy = (t.top - b.top) + 26;
-      var ex = e.right - b.left, ey = (e.top - b.top) - 5;
-      var bow = 58;
+      var sx = t.right - b.left, sy = (r.top - b.top) + r.height / 2;
+      var ex = e.right - b.left, ey = (e.top - b.top) + e.height / 2;
+      var bow = 64;
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-      var c1x = sx + bow, c1y = sy + (ey - sy) * 0.46;
-      var c2x = ex + 12,  c2y = ey - 40;
+      var c1x = sx + bow, c1y = sy + (ey - sy) * 0.30, c2x = ex + bow, c2y = ey - (ey - sy) * 0.30;
       var d = 'M ' + sx + ' ' + sy + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + ex + ' ' + ey;
-      var a = 12;
-      var head = 'M ' + (ex - a) + ' ' + (ey - a) + ' L ' + ex + ' ' + ey + ' L ' + (ex + a) + ' ' + (ey - a);
+      var a = 9, head = 'M ' + (ex - a) + ' ' + (ey - a) + ' L ' + ex + ' ' + ey + ' L ' + (ex - a) + ' ' + (ey + a);
       svg.innerHTML = '<path d="' + d + '"/><path d="' + head + '"/>';
     }
-    function all() { Array.prototype.forEach.call(document.querySelectorAll('.vz-flowblock'), draw); }
+    function wire(block){
+      var target = block.querySelector('[data-flow-target]'), row = lastRow(block);
+      if (!target || !row) return;
+      function on(){ block.classList.add('is-flowhot'); row.classList.add('is-flowmark'); target.classList.add('is-flowmark'); }
+      function off(){ block.classList.remove('is-flowhot'); row.classList.remove('is-flowmark'); target.classList.remove('is-flowmark'); }
+      [row, target].forEach(function(el){
+        el.addEventListener('mouseenter', on); el.addEventListener('mouseleave', off);
+        el.addEventListener('focusin', on); el.addEventListener('focusout', off);
+      });
+      target.tabIndex = 0;
+    }
+    var blocks = document.querySelectorAll('.vz-flowblock');
+    function all(){ Array.prototype.forEach.call(blocks, draw); }
+    Array.prototype.forEach.call(blocks, wire);
     all();
     window.addEventListener('resize', all);
     window.addEventListener('load', all);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
+  })();
+
+  /* Lightbox: klik na obrázek v podkladech → zvětšení. Esc / pozadí / × zavře, ‹ › a ←/→ navigace. */
+  (function () {
+    var imgs = Array.prototype.slice.call(document.querySelectorAll('.vz figure img'));
+    if (!imgs.length) return;
+    var overlay, lbImg, lbCap, idx = -1;
+    function build(){
+      overlay = document.createElement('div');
+      overlay.className = 'lbx'; overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
+      overlay.innerHTML =
+        '<button class="lbx__btn lbx__close" aria-label="Zavřít"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>' +
+        '<button class="lbx__btn lbx__prev" aria-label="Předchozí"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+        '<img class="lbx__img" alt="">' +
+        '<button class="lbx__btn lbx__next" aria-label="Další"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+        '<p class="lbx__cap"></p>';
+      document.body.appendChild(overlay);
+      lbImg = overlay.querySelector('.lbx__img'); lbCap = overlay.querySelector('.lbx__cap');
+      overlay.addEventListener('click', function(e){ if (e.target === overlay) close(); });
+      overlay.querySelector('.lbx__close').addEventListener('click', close);
+      overlay.querySelector('.lbx__prev').addEventListener('click', function(e){ e.stopPropagation(); show(idx - 1); });
+      overlay.querySelector('.lbx__next').addEventListener('click', function(e){ e.stopPropagation(); show(idx + 1); });
+    }
+    function capFor(im){ var f = im.closest('figure'), c = f && f.querySelector('figcaption'); return (c && c.textContent.trim()) || im.alt || ''; }
+    function show(i){ idx = (i + imgs.length) % imgs.length; var im = imgs[idx]; lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt || ''; lbCap.textContent = capFor(im); }
+    function open(i){ if (!overlay) build(); show(i); overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+    function close(){ if (overlay) overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
+    imgs.forEach(function(im, i){
+      im.tabIndex = 0; im.setAttribute('role', 'button');
+      if (!im.getAttribute('aria-label')) im.setAttribute('aria-label', 'Zvětšit obrázek');
+      im.addEventListener('click', function(){ open(i); });
+      im.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); } });
+    });
+    document.addEventListener('keydown', function(e){
+      if (!overlay || !overlay.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(idx - 1);
+      else if (e.key === 'ArrowRight') show(idx + 1);
+    });
   })();
 </script>
 
