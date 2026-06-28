@@ -10,7 +10,7 @@ STYLE = r"""<style>
   .vz{
     --ink:#2A2A60; --hair:#9696B9; --rule:#2A2A60; --grey:#7F7F7F; --link:#4351AD;
     --accent-input:#F0CFA0; --zebra:#FAFAFC;
-    margin:0; background:#fff; color:var(--ink);
+    margin:0; background:#fff; color:var(--ink); overflow-x:clip;
     font-family:'Atyp Special',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
     font-variant-numeric:tabular-nums lining-nums;
     -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
@@ -61,7 +61,8 @@ STYLE = r"""<style>
     border-right:1px solid #ECECF3;text-align:left;white-space:nowrap;vertical-align:top}
   .vz .vz-matrix thead th{background:var(--tint);font-weight:700;border-bottom:1px solid var(--rule);
     white-space:normal;min-width:62px;max-width:150px}
-  .vz .vz-matrix td.num{text-align:right;font-variant-numeric:tabular-nums}
+  /* velké matice: vše zarovnané vlevo (sjednoceno; tabular-nums drží šířku číslic) */
+  .vz .vz-matrix td.num{text-align:left;font-variant-numeric:tabular-nums}
   .vz .vz-matrix td.is-input{background:var(--accent-input)}
   .vz .vz-matrix .vz-stickcol{position:sticky;left:0;background:#fff;z-index:1;font-weight:600;
     border-right:1px solid var(--rule);min-width:104px;box-shadow:1px 0 0 0 var(--hair)}
@@ -97,6 +98,8 @@ STYLE = r"""<style>
   .vz .vz-mwrap::after{right:0;background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.92))}
   .vz .vz-mwrap.can-left::before{opacity:1}
   .vz .vz-mwrap.can-right::after{opacity:1}
+  /* levý fade jen u tabulek BEZ ukotveného 1. sloupce (jinak budí dojem fixního sloupce) */
+  .vz .vz-mwrap.has-stick::before{display:none}
   .vz .vz-mbtn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:none;
     width:38px;height:38px;border-radius:9999px;border:1px solid var(--hair);background:rgba(255,255,255,.95);
     color:var(--ink);font:400 24px/1 system-ui,sans-serif;cursor:pointer;align-items:center;justify-content:center;
@@ -164,7 +167,7 @@ STYLE = r"""<style>
   .vz .vz-gbox.is-input{background:#F0CFA0;border-color:#D9B57E}
   .vz .vz-gbox__label{display:block;font-size:.82rem;color:#3a3a52;line-height:1.3}
   .vz .vz-gbox__num{display:block;margin-top:5px;font-size:clamp(1.3rem,3.2vw,1.85rem);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-  .vz .vz-gbox.is-flowmark{outline:2px solid var(--rose,#C4A2C0);outline-offset:-2px}
+  .vz .vz-gbox.is-flowmark,.vz .vz-param.is-flowmark{outline:2px solid var(--rose,#C4A2C0);outline-offset:-2px}
   /* zóna: velký nadpis + zelené title bandy dílčích tabulek */
   .vz .vz-zonehead{margin:clamp(38px,5.5vw,64px) 0 0;background:var(--band,#D4E6C6);
     border-top:2px solid var(--band-bd,#88B673);border-bottom:2px solid var(--band-bd,#88B673);
@@ -181,14 +184,13 @@ STYLE = r"""<style>
     border:1px solid var(--hair)}
   .vz .vz-figrow figcaption{margin-top:7px;font-size:.78rem;color:var(--grey);line-height:1.4}
   @media (max-width:760px){ .vz .vz-figrow{grid-template-columns:1fr} .vz .vz-figrow img{height:clamp(200px,52vw,320px)} }
-  /* velký pravý ribbon (náhrada původní zahnuté šipky) — kreslí JS dle pozic.
-     Tabulka i souhrn dostanou pravý okraj, kam se oblouk vejde. */
+  /* konektor (náhrada původní zahnuté Excel šipky) — kreslí JS od vstupního parametru
+     k cílovému souhrnu. Tabulky drží plnou šířku; oblouk volně přesahuje do okraje webu. */
   .vz .vz-flowblock{position:relative}
-  .vz .vz-flowblock > .vz-mwrap, .vz .vz-flowblock > .vz-grand{margin-right:84px}
-  .vz .vz-bigribbon{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
-  .vz .vz-bigribbon path{fill:none;stroke:var(--rose,#C4A2C0);stroke-width:1.6;opacity:.55;stroke-linecap:round;stroke-linejoin:round;transition:stroke-width .15s,opacity .15s}
+  .vz .vz-bigribbon{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:4}
+  .vz .vz-bigribbon path{fill:none;stroke:var(--rose,#C4A2C0);stroke-width:1.7;opacity:.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke-width .15s,opacity .15s}
   .vz .vz-flowblock.is-flowhot .vz-bigribbon path{stroke-width:3.4;opacity:1}
-  @media (max-width:820px){ .vz .vz-flowblock > .vz-mwrap, .vz .vz-flowblock > .vz-grand{margin-right:0} .vz .vz-bigribbon{display:none} }
+  @media (max-width:820px){ .vz .vz-bigribbon{display:none} }
   /* vstupní parametry jako barevné boxy */
   .vz .vz-params{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px}
   .vz .vz-param{flex:1 1 165px;background:#EEF1F6;border:1px solid var(--hair);border-radius:7px;padding:11px 13px}
@@ -325,6 +327,7 @@ SCRIPTS = """
       var bl = wrap.querySelector('.vz-mbtn--left');
       var br = wrap.querySelector('.vz-mbtn--right');
       if (!box) return;
+      if (box.querySelector('.vz-stickcol')) wrap.classList.add('has-stick');
       function update() {
         var max = box.scrollWidth - box.clientWidth;
         var x = box.scrollLeft;
@@ -340,37 +343,46 @@ SCRIPTS = """
     });
   })();
 
-  /* Konektor (náhrada Excel šipek): trvalá jemná linka tabulka → cílový souhrnný box;
-     hover/focus na posledním řádku nebo boxu linku zvýrazní a obě hodnoty rozsvítí. */
+  /* Konektor (náhrada zahnuté Excel šipky): jemný oblouk od vstupního parametru
+     (data-flow-source) k cílovému souhrnu (data-flow-target). Vede po pravém okraji
+     a volně přesahuje do okraje webu; tabulky drží plnou šířku. Hover/focus zvýrazní
+     linku i obě propojené hodnoty. */
   (function () {
-    function lastRow(block){ var r = block.querySelectorAll('.vz-matrix tbody tr'); return r.length ? r[r.length - 1] : null; }
     function draw(block) {
       var svg = block.querySelector('.vz-bigribbon');
-      var wrap = block.querySelector('.vz-mwrap');
+      var source = block.querySelector('[data-flow-source]');
       var target = block.querySelector('[data-flow-target]');
-      if (!svg || !wrap || !target) return;
+      if (!svg || !source || !target) return;
       if (window.innerWidth < 820) { svg.innerHTML = ''; return; }
       var b = block.getBoundingClientRect();
-      var t = wrap.getBoundingClientRect();
+      var s = source.getBoundingClientRect();
       var e = target.getBoundingClientRect();
-      var row = lastRow(block), r = row ? row.getBoundingClientRect() : t;
       var W = b.width, H = b.height;
-      var sx = t.right - b.left, sy = (r.top - b.top) + r.height / 2;
-      var ex = e.right - b.left, ey = (e.top - b.top) + e.height / 2;
-      var bow = 64;
+      var sx = W, sy = (s.top - b.top) + s.height / 2;
+      var ex = W, ey = (e.top - b.top) + e.height / 2;
+      var room = Math.max(40, Math.min(150, window.innerWidth - b.right + 70));
+      var maxx = W + room;
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-      var c1x = sx + bow, c1y = sy + (ey - sy) * 0.30, c2x = ex + bow, c2y = ey - (ey - sy) * 0.30;
+      var c1x = maxx, c1y = sy + (ey - sy) * 0.12;
+      var c2x = maxx, c2y = ey - (ey - sy) * 0.12;
       var d = 'M ' + sx + ' ' + sy + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + ex + ' ' + ey;
-      var a = 9, head = 'M ' + (ex + a) + ' ' + (ey - a) + ' L ' + ex + ' ' + ey + ' L ' + (ex + a) + ' ' + (ey + a);
+      var dx = ex - c2x, dy = ey - c2y, L = Math.sqrt(dx * dx + dy * dy) || 1; dx /= L; dy /= L;
+      var px = -dy, py = dx, a = 10;
+      var head = 'M ' + (ex - dx * a + px * a) + ' ' + (ey - dy * a + py * a) +
+                 ' L ' + ex + ' ' + ey +
+                 ' L ' + (ex - dx * a - px * a) + ' ' + (ey - dy * a - py * a);
       svg.innerHTML = '<path d="' + d + '"/><path d="' + head + '"/>';
     }
     function wire(block){
-      var target = block.querySelector('[data-flow-target]'), row = lastRow(block);
-      if (!target || !row) return;
-      function on(){ block.classList.add('is-flowhot'); row.classList.add('is-flowmark'); target.classList.add('is-flowmark'); }
-      function off(){ block.classList.remove('is-flowhot'); row.classList.remove('is-flowmark'); target.classList.remove('is-flowmark'); }
-      [row, target].forEach(function(el){
+      var source = block.querySelector('[data-flow-source]');
+      var target = block.querySelector('[data-flow-target]');
+      if (!source || !target) return;
+      function on(){ block.classList.add('is-flowhot'); source.classList.add('is-flowmark'); target.classList.add('is-flowmark'); }
+      function off(){ block.classList.remove('is-flowhot'); source.classList.remove('is-flowmark'); target.classList.remove('is-flowmark'); }
+      [source, target].forEach(function(el){
         el.addEventListener('mouseenter', on); el.addEventListener('mouseleave', off);
+        el.setAttribute('tabindex', '0');
+        el.addEventListener('focusin', on); el.addEventListener('focusout', off);
       });
     }
     var blocks = document.querySelectorAll('.vz-flowblock');

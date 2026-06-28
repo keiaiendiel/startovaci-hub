@@ -299,15 +299,18 @@ def greenband(text, center=False):
     return lambda: w(f'  <p class="{cls}">{esc(text)}</p>')
 
 def paramstrip(items):
-    """Vstupní parametry jako boxy; barva dle zdrojového fillu hodnoty. items: (label, value_coord)."""
+    """Vstupní parametry jako boxy; barva dle zdrojového fillu hodnoty.
+    items: (label, value_coord, is_source?) — is_source označí box jako počátek konektoru."""
     def _():
         w('  <div class="vz-params">')
-        for label, coord in items:
+        for it in items:
+            label, coord = it[0], it[1]
+            src = ' data-flow-source' if (len(it) > 2 and it[2]) else ''
             m = re.match(r'^([A-Z]+)(\d+)$', coord)
             c, r = col2num(m.group(1)), int(m.group(2))
             fc = cell_fill_class(r, c)
             red = " is-red" if is_red(r, c) else ""
-            w(f'    <div class="vz-param {fc}"><span class="vz-param__label">{esc(label)}</span>'
+            w(f'    <div class="vz-param {fc}"{src}><span class="vz-param__label">{esc(label)}</span>'
               f'<span class="vz-param__num{red}">{esc(V(coord))}</span></div>')
         w('  </div>')
     return _
@@ -518,7 +521,7 @@ hub_bench = matrix(
 
 # ---- finále: 5 tabulek (BS–CZ) ----
 t20_params = paramstrip([
-    ("Odhadovaná výše příjmu pro rok 2026", "BS6"),
+    ("Odhadovaná výše příjmu pro rok 2026", "BS6", True),
     ("Odhadovaný meziroční růst ceny pronájmů", "BU6"),
 ])
 t20_matrix = matrix(
@@ -539,12 +542,12 @@ t21_matrix = matrix(
     ["BY", "BZ", "CA", "CB", "CC"], list(range(8, 24)), cellfills=True)
 t21_grand = vzgrand([
     ("Cena Areálu po odečtení uhrazených záloh na konci roku 2038:", "BZ39", False),
-    ("Hlavní příjmy projektu Startovací hub do konce roku 2038:", "CB39", True),
+    ("Hlavní příjmy projektu Startovací hub do konce roku 2038:", "CB39", False),
 ])
 
 t22_params = paramstrip([
     ("Odhadovaná prodejní cena jedné jednotky 1+kk o ČPP cca 21 m² v příslušné lokalitě "
-     "pro rok 2026", "CL6"),
+     "pro rok 2026", "CL6", True),
 ])
 t22_matrix = matrix(
     ["Číslo parcely", "Označení", "Název", "Celkem podlaží",
@@ -562,7 +565,7 @@ t22_bench = matrix(
     ["CK", "CL", "CM"], [42], cellfills=True)
 
 t24_params = paramstrip([
-    ("Odhadovaná tržní cena všech jednotek (2026)", "CP6"),
+    ("Odhadovaná tržní cena všech jednotek (2026)", "CP6", True),
     ("Zvolený index pro meziroční růst ceny nemovitostí v příslušné lokalitě", "CR6"),
 ])
 t24_matrix = matrix(
@@ -578,7 +581,7 @@ t24_grand = vzgrand([
 t25_params = paramstrip([
     ("Odhadovaný průměrný meziroční růst ceny nemovitostí v lokalitě Areálu mezi roky "
      "2026 až 2038", "CU6"),
-    ("Odhad tržní ceny jednotek vzniklých pro projekt Startovací hub (2026)", "CX6"),
+    ("Odhad tržní ceny jednotek vzniklých pro projekt Startovací hub (2026)", "CX6", True),
 ])
 t25_matrix = matrix(
     ["Rok", "Přírůstek prodejní ceny",
@@ -613,26 +616,23 @@ zonesection(
         hub_bench,
         vzmap("zdroj-odhad-najemneho.jpg",
               "Odhad tržního nájemného srovnatelné nemovitosti (oceňovací nástroj odhad-zdarma.cz)"),
-        # --- finále: 5 tabulek ---
+        # --- finále: 5 tabulek (konektor spojuje vstupní parametr s cílovým souhrnem) ---
         greenband("Odhadovaný meziroční nárůst příjmů z pronájmu jednotek vzniklých pro projekt Startovací hub"),
-        t20_params,
-        flowblock([t20_matrix, t20_grand]),
+        flowblock([t20_params, t20_matrix, t20_grand]),
         greenband("Hrubé porovnání hlavních provozních příjmů a nákladů projektu Startovací hub"),
-        flowblock([t21_matrix, t21_grand]),
+        t21_matrix,
+        t21_grand,
         greenband("Odhad tržní ceny všech jednotek vzniklých pro projekt Startovací hub"),
-        t22_params,
-        flowblock([t22_matrix, t22_grand]),
+        flowblock([t22_params, t22_matrix, t22_grand]),
         greenband("Odhad tržní ceny jedné jednotky 1+kk o ČPP 21 m² v příslušné lokalitě "
                   "(www.odhad-zdarma.cz, k 18. 1. 2026)", center=True),
         t22_bench,
         vzmap("zdroj-odhad-prodejni-ceny.jpg",
               "Odhad tržní prodejní ceny srovnatelné nemovitosti (oceňovací nástroj odhad-zdarma.cz)"),
         greenband("Odhadovaný nárůst tržní ceny jednotek vzniklých pro projekt Startovací hub"),
-        t24_params,
-        flowblock([t24_matrix, t24_grand]),
+        flowblock([t24_params, t24_matrix, t24_grand]),
         greenband("Rozdíl mezi nákupní cenou Areálu a tržní cenou jednotek vzniklých pro projekt Startovací hub"),
-        t25_params,
-        flowblock([t25_matrix, t25_grand]),
+        flowblock([t25_params, t25_matrix, t25_grand]),
     ],
     label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu jednotek 1+kk",
     shade=True, band="#E9E2A8", bandbd="#CDBF6E")
