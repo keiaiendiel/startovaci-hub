@@ -644,90 +644,107 @@ zonesection(
     shade=True, band="#E9E2A8", bandbd="#CDBF6E")
 
 # ============================================================
-# 4) STARTOVACÍ HUB — LŮŽKA
+# 4) STARTOVACÍ HUB — LŮŽKA VE SDÍLENÝCH POKOJÍCH (sloupce DM–DV)
 # ============================================================
-l_inputs = kv([
-    ("Index převodu HPP na ČPP pokojů s lůžky","DP6"),
-    ("Počet ČPP na jedno lůžko","DR6"),
-    ("Odhad tržního nájemného za jedno lůžko (měsíčně)","DT6"),
-    ("Odhadované náklady na služby na jedno lůžko (měsíčně)","DU6"),
-    ("Obsazenost","DV6"),
-], inputs=True)
-
-l_prijem = matrix(
-    ["Parcela","Označení","Název","HPP budovy","ČPP pokojů","Počet lůžek","Měsíční příjem","Měsíční náklad na služby","Roční příjem očištěný o služby"],
-    ["DM","DN","DO","DP","DQ","DR","DT","DU","DV"], list(range(10,27)),
-    caption="Odhad příjmů z pronájmu lůžek ve sdílených pokojích (po budovách)")
-
-l_souhrn = kv([
-    ("Celkový počet lůžek","DR39"),
-    ("Odhadovaná výše měsíčních příjmů","DT39"),
-    ("Odhadovaná výše měsíčních nákladů na služby","DU39"),
-    ("Odhadovaný roční příjem","DV39"),
+luzka_params = paramstrip([
+    ("Index pro převod HPP příslušných budov na ČPP pokojů k ubytovávání hostů", "DP6"),
+    ("Počet ČPP na jedno lůžko", "DR6"),
+    ("Odhad tržního nájemného za jedno lůžko (měsíčně vč. služeb)", "DT6"),
+    ("Odhadované náklady na základní služby v přepočtu na jedno lůžko (měsíčně)", "DU6"),
+    ("Obsazenost", "DV6", True),
+])
+luzka_matrix = matrix(
+    ["Číslo parcely", "Označení", "Název", "HPP příslušných budov", "ČPP pokojů s lůžky",
+     "Počet lůžek v budově", "Měsíční příjem z pronajímání lůžek", "Měsíční náklad na služby",
+     "Příjem projektu očištěný o služby"],
+    ["DM", "DN", "DO", "DP", "DQ", "DR", "DT", "DU", "DV"], list(range(10, 27)),
+    cellfills=True, zonecols=(117, 126),
+    foot="Žlutě jádro projektu Startovací hub, zeleně zázemí. Pokoje s lůžky vznikají dílčí "
+         "rekonstrukcí budov A1–A6 + C.")
+luzka_grand = vzgrand([
+    ("Celkový počet lůžek:", "DR39", False),
+    ("Odhadovaná výše měsíčních příjmů:", "DT39", False),
+    ("Odhadovaná výše měsíčních nákladů na služby:", "DU39", False),
+    ("Odhadovaný roční příjem (očištěný o služby):", "DV39", True),
 ])
 
-section_draft("Startovací hub · lůžka ve sdílených pokojích", "#F1EADF", [
-    subhead("Vstupní parametry"),
-    l_inputs,
-    l_prijem,
-    subhead("Souhrn"),
-    l_souhrn,
-    subhead("Vizualizace"),
-    figs([("render-sdileny-pokoj-interier.jpg", "Vizualizace interiéru: sdílený pokoj s lůžky se zvýšenou privátní ochranou")]),
-], label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu lůžek")
+zonesection(
+    "Projekt Startovací hub | orientační výpočty týkající se potenciálních příjmů plynoucích "
+    "z jádra projektu složeného výhradně ze sdílených pokojů, které může vzniknout dílčí "
+    "rekonstrukcí budov A1 až A6 + C",
+    "#FBFAF0", [
+        greenband("Odhad příjmů z pronájmu lůžek ve sdílených pokojích vzniklých pro projekt Startovací hub"),
+        flowblock([luzka_params, luzka_matrix, luzka_grand]),
+        subhead("Vizualizace"),
+        figs([("render-sdileny-pokoj-interier.jpg",
+               "Vizualizace interiéru: sdílený pokoj vybavený lůžky se zvýšenou privátní ochranou")],
+             label="Vizualizace sdíleného pokoje"),
+        greenband("Odhad tržní ceny ubytování za jedno lůžko ve sdíleném pokoji "
+                  "(pracovní model pro investiční záměr, k 1. 5. 2026)", center=True),
+        vzmap("zdroj-cena-ubytovani-luzko.jpg",
+              "Odhad ceny ubytování za jedno lůžko ve sdíleném pokoji (pracovní model)"),
+        greenband("Odhad provozních nákladů (voda, elektřina, teplo) na jedno lůžko "
+                  "(pracovní model, k 1. 5. 2026)", center=True),
+        vzmap("zdroj-naklady-luzko.jpg",
+              "Odhad provozních nákladů na jedno lůžko v přepočtu na měsíc (pracovní model)"),
+    ],
+    label="Projekt Startovací hub — orientační výpočty příjmů z pronájmu lůžek ve sdílených pokojích",
+    band="#E9E2A8", bandbd="#CDBF6E")
 
 # ============================================================
-# 5) NOVÁ ČTVRŤ
+# 5) NOVÁ ČTVRŤ (sloupce EH–ES; benchmark bytů EH–EN, řádky 188–214)
 # ============================================================
-n_inputs = kv([
-    ("Zastavitelnost Areálu","EH6"),
-    ("Podlažnost pro plochy SM","EJ6"),
-    ("Plochy SM v Areálu","EK6"),
-    ("Kolik % z maxima HPP dle ÚP se podaří zrealizovat","EL6"),
-    ("Index pro převod HPP na ČPP","EM6"),
-    ("Index meziročního nárůstu cen stavebních prací","EN6"),
-    ("Podíl projekčních / přípravných prací","EO6"),
-    ("Odhadovaná cena za vybudování 1 m² ČPP (2026)","EP6"),
-    ("Index meziročního nárůstu prodejní ceny bytů","EQ6"),
-    ("Odhadovaná tržní cena m² ČPP (2026, novostavby)","ER6"),
-], inputs=True)
+nc_params = paramstrip([
+    ("Zastavitelnost Areálu", "EH6"),
+    ("Podlažnost pro plochy SM v rámci Areálu", "EJ6"),
+    ("Plochy SM v Areálu", "EK6"),
+    ("Kolik % z maxima HPP dle současného ÚP se podaří zrealizovat", "EL6"),
+    ("Index pro převod HPP na ČPP", "EM6"),
+    ("Index meziročního nárůstu cen stavebních prací", "EN6"),
+    ("Podíl projekčních / přípravných prací", "EO6"),
+    ("Odhadovaná cena za vybudování 1 m² ČPP (2026)", "EP6"),
+    ("Index meziročního nárůstu prodejní ceny bytů", "EQ6"),
+    ("Odhadovaná tržní cena m² ČPP (2026, novostavby)", "ER6", True),
+])
+nc_matrix = matrix(
+    ["Rok", "Kupní cena celého areálu", "Nárůst ceny bytových jednotek v lokalitě",
+     "HPP (m²)", "ČPP (m²)", "Index meziroč. nárůstu cen stavebních prací",
+     "Odhadovaný náklad na výstavbu příslušných ČPP", "Odhadovaná cena projekčních / přípravných prací",
+     "Index nárůstu prodejních cen bytů", "Odhadovaná prodejní cena všech ČPP v Areálu",
+     "Odhadovaná pořizovací cena Areálu vč. stavebních a projekčních prací",
+     "Teoretický hrubý zisk z rozprodeje rozvinutého Areálu"],
+    ["EH", "EI", "EJ", "EK", "EL", "EM", "EN", "EO", "EP", "EQ", "ER", "ES"],
+    list(range(8, 24)), cellfills=True)
+nc_grand = vzgrand([
+    ("Potenciální hrubý zisk před zdaněním z rozprodeje stavební činností plně rozvinutého "
+     "Areálu v roce 2038 v souladu se zvolenými parametry:", "EQ39", True),
+])
+nc_bench = matrix(
+    ["Název", "Dispozice", "Plocha (m²)", "Podlaží", "Cena (Kč)", "Cena za m²"],
+    ["EH", "EI", "EJ", "EK", "EL", "EN"], list(range(188, 215)),
+    cellfills=True,
+    foot="Průměrná cena za m²: 140 393 Kč. Uvedené ceny jsou informativní (závazná je smluvní "
+         "dokumentace prodejce). Zdroj: www.creditasre.cz/projekty/klecanska-alej k 22. 9. 2025.")
 
-n_matrix = matrix(
-    ["Rok","Kupní cena areálu","Nárůst cen bytů","HPP","ČPP","Index stav. prací",
-     "Náklad na výstavbu ČPP","Projekční / přípravné práce","Index prodejních cen",
-     "Prodejní cena všech ČPP","Pořizovací cena vč. prací","Teoretický hrubý zisk"],
-    ["EH","EI","EJ","EK","EL","EM","EN","EO","EP","EQ","ER","ES"], list(range(8,24)),
-    caption="Odhad hrubých příjmů a nákladů developerského rozvoje Areálu (2023–2038)")
-
-def n_headline():
-    w('  <div class="vz-headline">')
-    w(f'    <span class="vz-headline__label">Potenciální hrubý zisk před zdaněním z rozprodeje plně rozvinutého Areálu (2038)</span>')
-    w(f'    <span class="vz-headline__num">{esc(V("EQ39"))}</span>')
-    w(f'    <span class="vz-headline__sub">Průměrná cena za m²: {esc(V("EN41"))}</span>')
-    w('  </div>')
-
-bench = matrix(
-    ["Název","Dispozice","Plocha","Podlaží","Cena","Vybavení","Dostupnost"],
-    ["EH","EI","EJ","EK","EL","EM","EN"], list(range(188,201)),
-    caption="Nabídkové ceny bytů v novostavbách poblíž Areálu (benchmark)",
-    foot="Zdroj: www.creditasre.cz/projekty/klecanska-alej k 22. 9. 2025.")
-
-section_draft("Nová čtvrť", "#E7F0E3", [
-    subhead("Vstupní parametry"),
-    n_inputs,
-    n_matrix,
-    flow("Prodejní cena všech ČPP − pořizovací cena včetně prací → teoretický hrubý zisk"),
-    n_headline,
-    bench,
-    subhead("Vizualizace a hmotové studie"),
-    figs([("render-exterier-plaza.jpg", "Vizualizace exteriéru: Nová čtvrť"),
-          ("schema-hmota-letecky-1.jpg", "Hmotová studie – letecký pohled (1)"),
-          ("schema-hmota-letecky-2.jpg", "Hmotová studie – letecký pohled (2)"),
-          ("schema-hmota-letecky-3.jpg", "Hmotová studie – letecký pohled (3)"),
-          ("schema-zony-zakres.jpg", "Schéma zón se zákresem budov"),
-          ("schema-ortofoto-zony-1.jpg", "Ortofoto se zákresem zón (1)"),
-          ("schema-ortofoto-zony-2.jpg", "Ortofoto se zákresem zón (2)")]),
-], label="Projekt Nová čtvrť — orientační výpočty")
+zonesection(
+    "Projekt Nová čtvrť | orientační výpočty hrubých příjmů a nákladů developerského rozvoje "
+    "celého Areálu do podoby nové městské čtvrti",
+    "#EEF3FA", [
+        greenband("Odhad hrubých příjmů a nákladů ve vztahu k developerskému rozvoji celého Areálu"),
+        flowblock([nc_params, nc_matrix, nc_grand]),
+        subhead("Vizualizace a hmotové studie"),
+        figs([("schema-hmota-letecky-1.jpg", "Hmotová studie Nové čtvrti – letecký pohled (1)"),
+              ("schema-hmota-letecky-2.jpg", "Hmotová studie Nové čtvrti – letecký pohled (2)"),
+              ("schema-hmota-letecky-3.jpg", "Hmotová studie Nové čtvrti – letecký pohled (3)"),
+              ("schema-zony-zakres.jpg", "Schéma zón se zákresem budov")],
+             label="Hmotové studie Nové čtvrti"),
+        greenband("Nabídkové ceny bytů v novostavbách v příslušné lokalitě (benchmark tržní ceny m² ČPP)"),
+        nc_bench,
+        vzmap("zdroj-nabidka-bytu-web.jpg",
+              "Nabídkové ceny bytů v novostavbě poblíž Areálu (www.creditasre.cz, k 22. 9. 2025)"),
+    ],
+    label="Projekt Nová čtvrť — orientační výpočty developerského rozvoje Areálu",
+    shade=True, band="#CBDDF1", bandbd="#8BB9E4")
 
 # ============================================================
 # 6) ZDROJE & PŘEDPOKLADY
