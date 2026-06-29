@@ -21,7 +21,7 @@ promítni změny sem; když klient chce úpravu tady, drž to konzistentní s As
 |---|---|
 | Styly | Tailwind CSS 3.4.17, zdroj `src/input.css` → build do `assets/styles.css` |
 | Tailwind config | `tailwind.config.js`, `content` = `index.html`, `404.html`, `pripravujeme.html`, `investori.html`, `investori-zamer.html`, `investori-zaklad.html`, `struktura-webu.html`, `galerie.html`; brand barvy mapované na CSS proměnné (`bg-plum-deep`, `text-rose`, …) |
-| Tokeny + komponenty | `src/input.css`: `:root` tokeny + `@layer components` (`.hero-ctas`, `.hero-cta`, `.sec-title/.sec-lede/.sec-cta`, `.ucards/.ucard*`, `.gal/.gallery*`, `.foot-act/.foot-label`, `.hub-404*`, `.menu/.burger`, `.to-top`, `.inv-topbar*/.inv-login*/.inv-btn`, `.inv-seg` přepínač). Pozn.: `.vz*` styly „Základních údajů" (`.vz-matrix/.vz-map/.vz-summary/.vz-zonehead/.vz-greenband/.vz-quote/.vz-figrow/.sec--shade` aj.) žijí **inline** v `investori-zaklad.html`, ne v Tailwindu. |
+| Tokeny + komponenty | `src/input.css`: `:root` tokeny + `@layer components` (`.hero-ctas`, `.hero-cta`, `.sec-title/.sec-lede/.sec-cta`, `.ucards/.ucard*`, `.gal/.gallery*`, `.foot-act/.foot-label/.foot-link`, hlavička `.hdr-bar/.hdr-brand/.hdr-osa/.hdr-osa--dark/.hdr-logo/.hdr-cta/.burger` (+ scroll-driven `hdr-stick/hdr-shrink/hdr-shrink-desktop/hdr-osa-out/hdr-osa-in/hdr-logo-in`), `.hub-404*`, `.menu`, `.to-top`, `.inv-topbar*/.inv-login*/.inv-btn`, `.inv-seg` přepínač). Pozn.: `.vz*` styly „Základních údajů" (`.vz-matrix/.vz-map/.vz-summary/.vz-zonehead/.vz-greenband/.vz-quote/.vz-figrow/.sec--shade` aj.) žijí **inline** v `investori-zaklad.html`, ne v Tailwindu. |
 | Fonty | self-hosted Atyp Special (woff2) v `assets/fonts/`, `@font-face` v `input.css` |
 | JS | Landing ŽÁDNÝ: menu = CSS checkbox (`#navtoggle`), galerie = scroll-snap + kotvy + scroll-driven aktivní tečka (`view-timeline`) + `::scroll-button` šipky, hero = `<video autoplay muted loop playsinline>`, „nahoru" = scroll-driven animace. Plynulé přechody = `@view-transition` (cross-document, bez JS). **Výjimka:** investorský pod-web má pár řádků JS (měkká brána heslem). |
 | Média | `assets/images/hub/...` (zrcadlo `sh-web/public/images/hub`), hero video `assets/videos/*.mp4` (H.264, ne `.mov` jako Astro) |
@@ -43,23 +43,41 @@ assets/images/investori/zona-vse.jpg        # ortofoto-podklad interaktivní map
 assets/images/investori/zona-{ctvrt,jadro,zazemi}.jpg  # 3 barevné zónové překryvy
 assets/images/investori/zaklad/         # obrázky „Základních údajů" (rendery/schémata/zdroje) + mapping.json
 tools/zaklad/           # generační pipeline „Základních údajů" (openpyxl dump → build → assemble)
-assets/{fonts,images,videos,brand-logo-white.svg}
+assets/{fonts,images,videos}
+assets/brand-logo-{white,dark}.svg    # wordmark „Startovací Hub" (bílý/tmavý)
+assets/osa-logo-{white,dark}.svg      # OSA glyph; tmavá varianta pro bílou stuck lištu
+assets/images/hub/zazemi/{coworking,gastronomie,wellness,ostatni}.jpg  # karty Zázemí (v004aPI)
+vNNN[a|b]PI/            # zmrazené snapshoty verzí (v001PI…v004aPI) + version.txt; verze.html = přehled
 tailwind.config.js, package.json, README.md
 ```
 
-## Struktura landingu (musí zrcadlit Astro `index.astro`)
+## Struktura landingu
 
-Hero (video + scrim; centro BrandLogo + lede „your perfect living & working space"
-+ 2 liquid-glass pilulky „Pronajmout apartmán/lůžko" ukotvené dole, **mezera mezi
-nimi přesně na středu stránky** přes 2 poloviční grid sloupce, šířka dle obsahu)
-→ zig-zag sekce **Ubytování** (úvod na celou šířku + 2 karty `.ucard`: Privátní
-apartmány, Sdílené pokoje) → **Zázemí** (foto vlevo) → **Doprava** „15 minut na
-metro." (foto vpravo) → **Stipendia** (foto vlevo) → **patička** (2 sloupce:
-kontakty/adresa/nav | mapa) + **rezervační pruh** dole (3 CTA).
+⚠️ **Od v003+/v004 se landing ZÁMĚRNĚ rozešel s Astrem** (klientské úpravy jen tady,
+nesyncovat zpět z Astra a nepřepsat je „syncem"). Aktuální stav (root = styl v003b):
 
-⚠️ Aktuální Astro landing NEMÁ galerie teaser, ceník teaser ani finální CTA banner
-a ribbon dlaždice pod herem jsou zakomentované , tady to taky není. Nepřidávej je,
-dokud to nepřibude i v Astru.
+Hero (video + scrim; **textový H1 „Startovací hub"** — ne wordmark obrázek — + lede
+„your perfect live & work space" + 2 liquid-glass tlačítka „Pronajmout apartmán/lůžko"
+dole; **mezera mezi nimi na středu** přes 2 grid sloupce. Na telefonu tlačítka
+`min(86%,250px)`, `whitespace-nowrap`, dál od sebe) → **Ubytování** (úvod + 2 karty
+`.ucard`) → **Zázemí** (root: zig-zag s galerií; **v004aPI: 4 karty** Coworking/
+Gastronomie/Wellness/Komunita — `.ucard` 2×2, 1 obrázek + nadpis, 1 CTA) → **Doprava**
+→ **Stipendia** → **patička** (1. sloupec užší `max-w-[340px]`: kontakty + **bloková
+skleněná tlačítka `.foot-link`** „Ostatní informace" | mapa přes 2.–3. sloupec) +
+**rezervační pruh** (3 CTA `.foot-act`).
+
+**Hlavička/lišta** (`.hdr-bar`, lícuje s obsahem `.wrap`, bez extra paddingu):
+vlevo **OSA glyph** (`.hdr-osa` bílé / `.hdr-osa--dark` tmavé), uprostřed
+vycentrovaný **textový wordmark „Startovací Hub"** (`.hdr-logo`, jen ≥ 768 px),
+vpravo CTA + **burger** (`.burger` — vodorovný, hranatý, silný stroke). Po
+odscrollování (stuck, bílá lišta): OSA se překříží bílá→tmavá (zůstává vlevo),
+wordmark naskočí na střed, CTA „Pronajmout" naskočí. Na desktopu se OSA+burger
+nad herem posunou níž (keyframe `hdr-shrink-desktop`). Na telefonu menší OSA (24px)
+i burger. **Tlačítka:** `.hero-cta`/`.foot-act` = `rounded-[12px]` (v003b/v004/root),
+`rounded-full` pilulka ve v003a. Kulaté ikony (scroll šipka, „nahoru") zůstaly kulaté.
+
+⚠️ Astro landing NEMÁ galerie teaser, ceník teaser ani finální CTA banner; tady to
+taky není. Nepřidávej je bezdůvodně.
 
 ## Odkazy (důležité pravidlo)
 
@@ -187,9 +205,23 @@ scripts/publish-version.sh 002PI "krátký popis"   # → složka v002PI/ + upda
 # pak: zkontroluj, zacommituj, zmerguj do main (Pages se přebuildí ~1 min)
 ```
 
-Označení verzí: `vNNNPI` (001PI, 002PI, …). `gh` token bývá neplatný (zápis přes API
+Označení verzí: `vNNNPI`, vč. variant `vNNNaPI`/`vNNNbPI` (001PI, 002PI, 003aPI, 003bPI,
+004aPI…). ⚠️ **Musí končit na `PI`** — `verze.html` se generuje globem `v*PI/version.txt`
+(holé `v003b` by se v přehledu neukázalo). `gh` token bývá neplatný (zápis přes API
 nejde), ale `git push` přes credential helper funguje — proto verze žijí na `main`,
-ne na samostatné `gh-pages` (nevyžaduje to ruční přepnutí Pages source).
+ne na samostatné `gh-pages`.
+
+**Varianty a/b (různý tvar tlačítek apod.):** jediný rozdíl drž ve zdroji a snapshotuj
+oboje — uprav zdroj → `publish-version.sh 00XbPI` (= aktuální stav) → přepni rozdíl
+(sed tříd v `input.css`, build) → `publish-version.sh 00XaPI` → vrať zpět, build. Root
+= poslední stav. Workflow: `publish` do gitu NESAHÁ → po něm `git add -A && commit`,
+pak `git branch -f main HEAD && git push origin main` (+ pracovní větev) → Pages ~1 min.
+
+**`v004aPI` vznikl jinak** — `cp -R v003aPI v004aPI` + ruční úprava jen jeho `index.html`
+(sekce Zázemí, reuse `.ucard`, žádné nové CSS) + obrázky do root `assets/` (sdílí přes
+`../assets`) + ruční `<li>` do `verze.html`. Tj. ta sekce Zázemí (4 karty) žije JEN ve
+frozen `v004aPI`, **ne ve zdroji/rootu**. Drobnou změnu napříč snapshoty (např. tloušťku
+burgeru) lze udělat sedem přímo v `vNNN*/assets/styles.css` (jsou commitnuté, bez buildu).
 
 ## Sync z Astra , na co koukat
 
