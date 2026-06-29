@@ -1,0 +1,1 @@
+v003aPI|2026-06-29|paticka: blokova sklenena tlacitka + uzsi sloupec; hero: textovy nadpis, vetsi OSA, bytelny burger, OSA glyph + wordmark na stred ve stuck liste; oprava to-top docku a fialoveho pruhu

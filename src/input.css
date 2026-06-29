@@ -114,8 +114,13 @@
   /* Po odscrollování pod hero (100svh) lišta zbělá (jako Astro is-stuck): bílé
      pozadí, tmavé logo/burger, vlasová linka dole a o něco nižší výška. Scroll-
      driven přes délkové rozsahy, bez JS. Logo je do té doby skryté. */
-  .hdr-logo { @apply self-center; opacity: 0; }
+  /* Wordmark „Startovací Hub" — vycentrovaný v liště; naskočí po odscrollování
+     (stuck). Absolutně na střed, ať nezávisí na brandu vlevo / akcích vpravo. */
+  .hdr-logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: 0; pointer-events: none; }
   .hdr-logo img { @apply block h-[18px] w-auto; }
+  /* Na telefonu stuck lišta nese OSA glyph + CTA + burger → vycentrovaný wordmark
+     by se tlačil; značku tam drží OSA glyph, wordmark proto < 640 px skryjeme. */
+  @media (max-width: 640px) { .hdr-logo { display: none; } }
 
   /* Landing: vlevo (oproti hamburgeru) bílé OSA logo PŘES hero; po odscrollování
      (stuck lišta) se vykříží s textovým logem — OSA zmizí, .hdr-logo najede. OSA je
@@ -124,7 +129,10 @@
   .hdr-brand { @apply relative inline-grid self-center; place-items: center start; }
   .hdr-brand > * { grid-area: 1 / 1; }
   /* .hdr-osa JE přímo <img> → výšku dáváme na něj (ne na .hdr-osa img). */
-  .hdr-osa { @apply block self-center w-auto; height: 26px; opacity: 1; pointer-events: none; } /* o něco větší; poměr k hamburgeru zachován */
+  .hdr-osa { @apply block self-center w-auto; height: 38px; opacity: 1; pointer-events: none; } /* větší (v003b); +5 % */
+  /* Tmavá varianta OSA glyphu — stuck (bílá) lišta: bílá OSA zmizí, tmavá naskočí.
+     OSA tak zůstane vlevo v obou stavech (jen překříží barvu). */
+  .hdr-osa--dark { opacity: 0; }
 
   /* Akční skupina vpravo: CTA „Pronajmout" + hamburger (jako sh-web Astro lišta).
      CTA je obrysová pilulka, barvu i obrys bere z currentColor → bílá nad tmavým
@@ -156,12 +164,17 @@
       from { min-height: 68px; padding-top: 12px; padding-bottom: 12px; }
       to   { min-height: 54px; padding-top: 7px; padding-bottom: 7px; }
     }
-    @keyframes hdr-logo-in { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
+    /* Wordmark je vycentrovaný přes transform: translate(-50%,-50%) → reveal řídí
+       JEN opacity (žádný transform v keyframe, jinak by přebil vycentrování). */
+    @keyframes hdr-logo-in { from { opacity: 0; pointer-events: none; } to { opacity: 1; pointer-events: auto; } }
     @keyframes hdr-osa-out { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes hdr-osa-in  { from { opacity: 0; } to { opacity: 1; } }
     .site-header { animation: hdr-stick both linear; animation-timeline: scroll(root block); animation-range: 78svh 94svh; }
     .hdr-bar { animation: hdr-shrink both linear; animation-timeline: scroll(root block); animation-range: 78svh 94svh; }
     .hdr-logo { animation: hdr-logo-in both linear; animation-timeline: scroll(root block); animation-range: 86svh 96svh; }
+    /* Crossfade OSA na stuck liště: bílá ven, tmavá dovnitř (stejný rozsah). */
     .hdr-osa { animation: hdr-osa-out both linear; animation-timeline: scroll(root block); animation-range: 80svh 92svh; }
+    .hdr-osa--dark { animation: hdr-osa-in both linear; animation-timeline: scroll(root block); animation-range: 80svh 92svh; }
     /* Reveal řídí JEN opacity. (Transform tu dřív byl taky, ale „both" fill ho po
        odscrollování držel a přebíjel hover-lift; a dvojná vazba opacity+transform
        přes scroll-timeline + transition byla zdrojem probliknutí.) */
@@ -174,9 +187,11 @@
   #navtoggle:checked ~ .hdr-bar .hdr-logo { opacity: 0 !important; }
   #navtoggle:checked ~ .hdr-bar .hdr-osa { opacity: 0 !important; }
   html:has(#navtoggle:checked), html:has(#navtoggle:checked) body { overflow: hidden; }
-  .burger-btn { @apply ml-auto inline-flex h-11 w-11 cursor-pointer items-center justify-center; }
-  .burger { @apply grid w-[26px] gap-[6px]; }
-  .burger > span { @apply block h-[1.5px] origin-center rounded bg-current; }
+  .burger-btn { @apply ml-auto inline-flex h-12 w-12 cursor-pointer items-center justify-center; }
+  /* Burger landingu zůstává vodorovný (jako dřív): pruhy SILNÉ (hrubý stroke) blízko
+     u sebe (menší výška objektu) s OSTRÝMI (hranatými) konci → bytelný, evokuje OSA logo (v003b). */
+  .burger { @apply grid w-[32px] gap-[4px]; }
+  .burger > span { @apply block h-[4.9px] origin-center bg-current; }
   .burger > span:nth-child(1), .burger > span:nth-child(3) { transition: transform 300ms var(--ease-quart); }
   .burger > span:nth-child(2) { transition: opacity 150ms linear; }
   /* Checkbox je sr-only → viditelný focus prsten ukaž na ikoně burgeru (klávesnice). */
@@ -203,9 +218,9 @@
     @apply visible translate-y-0 opacity-100;
     transition: opacity 320ms var(--ease-quart), transform 380ms var(--ease-quart), visibility 0s;
   }
-  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(1) { transform: translateY(8.9px) rotate(45deg); }
   #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(2) { opacity: 0; }
-  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(3) { transform: translateY(-8.9px) rotate(-45deg); }
 
   /* ---- Lišta pod-stránek (Struktura webu): „stejná jako landing", ale bílá
      „stuck" verze se spouští tím, jak tmavý banner (.sub-hero) odscrolluje pryč
@@ -258,7 +273,7 @@
       grid-template-columns: 1fr 1fr;
       align-items: start;
       row-gap: 0;
-      --rgap: clamp(40px, 6vw, 104px); /* tlačítka dál od středu */
+      --rgap: clamp(48px, 8.5vw, 190px); /* tlačítka dál od středu — roztaženo do stran (v003b) */
     }
     .hero-ctas > * { width: auto; } /* desktop: šířka dle obsahu */
     .hero-ctas > :nth-child(1) { justify-self: end; margin-right: calc(var(--rgap) / 2); }
@@ -470,6 +485,30 @@
   .foot-act:hover > svg { transform: translateX(3px); }
   .foot-label { @apply mb-3 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-rose; }
 
+  /* Odkazy „Ostatní informace" jako jemná skleněná bloková tlačítka (liquid glass
+     feel jako hero/.foot-act, jen lehčí): plný blok přes šířku sloupce, šipka vpravo,
+     hover = projasnění skla + zvednutí + posun šipky. */
+  .foot-link {
+    @apply inline-flex w-full items-center justify-between gap-3 rounded-[11px] px-[18px] py-[12px]
+           text-sm font-semibold leading-tight text-cream no-underline;
+    isolation: isolate;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: linear-gradient(150deg, rgba(255,255,255,0.11), rgba(255,255,255,0.035) 55%, rgba(255,255,255,0.075));
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(150%);
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.22), 0 8px 20px -16px rgba(0,0,0,0.55);
+    transition: background 200ms var(--ease-quart), border-color 200ms var(--ease-quart),
+      color 200ms var(--ease-quart), transform 200ms var(--ease-quart);
+  }
+  .foot-link:hover {
+    background: linear-gradient(150deg, rgba(255,255,255,0.22), rgba(255,255,255,0.09) 55%, rgba(255,255,255,0.15));
+    border-color: rgba(255,255,255,0.38);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  .foot-link > svg { flex-shrink: 0; opacity: 0.65; transition: transform 200ms var(--ease-quart), opacity 200ms var(--ease-quart); }
+  .foot-link:hover > svg { transform: translateX(3px); opacity: 1; }
+
   /* ---- Plovoucí „nahoru" (kotva #top, plynulý scroll, bez JS) ------------- */
   .to-top {
     @apply fixed z-20 grid h-11 w-11 place-items-center rounded-full text-white;
@@ -507,8 +546,12 @@
     right: auto;
     margin-left: auto;
     margin-right: clamp(16px, 3vw, 32px);
-    margin-top: -44px;
-    margin-bottom: 22px; /* zaparkuje o ~půl průměru výš nad patičkou */
+    /* Net vertikální příspěvek = margin-top + výška (44) + margin-bottom = 0, aby
+       patička přilnula přímo k sekci nad ní a NEPROSVÍTALO tmavé pozadí body
+       (jinak vznikl „fialový obdélník" přes celou šířku — plum-deep v mezeře).
+       Tlačítko přitom zaparkuje o `clearance` výš nad patičkou. */
+    margin-top: -76px;   /* = -(44 + 32) */
+    margin-bottom: 32px; /* clearance nad patičkou; pohlcen záporným margin-top → bez mezery */
   }
 
   /* ---- 404 / „ve výrobě" obrazovka (sdílená pro všechny necílové odkazy) -- */

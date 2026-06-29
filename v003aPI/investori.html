@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <style>html{background:#14142f}</style><!-- první paint = brand tmavá, ať navigace neproblikne bíle -->
+  <title>Přihlášení · Podklady pro investory · Startovací Hub</title>
+  <meta name="description" content="Podklady pro investory jsou přístupné po zadání hesla." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <header class="inv-topbar">
+    <div class="inv-topbar__inner">
+      <a class="inv-topbar__brand" href="index.html" aria-label="Startovací Hub, na úvod">
+        <img src="assets/brand-logo-white.svg" alt="Startovací Hub" />
+      </a>
+      <span class="inv-topbar__title">Podklady pro investory</span>
+      <div class="inv-topbar__actions">
+        <a class="inv-topbar__logout" href="index.html">Zpět na úvod</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="inv-login">
+    <div class="inv-login__card">
+      <h1 class="inv-login__title">Podklady pro investory</h1>
+      <p class="inv-login__lede">Podklady jsou přístupné pouze po zadání příslušného hesla.</p>
+      <p class="inv-login__error" id="inv-err" data-login-error role="alert">Nesprávné heslo. Zkuste to znovu.</p>
+      <noscript><p class="inv-login__lede">Přihlášení vyžaduje zapnutý JavaScript.</p></noscript>
+      <form data-login-form method="post" novalidate>
+        <input id="inv-pass" name="password" type="password" autocomplete="current-password" aria-label="Heslo" aria-describedby="inv-err" placeholder="Heslo" required autofocus />
+        <button type="submit" class="inv-btn">Zadat heslo</button>
+      </form>
+      <p class="inv-login__hint">Nemáte přístup? Napište na <a href="mailto:vpd@osa2.cz">vpd@osa2.cz</a>.</p>
+    </div>
+  </main>
+
+  <script>
+    /* Měkká brána na statickém webu (jako v002): SHA-256 hesla proti allowlistu,
+       otisk do localStorage, pak na podklady. Obsah podkladů je v HTML
+       dohledatelný i bez hesla — nejde o skutečné zabezpečení, jen o zábranu.
+       Vyžaduje secure context (https / localhost) kvůli crypto.subtle. */
+    (function () {
+      var ALLOW = ['2250c0a01e81a5c7c27c6a9632b9f92faed24cfba6868421b7311472982a1b06'];
+      var KEY = 'vpd1-auth';
+      var TARGET = 'investori-zamer.html';
+      var form = document.querySelector('[data-login-form]');
+      var error = document.querySelector('[data-login-error]');
+      var input = form.password;
+
+      function fail(msg) {
+        error.textContent = msg;
+        error.classList.add('is-visible');
+        input.setAttribute('aria-invalid', 'true');
+        input.value = '';
+        input.focus();
+      }
+
+      try {
+        if (ALLOW.indexOf(localStorage.getItem(KEY)) !== -1) { location.replace(TARGET); return; }
+      } catch (e) {}
+
+      // crypto.subtle existuje jen v secure contextu (https / localhost).
+      if (!window.isSecureContext || !(window.crypto && crypto.subtle)) {
+        form.addEventListener('submit', function (ev) {
+          ev.preventDefault();
+          fail('Přihlášení vyžaduje zabezpečené připojení (https).');
+        });
+        return;
+      }
+
+      function sha256hex(text) {
+        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
+          return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+            return b.toString(16).padStart(2, '0');
+          }).join('');
+        });
+      }
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        sha256hex(input.value).then(function (hash) {
+          if (ALLOW.indexOf(hash) === -1) { fail('Nesprávné heslo. Zkuste to znovu.'); return; }
+          try {
+            localStorage.setItem(KEY, hash);
+            if (localStorage.getItem(KEY) !== hash) throw new Error('storage');
+          } catch (e) {
+            fail('Prohlížeč blokuje úložiště, přihlášení nelze uložit. Povolte cookies/úložiště pro tuto stránku.');
+            return;
+          }
+          input.removeAttribute('aria-invalid');
+          location.href = TARGET;
+        }).catch(function () {
+          fail('Přihlášení se nezdařilo. Zkuste to prosím znovu.');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
