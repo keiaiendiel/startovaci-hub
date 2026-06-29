@@ -206,7 +206,7 @@
   /* Burger landingu zůstává vodorovný (jako dřív): pruhy SILNÉ (hrubý stroke) blízko
      u sebe (menší výška objektu) s OSTRÝMI (hranatými) konci → bytelný, evokuje OSA logo (v003b). */
   .burger { @apply grid w-[32px] gap-[4px]; }
-  .burger > span { @apply block h-[4.9px] origin-center bg-current; }
+  .burger > span { @apply block h-[4.2px] origin-center bg-current; }
   .burger > span:nth-child(1), .burger > span:nth-child(3) { transition: transform 300ms var(--ease-quart); }
   .burger > span:nth-child(2) { transition: opacity 150ms linear; }
   /* Na telefonu burger ~o 20 % užší (32→26px) → zmenší se spolu se zmenšeným OSA
@@ -236,9 +236,9 @@
     @apply visible translate-y-0 opacity-100;
     transition: opacity 320ms var(--ease-quart), transform 380ms var(--ease-quart), visibility 0s;
   }
-  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(1) { transform: translateY(8.9px) rotate(45deg); }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(1) { transform: translateY(8.2px) rotate(45deg); }
   #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(2) { opacity: 0; }
-  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(3) { transform: translateY(-8.9px) rotate(-45deg); }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(3) { transform: translateY(-8.2px) rotate(-45deg); }
 
   /* ---- Lišta pod-stránek (Struktura webu): „stejná jako landing", ale bílá
      „stuck" verze se spouští tím, jak tmavý banner (.sub-hero) odscrolluje pryč
