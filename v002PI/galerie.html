@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <style>html{background:#14142f}</style><!-- první paint = brand tmavá, ať navigace neproblikne -->
+  <title>Galerie · Startovací Hub Klecany</title>
+  <meta name="description" content="Galerie vizualizací Startovacího Hubu Klecany: ubytování, zázemí, doprava a okolí areálu Horních kasáren." />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="page-sub">
+
+  <!-- ===== HEADER (stejný jako pod-stránky; bílá „stuck" lišta po odscrollování banneru) ===== -->
+  <header class="site-header fixed inset-x-0 top-0 z-30 text-white">
+    <input type="checkbox" id="navtoggle" class="sr-only" aria-label="Přepnout menu" />
+
+    <div class="wrap hdr-bar">
+      <a href="index.html" class="subhdr-logo" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="is-white" /><img src="assets/brand-logo-dark.svg" alt="" aria-hidden="true" class="is-dark" /></a>
+      <div class="hdr-actions">
+        <a href="pripravujeme.html" class="hdr-cta">Pronajmout</a>
+        <label for="navtoggle" class="burger-btn" aria-label="Otevřít menu">
+          <span class="burger"><span></span><span></span><span></span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="menu">
+      <div class="wrap menu__inner">
+        <a href="index.html" class="self-center" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(22px,2.6vw,30px)] w-auto" /></a>
+
+        <a href="pripravujeme.html" class="inline-flex items-center justify-center gap-2 self-center rounded-[7px] bg-rose px-8 py-3 text-base font-bold leading-none text-plum-deep transition hover:-translate-y-[2px] hover:bg-white">
+          <span>Pronajmout</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+
+        <nav class="flex flex-1 flex-col items-center justify-center gap-2" aria-label="Hlavní navigace">
+          <a class="menu-link" href="pripravujeme.html">Ubytování</a>
+          <a class="menu-link" href="pripravujeme.html">Zázemí</a>
+          <a class="menu-link" href="pripravujeme.html">Doprava</a>
+          <a class="menu-link" href="pripravujeme.html">Ceník</a>
+          <a class="menu-link" href="pripravujeme.html">Stipendia</a>
+          <a class="menu-link" href="pripravujeme.html">Novinky</a>
+        </nav>
+
+        <div class="menu__foot">
+          <a class="menu-acct" href="pripravujeme.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Přihlásit se</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== SUB-HERO (poster banner — port Astro SubpageHero „deep" + skoky) ===== -->
+  <section id="top" class="sub-hero sub-hero--poster" aria-label="Galerie">
+    <span class="ribbon opacity-[0.6]" aria-hidden="true"><svg viewBox="0 0 2100 900" preserveAspectRatio="xMidYMid slice"><path d="M 120 720 C 520 420, 980 860, 1380 540 C 1700 300, 1980 560, 2060 420" style="stroke:hsl(var(--hue) 32% 44%);stroke-width:56" vector-effect="non-scaling-stroke"/></svg></span>
+    <div class="sub-hero__inner">
+      <nav class="sub-hero__crumbs" aria-label="Drobečková navigace">
+        <a class="crumb-link" href="index.html">Úvod</a>
+        <span class="crumb-dot" aria-hidden="true">·</span>
+        <span class="crumb-current" aria-current="page">Galerie</span>
+      </nav>
+      <h1 class="sub-hero__title">Podívejte se <em>dovnitř</em></h1>
+      <nav class="sub-hero__jumps" aria-label="Skok na sekci">
+        <a class="sub-hero__jump" href="#ubytovani">Ubytování</a>
+        <a class="sub-hero__jump" href="#zazemi">Zázemí</a>
+        <a class="sub-hero__jump" href="#doprava">Doprava</a>
+        <a class="sub-hero__jump" href="#okoli">Okolí</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ===== GALERIE ===== -->
+  <main class="gmain">
+    <section id="ubytovani" class="gsec">
+      <div class="gwrap">
+        <h2 class="gsec__title">Ubytování</h2>
+        <h3 class="gsub__title">Apartmány</h3>
+        <div class="ggrid">
+          <a class="gcell" id="g-1" href="#lb-1"><img src="../assets/images/galerie/ubytovani/apartmany-01-01-1kk.jpg" alt="Apartmán — apartmán 1+kk" loading="lazy" /></a>
+          <a class="gcell" id="g-2" href="#lb-2"><img src="../assets/images/galerie/ubytovani/apartmany-02-02-1kk-kuchyn.jpg" alt="Apartmán — kuchyň" loading="lazy" /></a>
+          <a class="gcell" id="g-3" href="#lb-3"><img src="../assets/images/galerie/ubytovani/apartmany-03-01-2kk.jpg" alt="Apartmán — apartmán 2+kk" loading="lazy" /></a>
+          <a class="gcell" id="g-4" href="#lb-4"><img src="../assets/images/galerie/ubytovani/apartmany-04-02-2kk.jpg" alt="Apartmán — apartmán 2+kk" loading="lazy" /></a>
+          <a class="gcell" id="g-5" href="#lb-5"><img src="../assets/images/galerie/ubytovani/apartmany-05-03-detail-2kk-kuchyn.jpg" alt="Apartmán — kuchyň" loading="lazy" /></a>
+          <a class="gcell" id="g-6" href="#lb-6"><img src="../assets/images/galerie/ubytovani/apartmany-06-01-3kk.jpg" alt="Apartmán — apartmán 3+kk" loading="lazy" /></a>
+          <a class="gcell" id="g-7" href="#lb-7"><img src="../assets/images/galerie/ubytovani/apartmany-07-01-5kk.jpg" alt="Apartmán — apartmán 5+kk" loading="lazy" /></a>
+          <a class="gcell" id="g-8" href="#lb-8"><img src="../assets/images/galerie/ubytovani/apartmany-08-01-5kk.jpg" alt="Apartmán — apartmán 5+kk" loading="lazy" /></a>
+          <a class="gcell" id="g-9" href="#lb-9"><img src="../assets/images/galerie/ubytovani/apartmany-09-04-wc.jpg" alt="Apartmán — WC" loading="lazy" /></a>
+          <a class="gcell" id="g-10" href="#lb-10"><img src="../assets/images/galerie/ubytovani/apartmany-10-05-koupelna.jpg" alt="Apartmán — koupelna" loading="lazy" /></a>
+          <a class="gcell" id="g-11" href="#lb-11"><img src="../assets/images/galerie/ubytovani/apartmany-11-08-chodba.jpg" alt="Apartmán — chodba" loading="lazy" /></a>
+          <a class="gcell" id="g-12" href="#lb-12"><img src="../assets/images/galerie/ubytovani/apartmany-12-apartman-01.jpg" alt="Apartmán, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-13" href="#lb-13"><img src="../assets/images/galerie/ubytovani/apartmany-13-02-1kk.jpg" alt="Apartmán — apartmán 1+kk" loading="lazy" /></a>
+          <a class="gcell" id="g-14" href="#lb-14"><img src="../assets/images/galerie/ubytovani/apartmany-14-4kk-update-family.jpg" alt="Apartmán — apartmán 4+kk" loading="lazy" /></a>
+        </div>
+        <h3 class="gsub__title">Sdílené pokoje — co-living</h3>
+        <div class="ggrid">
+          <a class="gcell" id="g-15" href="#lb-15"><img src="../assets/images/galerie/ubytovani/coliving-01-1kapsle-detail-2.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" /></a>
+          <a class="gcell" id="g-16" href="#lb-16"><img src="../assets/images/galerie/ubytovani/coliving-02-1kapsle-detail.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" /></a>
+          <a class="gcell" id="g-17" href="#lb-17"><img src="../assets/images/galerie/ubytovani/coliving-03-coliving-bathroom-update.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-18" href="#lb-18"><img src="../assets/images/galerie/ubytovani/coliving-04-coliving-kitchen-update.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-19" href="#lb-19"><img src="../assets/images/galerie/ubytovani/coliving-05-2kapsle-detail.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" /></a>
+          <a class="gcell" id="g-20" href="#lb-20"><img src="../assets/images/galerie/ubytovani/coliving-06-01-room-base-4.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-21" href="#lb-21"><img src="../assets/images/galerie/ubytovani/coliving-07-02-room-base-3.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-22" href="#lb-22"><img src="../assets/images/galerie/ubytovani/coliving-08-03-room-base-3.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-23" href="#lb-23"><img src="../assets/images/galerie/ubytovani/coliving-09-01-luzko-privacy-sliding-doors-closed.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" /></a>
+          <a class="gcell" id="g-24" href="#lb-24"><img src="../assets/images/galerie/ubytovani/coliving-10-01-luzko-privacy-sliding-doors.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" /></a>
+          <a class="gcell" id="g-25" href="#lb-25"><img src="../assets/images/galerie/ubytovani/coliving-11-01-luzko-privacy.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" /></a>
+          <a class="gcell" id="g-26" href="#lb-26"><img src="../assets/images/galerie/ubytovani/coliving-12-02-luzko-privacy-detail.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" /></a>
+          <a class="gcell" id="g-27" href="#lb-27"><img src="../assets/images/galerie/ubytovani/coliving-13-03-luzko-privacy-inside.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" /></a>
+          <a class="gcell" id="g-28" href="#lb-28"><img src="../assets/images/galerie/ubytovani/coliving-14-sdilene-01.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-29" href="#lb-29"><img src="../assets/images/galerie/ubytovani/coliving-15-kapsle-wide.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" /></a>
+          <a class="gcell" id="g-30" href="#lb-30"><img src="../assets/images/galerie/ubytovani/coliving-16-01-kapsle.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" /></a>
+          <a class="gcell" id="g-31" href="#lb-31"><img src="../assets/images/galerie/ubytovani/coliving-17-03-ext.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-32" href="#lb-32"><img src="../assets/images/galerie/ubytovani/coliving-18-04-int.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" /></a>
+        </div>
+      </div>
+    </section>
+    <section id="zazemi" class="gsec">
+      <div class="gwrap">
+        <h2 class="gsec__title">Zázemí</h2>
+        <h3 class="gsub__title">Komunita</h3>
+        <div class="ggrid">
+          <a class="gcell" id="g-33" href="#lb-33"><img src="../assets/images/galerie/zazemi/komunita-01-01-kantyna.jpg" alt="Komunita — kantýna" loading="lazy" /></a>
+          <a class="gcell" id="g-34" href="#lb-34"><img src="../assets/images/galerie/zazemi/komunita-02-02-minipivovar-new.jpg" alt="Komunita — minipivovar" loading="lazy" /></a>
+          <a class="gcell" id="g-35" href="#lb-35"><img src="../assets/images/galerie/zazemi/komunita-03-03-kantyna-busy.jpg" alt="Komunita — kantýna" loading="lazy" /></a>
+          <a class="gcell" id="g-36" href="#lb-36"><img src="../assets/images/galerie/zazemi/komunita-04-04-pekarna.jpg" alt="Komunita — pekárna" loading="lazy" /></a>
+          <a class="gcell" id="g-37" href="#lb-37"><img src="../assets/images/galerie/zazemi/komunita-05-05-restaurace.jpg" alt="Komunita — restaurace" loading="lazy" /></a>
+          <a class="gcell" id="g-38" href="#lb-38"><img src="../assets/images/galerie/zazemi/komunita-06-klubovna.jpg" alt="Komunita — klubovna" loading="lazy" /></a>
+          <a class="gcell" id="g-39" href="#lb-39"><img src="../assets/images/galerie/zazemi/komunita-07-01-komunitni-zahrady.jpg" alt="Komunita — komunitní zahrady" loading="lazy" /></a>
+          <a class="gcell" id="g-40" href="#lb-40"><img src="../assets/images/galerie/zazemi/komunita-08-02-grilovaci-misto.jpg" alt="Komunita — grilovací místo" loading="lazy" /></a>
+          <a class="gcell" id="g-41" href="#lb-41"><img src="../assets/images/galerie/zazemi/komunita-09-01-bazen.jpg" alt="Komunita — bazén" loading="lazy" /></a>
+          <a class="gcell" id="g-42" href="#lb-42"><img src="../assets/images/galerie/zazemi/komunita-10-02-sauna-update.jpg" alt="Komunita — sauna" loading="lazy" /></a>
+          <a class="gcell" id="g-43" href="#lb-43"><img src="../assets/images/galerie/zazemi/komunita-11-03-bazen-vecer.jpg" alt="Komunita — bazén" loading="lazy" /></a>
+        </div>
+        <h3 class="gsub__title">Coworking</h3>
+        <div class="ggrid">
+          <a class="gcell" id="g-44" href="#lb-44"><img src="../assets/images/galerie/zazemi/coworking-01-cowork-exterier-c-busy.jpg" alt="Coworking — exteriér" loading="lazy" /></a>
+          <a class="gcell" id="g-45" href="#lb-45"><img src="../assets/images/galerie/zazemi/coworking-02-cowork-exterier-c-evening.jpg" alt="Coworking — exteriér" loading="lazy" /></a>
+          <a class="gcell" id="g-46" href="#lb-46"><img src="../assets/images/galerie/zazemi/coworking-03-cowork-interier-pro4-busy.jpg" alt="Coworking, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-47" href="#lb-47"><img src="../assets/images/galerie/zazemi/coworking-04-cowork-interier-pro4.jpg" alt="Coworking, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-48" href="#lb-48"><img src="../assets/images/galerie/zazemi/coworking-05-cowork-interier-sal-c-update2.jpg" alt="Coworking — coworkingový sál" loading="lazy" /></a>
+          <a class="gcell" id="g-49" href="#lb-49"><img src="../assets/images/galerie/zazemi/coworking-06-cowork-interier-vlastni-stul-1.jpg" alt="Coworking, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-50" href="#lb-50"><img src="../assets/images/galerie/zazemi/coworking-07-cowork-interior-dilna.jpg" alt="Coworking — dílna" loading="lazy" /></a>
+          <a class="gcell" id="g-51" href="#lb-51"><img src="../assets/images/galerie/zazemi/coworking-08-cowork-interior-zasedacka.jpg" alt="Coworking — zasedací místnost" loading="lazy" /></a>
+        </div>
+      </div>
+    </section>
+    <section id="doprava" class="gsec">
+      <div class="gwrap">
+        <h2 class="gsec__title">Doprava</h2>
+        <div class="ggrid">
+          <a class="gcell" id="g-52" href="#lb-52"><img src="../assets/images/galerie/doprava/doprava-01-cyklostezka.jpg" alt="Doprava — cyklostezka" loading="lazy" /></a>
+          <a class="gcell" id="g-53" href="#lb-53"><img src="../assets/images/galerie/doprava/doprava-02-doparava.jpg" alt="Doprava, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-54" href="#lb-54"><img src="../assets/images/galerie/doprava/doprava-03-dostupnost.jpg" alt="Doprava — dostupnost areálu" loading="lazy" /></a>
+          <a class="gcell" id="g-55" href="#lb-55"><img src="../assets/images/galerie/doprava/doprava-04-hero-dostupnost.jpg" alt="Doprava — dostupnost areálu" loading="lazy" /></a>
+          <a class="gcell" id="g-56" href="#lb-56"><img src="../assets/images/galerie/doprava/doprava-05-zastavka.jpg" alt="Doprava — zastávka kyvadlové dopravy" loading="lazy" /></a>
+        </div>
+      </div>
+    </section>
+    <section id="okoli" class="gsec">
+      <div class="gwrap">
+        <h2 class="gsec__title">Okolí</h2>
+        <div class="ggrid">
+          <a class="gcell" id="g-57" href="#lb-57"><img src="../assets/images/galerie/okoli/okoli-01-4.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-58" href="#lb-58"><img src="../assets/images/galerie/okoli/okoli-02-a-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-59" href="#lb-59"><img src="../assets/images/galerie/okoli/okoli-03-a-2-4.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-60" href="#lb-60"><img src="../assets/images/galerie/okoli/okoli-04-a-2.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-61" href="#lb-61"><img src="../assets/images/galerie/okoli/okoli-05-a-c-2-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-62" href="#lb-62"><img src="../assets/images/galerie/okoli/okoli-06-a-row-3.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-63" href="#lb-63"><img src="../assets/images/galerie/okoli/okoli-07-a-row.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-64" href="#lb-64"><img src="../assets/images/galerie/okoli/okoli-08-a7-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-65" href="#lb-65"><img src="../assets/images/galerie/okoli/okoli-09-a8.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-66" href="#lb-66"><img src="../assets/images/galerie/okoli/okoli-10-aa1-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-67" href="#lb-67"><img src="../assets/images/galerie/okoli/okoli-11-areal-vstup.jpg" alt="Areál a okolí — vstup do areálu" loading="lazy" /></a>
+          <a class="gcell" id="g-68" href="#lb-68"><img src="../assets/images/galerie/okoli/okoli-12-b1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-69" href="#lb-69"><img src="../assets/images/galerie/okoli/okoli-13-b2-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-70" href="#lb-70"><img src="../assets/images/galerie/okoli/okoli-14-bazen.jpg" alt="Areál a okolí — bazén" loading="lazy" /></a>
+          <a class="gcell" id="g-71" href="#lb-71"><img src="../assets/images/galerie/okoli/okoli-15-coworking-exterier.jpg" alt="Areál a okolí — exteriér" loading="lazy" /></a>
+          <a class="gcell" id="g-72" href="#lb-72"><img src="../assets/images/galerie/okoli/okoli-16-d1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-73" href="#lb-73"><img src="../assets/images/galerie/okoli/okoli-17-e-f.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-74" href="#lb-74"><img src="../assets/images/galerie/okoli/okoli-18-t1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" /></a>
+          <a class="gcell" id="g-75" href="#lb-75"><img src="../assets/images/galerie/okoli/okoli-19-zastavka1.jpg" alt="Areál a okolí — zastávka kyvadlové dopravy" loading="lazy" /></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER (shodný s landingem) ===== -->
+  <footer class="border-t border-plum pb-8 pt-12 text-white"
+          style="background:radial-gradient(ellipse at 88% 105%, hsl(calc(var(--hue) + 44) 30% 70% / 0.16) 0%, transparent 50%), linear-gradient(135deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 36% 17%) 100%)">
+    <div class="wrap grid items-stretch gap-8 md:grid-cols-2 md:gap-x-[clamp(24px,4vw,64px)] md:gap-y-0">
+      <div class="flex flex-col">
+        <p class="foot-label">Kontakty</p>
+        <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="mailto:vpd@osa2.cz">vpd@osa2.cz</a></p>
+        <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="tel:+420602849342">+420 602 849 342</a></p>
+
+        <p class="foot-label mt-6">Adresa</p>
+        <p class="mb-2 text-sm leading-[1.5] text-white/85">Kampus projektu Startovací Hub naleznete v rozvojovém území na adrese:</p>
+        <p class="text-sm leading-[1.5] text-white/85"><strong class="font-semibold text-white">Dolní Kasárna 798, 250 67 Klecany (Praha-sever)</strong></p>
+
+        <p class="mt-4 text-xs leading-[1.5] text-white/55">Projekt Startovací Hub je realizován pod záštitou Občanského sdružení Alternativa II a partnerských organizací.</p>
+
+        <div class="my-6 flex flex-wrap gap-3">
+          <a class="group inline-flex items-center gap-2 rounded-[7px] border border-white/30 bg-white/5 px-[18px] py-[11px] text-sm font-semibold text-cream no-underline transition hover:-translate-y-[2px] hover:border-rose hover:bg-rose hover:text-plum-deep" href="investori.html"><span>Pro investory</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="transition-transform group-hover:translate-x-[3px]"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="group inline-flex items-center gap-2 rounded-[7px] border border-white/30 bg-white/5 px-[18px] py-[11px] text-sm font-semibold text-cream no-underline transition hover:-translate-y-[2px] hover:border-rose hover:bg-rose hover:text-plum-deep" href="struktura-webu.html"><span>Struktura webu</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="transition-transform group-hover:translate-x-[3px]"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <div class="mt-auto border-t border-white/10 pt-4">
+          <nav class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm" aria-label="Doplňkové odkazy">
+            <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Adresa</a>
+            <span class="text-white/35" aria-hidden="true">·</span>
+            <a class="text-white/75 no-underline transition hover:text-rose" href="https://www.google.com/maps?q=Dolní+Kasárna+798,+250+67+Klecany" target="_blank" rel="noopener">Mapa</a>
+            <span class="text-white/35" aria-hidden="true">·</span>
+            <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Kontakty</a>
+            <span class="text-white/35" aria-hidden="true">·</span>
+            <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Akce</a>
+          </nav>
+          <p class="mt-2 text-xs text-white/55">Poslední aktualizace webu proběhla 27. 6. 2026 <span class="whitespace-nowrap text-white/75">· verze 0.0.001PI</span></p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <p class="m-0">
+          <a class="inline-flex items-center gap-1 border-b border-rose pb-px text-sm font-medium text-rose no-underline transition hover:border-white hover:text-white" href="https://www.google.com/maps?q=Dolní+Kasárna+798,+250+67+Klecany" target="_blank" rel="noopener">Otevřít v Mapách <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </p>
+        <div class="relative min-h-[260px] flex-1 overflow-hidden rounded-[7px] border border-accent-rule bg-bg-muted">
+          <iframe title="Mapa Hubu Klecany" src="https://maps.google.com/maps?q=Doln%C3%AD+Kas%C3%A1rna+798,+250+67+Klecany&amp;z=16&amp;output=embed" class="absolute inset-0 h-full w-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap mt-12 grid gap-[clamp(10px,1.4vw,18px)] md:grid-cols-3">
+      <a class="foot-act" href="pripravujeme.html"><span>Pronajmout apartmán</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="foot-act" href="pripravujeme.html"><span>Pronajmout lůžko</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="foot-act" href="pripravujeme.html"><span>Požádat o stipendium</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </footer>
+
+  <!-- Zpět nahoru -->
+  <a href="#top" class="to-top" aria-label="Nahoru">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="m6 15 6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
+  <!-- ===== LIGHTBOX (CSS :target, bez JS) ===== -->
+  <div class="lbs" aria-hidden="false">
+    <div class="lb" id="lb-1" role="dialog" aria-modal="true" aria-label="Apartmán — apartmán 1+kk (1 z 75)">
+      <a class="lb__backdrop" href="#g-1" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-75" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-01-01-1kk.jpg" alt="Apartmán — apartmán 1+kk" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-2" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-1" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">1 / 75</span>
+    </div>
+    <div class="lb" id="lb-2" role="dialog" aria-modal="true" aria-label="Apartmán — kuchyň (2 z 75)">
+      <a class="lb__backdrop" href="#g-2" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-1" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-02-02-1kk-kuchyn.jpg" alt="Apartmán — kuchyň" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-3" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-2" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">2 / 75</span>
+    </div>
+    <div class="lb" id="lb-3" role="dialog" aria-modal="true" aria-label="Apartmán — apartmán 2+kk (3 z 75)">
+      <a class="lb__backdrop" href="#g-3" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-2" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-03-01-2kk.jpg" alt="Apartmán — apartmán 2+kk" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-4" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-3" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">3 / 75</span>
+    </div>
+    <div class="lb" id="lb-4" role="dialog" aria-modal="true" aria-label="Apartmán — apartmán 2+kk (4 z 75)">
+      <a class="lb__backdrop" href="#g-4" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-3" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-04-02-2kk.jpg" alt="Apartmán — apartmán 2+kk" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-5" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-4" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">4 / 75</span>
+    </div>
+    <div class="lb" id="lb-5" role="dialog" aria-modal="true" aria-label="Apartmán — kuchyň (5 z 75)">
+      <a class="lb__backdrop" href="#g-5" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-4" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-05-03-detail-2kk-kuchyn.jpg" alt="Apartmán — kuchyň" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-6" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-5" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">5 / 75</span>
+    </div>
+    <div class="lb" id="lb-6" role="dialog" aria-modal="true" aria-label="Apartmán — apartmán 3+kk (6 z 75)">
+      <a class="lb__backdrop" href="#g-6" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-5" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-06-01-3kk.jpg" alt="Apartmán — apartmán 3+kk" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-7" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-6" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">6 / 75</span>
+    </div>
+    <div class="lb" id="lb-7" role="dialog" aria-modal="true" aria-label="Apartmán — apartmán 5+kk (7 z 75)">
+      <a class="lb__backdrop" href="#g-7" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-6" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-07-01-5kk.jpg" alt="Apartmán — apartmán 5+kk" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-8" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-7" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">7 / 75</span>
+    </div>
+    <div class="lb" id="lb-8" role="dialog" aria-modal="true" aria-label="Apartmán — apartmán 5+kk (8 z 75)">
+      <a class="lb__backdrop" href="#g-8" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-7" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-08-01-5kk.jpg" alt="Apartmán — apartmán 5+kk" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-9" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-8" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">8 / 75</span>
+    </div>
+    <div class="lb" id="lb-9" role="dialog" aria-modal="true" aria-label="Apartmán — WC (9 z 75)">
+      <a class="lb__backdrop" href="#g-9" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-8" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-09-04-wc.jpg" alt="Apartmán — WC" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-10" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-9" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">9 / 75</span>
+    </div>
+    <div class="lb" id="lb-10" role="dialog" aria-modal="true" aria-label="Apartmán — koupelna (10 z 75)">
+      <a class="lb__backdrop" href="#g-10" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-9" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-10-05-koupelna.jpg" alt="Apartmán — koupelna" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-11" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-10" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">10 / 75</span>
+    </div>
+    <div class="lb" id="lb-11" role="dialog" aria-modal="true" aria-label="Apartmán — chodba (11 z 75)">
+      <a class="lb__backdrop" href="#g-11" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-10" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-11-08-chodba.jpg" alt="Apartmán — chodba" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-12" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-11" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">11 / 75</span>
+    </div>
+    <div class="lb" id="lb-12" role="dialog" aria-modal="true" aria-label="Apartmán, vizualizace (12 z 75)">
+      <a class="lb__backdrop" href="#g-12" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-11" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-12-apartman-01.jpg" alt="Apartmán, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-13" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-12" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">12 / 75</span>
+    </div>
+    <div class="lb" id="lb-13" role="dialog" aria-modal="true" aria-label="Apartmán — apartmán 1+kk (13 z 75)">
+      <a class="lb__backdrop" href="#g-13" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-12" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-13-02-1kk.jpg" alt="Apartmán — apartmán 1+kk" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-14" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-13" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">13 / 75</span>
+    </div>
+    <div class="lb" id="lb-14" role="dialog" aria-modal="true" aria-label="Apartmán — apartmán 4+kk (14 z 75)">
+      <a class="lb__backdrop" href="#g-14" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-13" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/apartmany-14-4kk-update-family.jpg" alt="Apartmán — apartmán 4+kk" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-15" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-14" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">14 / 75</span>
+    </div>
+    <div class="lb" id="lb-15" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — kapsle (15 z 75)">
+      <a class="lb__backdrop" href="#g-15" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-14" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-01-1kapsle-detail-2.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-16" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-15" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">15 / 75</span>
+    </div>
+    <div class="lb" id="lb-16" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — kapsle (16 z 75)">
+      <a class="lb__backdrop" href="#g-16" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-15" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-02-1kapsle-detail.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-17" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-16" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">16 / 75</span>
+    </div>
+    <div class="lb" id="lb-17" role="dialog" aria-modal="true" aria-label="Sdílený pokoj, vizualizace (17 z 75)">
+      <a class="lb__backdrop" href="#g-17" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-16" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-03-coliving-bathroom-update.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-18" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-17" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">17 / 75</span>
+    </div>
+    <div class="lb" id="lb-18" role="dialog" aria-modal="true" aria-label="Sdílený pokoj, vizualizace (18 z 75)">
+      <a class="lb__backdrop" href="#g-18" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-17" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-04-coliving-kitchen-update.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-19" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-18" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">18 / 75</span>
+    </div>
+    <div class="lb" id="lb-19" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — kapsle (19 z 75)">
+      <a class="lb__backdrop" href="#g-19" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-18" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-05-2kapsle-detail.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-20" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-19" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">19 / 75</span>
+    </div>
+    <div class="lb" id="lb-20" role="dialog" aria-modal="true" aria-label="Sdílený pokoj, vizualizace (20 z 75)">
+      <a class="lb__backdrop" href="#g-20" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-19" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-06-01-room-base-4.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-21" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-20" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">20 / 75</span>
+    </div>
+    <div class="lb" id="lb-21" role="dialog" aria-modal="true" aria-label="Sdílený pokoj, vizualizace (21 z 75)">
+      <a class="lb__backdrop" href="#g-21" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-20" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-07-02-room-base-3.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-22" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-21" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">21 / 75</span>
+    </div>
+    <div class="lb" id="lb-22" role="dialog" aria-modal="true" aria-label="Sdílený pokoj, vizualizace (22 z 75)">
+      <a class="lb__backdrop" href="#g-22" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-21" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-08-03-room-base-3.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-23" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-22" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">22 / 75</span>
+    </div>
+    <div class="lb" id="lb-23" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — lůžko (23 z 75)">
+      <a class="lb__backdrop" href="#g-23" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-22" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-09-01-luzko-privacy-sliding-doors-closed.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-24" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-23" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">23 / 75</span>
+    </div>
+    <div class="lb" id="lb-24" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — lůžko (24 z 75)">
+      <a class="lb__backdrop" href="#g-24" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-23" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-10-01-luzko-privacy-sliding-doors.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-25" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-24" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">24 / 75</span>
+    </div>
+    <div class="lb" id="lb-25" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — lůžko (25 z 75)">
+      <a class="lb__backdrop" href="#g-25" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-24" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-11-01-luzko-privacy.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-26" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-25" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">25 / 75</span>
+    </div>
+    <div class="lb" id="lb-26" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — lůžko (26 z 75)">
+      <a class="lb__backdrop" href="#g-26" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-25" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-12-02-luzko-privacy-detail.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-27" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-26" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">26 / 75</span>
+    </div>
+    <div class="lb" id="lb-27" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — lůžko (27 z 75)">
+      <a class="lb__backdrop" href="#g-27" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-26" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-13-03-luzko-privacy-inside.jpg" alt="Sdílený pokoj — lůžko" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-28" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-27" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">27 / 75</span>
+    </div>
+    <div class="lb" id="lb-28" role="dialog" aria-modal="true" aria-label="Sdílený pokoj, vizualizace (28 z 75)">
+      <a class="lb__backdrop" href="#g-28" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-27" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-14-sdilene-01.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-29" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-28" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">28 / 75</span>
+    </div>
+    <div class="lb" id="lb-29" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — kapsle (29 z 75)">
+      <a class="lb__backdrop" href="#g-29" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-28" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-15-kapsle-wide.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-30" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-29" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">29 / 75</span>
+    </div>
+    <div class="lb" id="lb-30" role="dialog" aria-modal="true" aria-label="Sdílený pokoj — kapsle (30 z 75)">
+      <a class="lb__backdrop" href="#g-30" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-29" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-16-01-kapsle.jpg" alt="Sdílený pokoj — kapsle" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-31" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-30" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">30 / 75</span>
+    </div>
+    <div class="lb" id="lb-31" role="dialog" aria-modal="true" aria-label="Sdílený pokoj, vizualizace (31 z 75)">
+      <a class="lb__backdrop" href="#g-31" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-30" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-17-03-ext.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-32" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-31" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">31 / 75</span>
+    </div>
+    <div class="lb" id="lb-32" role="dialog" aria-modal="true" aria-label="Sdílený pokoj, vizualizace (32 z 75)">
+      <a class="lb__backdrop" href="#g-32" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-31" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/ubytovani/coliving-18-04-int.jpg" alt="Sdílený pokoj, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-33" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-32" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">32 / 75</span>
+    </div>
+    <div class="lb" id="lb-33" role="dialog" aria-modal="true" aria-label="Komunita — kantýna (33 z 75)">
+      <a class="lb__backdrop" href="#g-33" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-32" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-01-01-kantyna.jpg" alt="Komunita — kantýna" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-34" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-33" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">33 / 75</span>
+    </div>
+    <div class="lb" id="lb-34" role="dialog" aria-modal="true" aria-label="Komunita — minipivovar (34 z 75)">
+      <a class="lb__backdrop" href="#g-34" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-33" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-02-02-minipivovar-new.jpg" alt="Komunita — minipivovar" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-35" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-34" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">34 / 75</span>
+    </div>
+    <div class="lb" id="lb-35" role="dialog" aria-modal="true" aria-label="Komunita — kantýna (35 z 75)">
+      <a class="lb__backdrop" href="#g-35" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-34" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-03-03-kantyna-busy.jpg" alt="Komunita — kantýna" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-36" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-35" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">35 / 75</span>
+    </div>
+    <div class="lb" id="lb-36" role="dialog" aria-modal="true" aria-label="Komunita — pekárna (36 z 75)">
+      <a class="lb__backdrop" href="#g-36" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-35" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-04-04-pekarna.jpg" alt="Komunita — pekárna" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-37" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-36" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">36 / 75</span>
+    </div>
+    <div class="lb" id="lb-37" role="dialog" aria-modal="true" aria-label="Komunita — restaurace (37 z 75)">
+      <a class="lb__backdrop" href="#g-37" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-36" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-05-05-restaurace.jpg" alt="Komunita — restaurace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-38" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-37" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">37 / 75</span>
+    </div>
+    <div class="lb" id="lb-38" role="dialog" aria-modal="true" aria-label="Komunita — klubovna (38 z 75)">
+      <a class="lb__backdrop" href="#g-38" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-37" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-06-klubovna.jpg" alt="Komunita — klubovna" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-39" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-38" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">38 / 75</span>
+    </div>
+    <div class="lb" id="lb-39" role="dialog" aria-modal="true" aria-label="Komunita — komunitní zahrady (39 z 75)">
+      <a class="lb__backdrop" href="#g-39" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-38" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-07-01-komunitni-zahrady.jpg" alt="Komunita — komunitní zahrady" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-40" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-39" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">39 / 75</span>
+    </div>
+    <div class="lb" id="lb-40" role="dialog" aria-modal="true" aria-label="Komunita — grilovací místo (40 z 75)">
+      <a class="lb__backdrop" href="#g-40" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-39" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-08-02-grilovaci-misto.jpg" alt="Komunita — grilovací místo" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-41" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-40" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">40 / 75</span>
+    </div>
+    <div class="lb" id="lb-41" role="dialog" aria-modal="true" aria-label="Komunita — bazén (41 z 75)">
+      <a class="lb__backdrop" href="#g-41" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-40" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-09-01-bazen.jpg" alt="Komunita — bazén" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-42" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-41" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">41 / 75</span>
+    </div>
+    <div class="lb" id="lb-42" role="dialog" aria-modal="true" aria-label="Komunita — sauna (42 z 75)">
+      <a class="lb__backdrop" href="#g-42" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-41" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-10-02-sauna-update.jpg" alt="Komunita — sauna" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-43" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-42" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">42 / 75</span>
+    </div>
+    <div class="lb" id="lb-43" role="dialog" aria-modal="true" aria-label="Komunita — bazén (43 z 75)">
+      <a class="lb__backdrop" href="#g-43" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-42" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/komunita-11-03-bazen-vecer.jpg" alt="Komunita — bazén" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-44" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-43" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">43 / 75</span>
+    </div>
+    <div class="lb" id="lb-44" role="dialog" aria-modal="true" aria-label="Coworking — exteriér (44 z 75)">
+      <a class="lb__backdrop" href="#g-44" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-43" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/coworking-01-cowork-exterier-c-busy.jpg" alt="Coworking — exteriér" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-45" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-44" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">44 / 75</span>
+    </div>
+    <div class="lb" id="lb-45" role="dialog" aria-modal="true" aria-label="Coworking — exteriér (45 z 75)">
+      <a class="lb__backdrop" href="#g-45" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-44" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/coworking-02-cowork-exterier-c-evening.jpg" alt="Coworking — exteriér" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-46" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-45" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">45 / 75</span>
+    </div>
+    <div class="lb" id="lb-46" role="dialog" aria-modal="true" aria-label="Coworking, vizualizace (46 z 75)">
+      <a class="lb__backdrop" href="#g-46" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-45" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/coworking-03-cowork-interier-pro4-busy.jpg" alt="Coworking, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-47" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-46" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">46 / 75</span>
+    </div>
+    <div class="lb" id="lb-47" role="dialog" aria-modal="true" aria-label="Coworking, vizualizace (47 z 75)">
+      <a class="lb__backdrop" href="#g-47" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-46" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/coworking-04-cowork-interier-pro4.jpg" alt="Coworking, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-48" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-47" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">47 / 75</span>
+    </div>
+    <div class="lb" id="lb-48" role="dialog" aria-modal="true" aria-label="Coworking — coworkingový sál (48 z 75)">
+      <a class="lb__backdrop" href="#g-48" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-47" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/coworking-05-cowork-interier-sal-c-update2.jpg" alt="Coworking — coworkingový sál" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-49" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-48" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">48 / 75</span>
+    </div>
+    <div class="lb" id="lb-49" role="dialog" aria-modal="true" aria-label="Coworking, vizualizace (49 z 75)">
+      <a class="lb__backdrop" href="#g-49" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-48" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/coworking-06-cowork-interier-vlastni-stul-1.jpg" alt="Coworking, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-50" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-49" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">49 / 75</span>
+    </div>
+    <div class="lb" id="lb-50" role="dialog" aria-modal="true" aria-label="Coworking — dílna (50 z 75)">
+      <a class="lb__backdrop" href="#g-50" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-49" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/coworking-07-cowork-interior-dilna.jpg" alt="Coworking — dílna" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-51" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-50" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">50 / 75</span>
+    </div>
+    <div class="lb" id="lb-51" role="dialog" aria-modal="true" aria-label="Coworking — zasedací místnost (51 z 75)">
+      <a class="lb__backdrop" href="#g-51" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-50" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/zazemi/coworking-08-cowork-interior-zasedacka.jpg" alt="Coworking — zasedací místnost" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-52" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-51" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">51 / 75</span>
+    </div>
+    <div class="lb" id="lb-52" role="dialog" aria-modal="true" aria-label="Doprava — cyklostezka (52 z 75)">
+      <a class="lb__backdrop" href="#g-52" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-51" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/doprava/doprava-01-cyklostezka.jpg" alt="Doprava — cyklostezka" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-53" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-52" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">52 / 75</span>
+    </div>
+    <div class="lb" id="lb-53" role="dialog" aria-modal="true" aria-label="Doprava, vizualizace (53 z 75)">
+      <a class="lb__backdrop" href="#g-53" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-52" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/doprava/doprava-02-doparava.jpg" alt="Doprava, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-54" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-53" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">53 / 75</span>
+    </div>
+    <div class="lb" id="lb-54" role="dialog" aria-modal="true" aria-label="Doprava — dostupnost areálu (54 z 75)">
+      <a class="lb__backdrop" href="#g-54" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-53" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/doprava/doprava-03-dostupnost.jpg" alt="Doprava — dostupnost areálu" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-55" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-54" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">54 / 75</span>
+    </div>
+    <div class="lb" id="lb-55" role="dialog" aria-modal="true" aria-label="Doprava — dostupnost areálu (55 z 75)">
+      <a class="lb__backdrop" href="#g-55" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-54" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/doprava/doprava-04-hero-dostupnost.jpg" alt="Doprava — dostupnost areálu" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-56" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-55" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">55 / 75</span>
+    </div>
+    <div class="lb" id="lb-56" role="dialog" aria-modal="true" aria-label="Doprava — zastávka kyvadlové dopravy (56 z 75)">
+      <a class="lb__backdrop" href="#g-56" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-55" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/doprava/doprava-05-zastavka.jpg" alt="Doprava — zastávka kyvadlové dopravy" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-57" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-56" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">56 / 75</span>
+    </div>
+    <div class="lb" id="lb-57" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (57 z 75)">
+      <a class="lb__backdrop" href="#g-57" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-56" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-01-4.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-58" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-57" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">57 / 75</span>
+    </div>
+    <div class="lb" id="lb-58" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (58 z 75)">
+      <a class="lb__backdrop" href="#g-58" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-57" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-02-a-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-59" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-58" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">58 / 75</span>
+    </div>
+    <div class="lb" id="lb-59" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (59 z 75)">
+      <a class="lb__backdrop" href="#g-59" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-58" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-03-a-2-4.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-60" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-59" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">59 / 75</span>
+    </div>
+    <div class="lb" id="lb-60" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (60 z 75)">
+      <a class="lb__backdrop" href="#g-60" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-59" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-04-a-2.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-61" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-60" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">60 / 75</span>
+    </div>
+    <div class="lb" id="lb-61" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (61 z 75)">
+      <a class="lb__backdrop" href="#g-61" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-60" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-05-a-c-2-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-62" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-61" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">61 / 75</span>
+    </div>
+    <div class="lb" id="lb-62" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (62 z 75)">
+      <a class="lb__backdrop" href="#g-62" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-61" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-06-a-row-3.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-63" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-62" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">62 / 75</span>
+    </div>
+    <div class="lb" id="lb-63" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (63 z 75)">
+      <a class="lb__backdrop" href="#g-63" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-62" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-07-a-row.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-64" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-63" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">63 / 75</span>
+    </div>
+    <div class="lb" id="lb-64" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (64 z 75)">
+      <a class="lb__backdrop" href="#g-64" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-63" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-08-a7-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-65" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-64" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">64 / 75</span>
+    </div>
+    <div class="lb" id="lb-65" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (65 z 75)">
+      <a class="lb__backdrop" href="#g-65" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-64" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-09-a8.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-66" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-65" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">65 / 75</span>
+    </div>
+    <div class="lb" id="lb-66" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (66 z 75)">
+      <a class="lb__backdrop" href="#g-66" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-65" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-10-aa1-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-67" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-66" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">66 / 75</span>
+    </div>
+    <div class="lb" id="lb-67" role="dialog" aria-modal="true" aria-label="Areál a okolí — vstup do areálu (67 z 75)">
+      <a class="lb__backdrop" href="#g-67" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-66" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-11-areal-vstup.jpg" alt="Areál a okolí — vstup do areálu" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-68" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-67" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">67 / 75</span>
+    </div>
+    <div class="lb" id="lb-68" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (68 z 75)">
+      <a class="lb__backdrop" href="#g-68" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-67" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-12-b1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-69" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-68" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">68 / 75</span>
+    </div>
+    <div class="lb" id="lb-69" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (69 z 75)">
+      <a class="lb__backdrop" href="#g-69" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-68" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-13-b2-1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-70" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-69" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">69 / 75</span>
+    </div>
+    <div class="lb" id="lb-70" role="dialog" aria-modal="true" aria-label="Areál a okolí — bazén (70 z 75)">
+      <a class="lb__backdrop" href="#g-70" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-69" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-14-bazen.jpg" alt="Areál a okolí — bazén" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-71" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-70" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">70 / 75</span>
+    </div>
+    <div class="lb" id="lb-71" role="dialog" aria-modal="true" aria-label="Areál a okolí — exteriér (71 z 75)">
+      <a class="lb__backdrop" href="#g-71" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-70" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-15-coworking-exterier.jpg" alt="Areál a okolí — exteriér" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-72" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-71" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">71 / 75</span>
+    </div>
+    <div class="lb" id="lb-72" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (72 z 75)">
+      <a class="lb__backdrop" href="#g-72" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-71" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-16-d1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-73" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-72" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">72 / 75</span>
+    </div>
+    <div class="lb" id="lb-73" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (73 z 75)">
+      <a class="lb__backdrop" href="#g-73" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-72" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-17-e-f.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-74" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-73" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">73 / 75</span>
+    </div>
+    <div class="lb" id="lb-74" role="dialog" aria-modal="true" aria-label="Areál a okolí, vizualizace (74 z 75)">
+      <a class="lb__backdrop" href="#g-74" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-73" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-18-t1.jpg" alt="Areál a okolí, vizualizace" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-75" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-74" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">74 / 75</span>
+    </div>
+    <div class="lb" id="lb-75" role="dialog" aria-modal="true" aria-label="Areál a okolí — zastávka kyvadlové dopravy (75 z 75)">
+      <a class="lb__backdrop" href="#g-75" aria-label="Zavřít náhled"></a>
+      <a class="lb__nav lb__prev" href="#lb-74" aria-label="Předchozí fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <img class="lb__img" src="../assets/images/galerie/okoli/okoli-19-zastavka1.jpg" alt="Areál a okolí — zastávka kyvadlové dopravy" loading="lazy" />
+      <a class="lb__nav lb__next" href="#lb-1" aria-label="Další fotka"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="lb__close" href="#g-75" aria-label="Zavřít náhled"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+      <span class="lb__count">75 / 75</span>
+    </div>
+  </div>
+
+  <!-- Lightbox: klávesové šipky ←/→ (a Esc na zavření) jako progresivní vylepšení.
+       Bez JS dál fungují klikací ‹ › a ✕; tohle jen přidá ovládání klávesnicí.
+       Čte prev/next/close přímo z otevřeného .lb:target, žádný stav navíc. -->
+  <script>
+    document.addEventListener('keydown', function (e) {
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      var lb = document.querySelector('.lb:target');
+      if (!lb) return;
+      var sel = e.key === 'ArrowLeft' ? '.lb__prev'
+              : e.key === 'ArrowRight' ? '.lb__next'
+              : e.key === 'Escape' ? '.lb__close' : null;
+      if (!sel) return;
+      var a = lb.querySelector(sel);
+      if (a) { e.preventDefault(); location.hash = a.getAttribute('href'); }
+    });
+  </script>
+
+</body>
+</html>
