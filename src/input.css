@@ -280,12 +280,13 @@
     .hero-ctas > :nth-child(2) { justify-self: start; margin-left: calc(var(--rgap) / 2); }
     .hero-ctacol > .hero-cta { width: auto; }
   }
-  /* HERO CTA — „liquid glass" pilulka dle Astro originálu (.lp-hero__quick-btn):
-     skleněný gradient + backdrop blur/saturate + světelný okraj a stín, plný pill
-     radius. Hover = plné bílé pozadí + plum text + lehký lift. Krytí povrchu
-     o malilinko vyšší než v Astru (uživatelské přání). */
+  /* HERO CTA — „liquid glass" tlačítko dle Astro originálu (.lp-hero__quick-btn):
+     skleněný gradient + backdrop blur/saturate + světelný okraj a stín; od v003b
+     zaoblený obdélník (rounded-[12px]) místo plné pilulky (víc sedí k webu). Hover
+     = plné bílé pozadí + plum text + lehký lift. Krytí povrchu o malilinko vyšší
+     než v Astru (uživatelské přání). */
   .hero-cta {
-    @apply relative inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-[14px]
+    @apply relative inline-flex items-center justify-center gap-2.5 rounded-[12px] px-5 py-[14px]
            text-[0.95rem] font-bold leading-none tracking-[-0.02em] text-white
            md:gap-3 md:px-10 md:py-5 md:text-[clamp(1.1rem,1.3vw,1.35rem)];
     isolation: isolate;
@@ -471,7 +472,7 @@
   /* Tlačítka jako hero glass CTA na fialovém gradientu footeru: skleněný povrch +
      blur + světelný okraj, bílý text; hover = bílá výplň + plum text + lift. */
   .foot-act {
-    @apply inline-flex items-center justify-center gap-3 rounded-full px-[clamp(20px,2vw,30px)] py-[clamp(15px,1.6vw,20px)]
+    @apply inline-flex items-center justify-center gap-3 rounded-[12px] px-[clamp(20px,2vw,30px)] py-[clamp(15px,1.6vw,20px)]
            text-base font-bold leading-[1.1] text-white transition hover:-translate-y-[2px];
     isolation: isolate;
     border: 1px solid rgba(255,255,255,0.30);
