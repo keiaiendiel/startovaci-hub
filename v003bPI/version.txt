@@ -1,1 +1,1 @@
-v003bPI|2026-06-29|jako v003a, jen hlavni akcni tlacitka (hero + paticka) jsou zaobleny obdelnik misto plne pilulky
+v003bPI|2026-06-29|obdelnikova tlacitka; nad herem OSA+burger niz (desktop), wordmark jako text na stred (desktop), mobilni CTA ~60% a dal od sebe, mensi OSA na mobilu

@@ -114,13 +114,16 @@
   /* Po odscrollování pod hero (100svh) lišta zbělá (jako Astro is-stuck): bílé
      pozadí, tmavé logo/burger, vlasová linka dole a o něco nižší výška. Scroll-
      driven přes délkové rozsahy, bez JS. Logo je do té doby skryté. */
-  /* Wordmark „Startovací Hub" — vycentrovaný v liště; naskočí po odscrollování
-     (stuck). Absolutně na střed, ať nezávisí na brandu vlevo / akcích vpravo. */
-  .hdr-logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: 0; pointer-events: none; }
-  .hdr-logo img { @apply block h-[18px] w-auto; }
-  /* Na telefonu stuck lišta nese OSA glyph + CTA + burger → vycentrovaný wordmark
-     by se tlačil; značku tam drží OSA glyph, wordmark proto < 640 px skryjeme. */
-  @media (max-width: 640px) { .hdr-logo { display: none; } }
+  /* „Startovací Hub" — vycentrovaný NÁPIS (samotný text, bez glyphu) v liště;
+     naskočí po odscrollování (stuck). Absolutně na střed, ať nezávisí na brandu
+     vlevo / akcích vpravo. JEN DESKTOP — na telefonu stuck lišta nese OSA glyph +
+     CTA + burger, text by se tlačil (značku tam drží OSA glyph). */
+  .hdr-logo {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    opacity: 0; pointer-events: none; color: inherit; white-space: nowrap;
+    font-weight: 700; font-size: 1.375rem; letter-spacing: -0.01em; line-height: 1;
+  }
+  @media (max-width: 767px) { .hdr-logo { display: none; } }
 
   /* Landing: vlevo (oproti hamburgeru) bílé OSA logo PŘES hero; po odscrollování
      (stuck lišta) se vykříží s textovým logem — OSA zmizí, .hdr-logo najede. OSA je
@@ -130,6 +133,8 @@
   .hdr-brand > * { grid-area: 1 / 1; }
   /* .hdr-osa JE přímo <img> → výšku dáváme na něj (ne na .hdr-osa img). */
   .hdr-osa { @apply block self-center w-auto; height: 38px; opacity: 1; pointer-events: none; } /* větší (v003b); +5 % */
+  /* Na telefonu OSA opticky stejně vysoké jako hamburger (38px je tam moc velké). */
+  @media (max-width: 767px) { .hdr-osa { height: 24px; } }
   /* Tmavá varianta OSA glyphu — stuck (bílá) lišta: bílá OSA zmizí, tmavá naskočí.
      OSA tak zůstane vlevo v obou stavech (jen překříží barvu). */
   .hdr-osa--dark { opacity: 0; }
@@ -180,6 +185,16 @@
        přes scroll-timeline + transition byla zdrojem probliknutí.) */
     @keyframes hdr-cta-in { from { opacity: 0; pointer-events: none; } to { opacity: 1; pointer-events: auto; } }
     body:not(.page-sub) .site-header .hdr-cta { animation: hdr-cta-in both linear; animation-timeline: scroll(root block); animation-range: 86svh 96svh; }
+    /* Desktop: nad herem posuň OSA + burger níž (~o jejich výšku); po scrollnutí
+       (stuck) zpět nahoru. Větší „from" padding-top rozhrne lištu dolů; timeline,
+       range i fill dědí ze základu .hdr-bar — měníme jen jméno keyframe. */
+    @media (min-width: 768px) {
+      @keyframes hdr-shrink-desktop {
+        from { min-height: 68px; padding-top: 50px; padding-bottom: 12px; }
+        to   { min-height: 54px; padding-top: 7px; padding-bottom: 7px; }
+      }
+      .hdr-bar { animation-name: hdr-shrink-desktop; }
+    }
   }
   /* Menu otevřené: burger/X zůstává bílé i na „stuck" liště a logo se skryje
      (menu má vlastní brand); zároveň se zamkne scroll stránky za menu. */
@@ -248,23 +263,24 @@
      Skupina ukotvená dole nad scroll šipkou; na desktopu dva poloviční sloupce
      dělené ve středu stránky, takže mezera (a scroll šipka) je přesně na středu
      a šířka každé pilulky je dle obsahu. Mobil: stack na střed. */
-  /* Mobil: ukotveno dole nad scroll šipkou (jako desktop), obě pilulky stejně
-     široké (stretch přes celou šířku). */
+  /* Mobil: ukotveno dole nad scroll šipkou (jako desktop). Obě tlačítka stejně
+     široké, ale NE full-width — cca 60 % na střed; a dál od sebe (větší row-gap +
+     blok o kus níž, tj. „lůžko" + jeho popisek blíž ke scroll šipce). */
   .hero-ctas {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: clamp(104px, 15vh, 144px);
+    bottom: clamp(88px, 13vh, 128px);
     z-index: 2;
     padding-inline: var(--gutter);
     display: grid;
-    justify-items: stretch;
-    row-gap: 14px;
+    justify-items: center;
+    row-gap: 30px;
   }
   /* Přímý potomek .hero-ctas = buď tlačítko (starší struktura), nebo sloupec
      tlačítko + popisek (.hero-ctacol). Centrování řešíme na přímém potomkovi, ať
      to platí pro obě varianty. */
-  .hero-ctas > * { width: 100%; }
+  .hero-ctas > * { width: 60%; min-width: 220px; } /* mobil: ~60 %, ne full-width; min kvůli „Pronajmout apartmán" */
   .hero-ctacol { display: flex; flex-direction: column; align-items: center; gap: 9px; }
   .hero-ctacol > .hero-cta { width: 100%; }
   @media (min-width: 768px) {
