@@ -124,7 +124,7 @@
   .hdr-brand { @apply relative inline-grid self-center; place-items: center start; }
   .hdr-brand > * { grid-area: 1 / 1; }
   /* .hdr-osa JE přímo <img> → výšku dáváme na něj (ne na .hdr-osa img). */
-  .hdr-osa { @apply block self-center w-auto; height: 22px; opacity: 1; pointer-events: none; } /* ~1,5× hamburger */
+  .hdr-osa { @apply block self-center w-auto; height: 26px; opacity: 1; pointer-events: none; } /* o něco větší; poměr k hamburgeru zachován */
 
   /* Akční skupina vpravo: CTA „Pronajmout" + hamburger (jako sh-web Astro lišta).
      CTA je obrysová pilulka, barvu i obrys bere z currentColor → bílá nad tmavým
@@ -175,7 +175,7 @@
   #navtoggle:checked ~ .hdr-bar .hdr-osa { opacity: 0 !important; }
   html:has(#navtoggle:checked), html:has(#navtoggle:checked) body { overflow: hidden; }
   .burger-btn { @apply ml-auto inline-flex h-11 w-11 cursor-pointer items-center justify-center; }
-  .burger { @apply grid w-[22px] gap-[5px]; }
+  .burger { @apply grid w-[26px] gap-[6px]; }
   .burger > span { @apply block h-[1.5px] origin-center rounded bg-current; }
   .burger > span:nth-child(1), .burger > span:nth-child(3) { transition: transform 300ms var(--ease-quart); }
   .burger > span:nth-child(2) { transition: opacity 150ms linear; }
@@ -203,9 +203,9 @@
     @apply visible translate-y-0 opacity-100;
     transition: opacity 320ms var(--ease-quart), transform 380ms var(--ease-quart), visibility 0s;
   }
-  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
   #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(2) { opacity: 0; }
-  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  #navtoggle:checked ~ .hdr-bar .burger > span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
   /* ---- Lišta pod-stránek (Struktura webu): „stejná jako landing", ale bílá
      „stuck" verze se spouští tím, jak tmavý banner (.sub-hero) odscrolluje pryč

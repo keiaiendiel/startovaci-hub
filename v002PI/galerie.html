@@ -188,48 +188,47 @@
   <!-- ===== FOOTER (shodný s landingem) ===== -->
   <footer class="border-t border-plum pb-8 pt-12 text-white"
           style="background:radial-gradient(ellipse at 88% 105%, hsl(calc(var(--hue) + 44) 30% 70% / 0.16) 0%, transparent 50%), linear-gradient(135deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 36% 17%) 100%)">
-    <div class="wrap grid items-stretch gap-8 md:grid-cols-2 md:gap-x-[clamp(24px,4vw,64px)] md:gap-y-0">
+    <!-- Dva sloupce: Kontakty + Ostatní informace  |  Adresa + mapa -->
+    <div class="wrap grid items-start gap-8 md:grid-cols-2 md:gap-x-[clamp(24px,4vw,64px)] md:gap-y-0">
+      <!-- levý sloupec: Kontakty + Ostatní informace -->
       <div class="flex flex-col">
         <p class="foot-label">Kontakty</p>
         <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="mailto:vpd@osa2.cz">vpd@osa2.cz</a></p>
         <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="tel:+420602849342">+420 602 849 342</a></p>
 
-        <p class="foot-label mt-6">Adresa</p>
-        <p class="mb-2 text-sm leading-[1.5] text-white/85">Kampus projektu Startovací Hub naleznete v rozvojovém území na adrese:</p>
-        <p class="text-sm leading-[1.5] text-white/85"><strong class="font-semibold text-white">Dolní Kasárna 798, 250 67 Klecany (Praha-sever)</strong></p>
-
-        <p class="mt-4 text-xs leading-[1.5] text-white/55">Projekt Startovací Hub je realizován pod záštitou Občanského sdružení Alternativa II a partnerských organizací.</p>
-
-        <div class="my-6 flex flex-wrap gap-3">
-          <a class="group inline-flex items-center gap-2 rounded-[7px] border border-white/30 bg-white/5 px-[18px] py-[11px] text-sm font-semibold text-cream no-underline transition hover:-translate-y-[2px] hover:border-rose hover:bg-rose hover:text-plum-deep" href="investori.html"><span>Pro investory</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="transition-transform group-hover:translate-x-[3px]"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="group inline-flex items-center gap-2 rounded-[7px] border border-white/30 bg-white/5 px-[18px] py-[11px] text-sm font-semibold text-cream no-underline transition hover:-translate-y-[2px] hover:border-rose hover:bg-rose hover:text-plum-deep" href="struktura-webu.html"><span>Struktura webu</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="transition-transform group-hover:translate-x-[3px]"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-
-        <div class="mt-auto border-t border-white/10 pt-4">
-          <nav class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm" aria-label="Doplňkové odkazy">
-            <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Adresa</a>
-            <span class="text-white/35" aria-hidden="true">·</span>
-            <a class="text-white/75 no-underline transition hover:text-rose" href="https://www.google.com/maps?q=Dolní+Kasárna+798,+250+67+Klecany" target="_blank" rel="noopener">Mapa</a>
-            <span class="text-white/35" aria-hidden="true">·</span>
-            <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Kontakty</a>
-            <span class="text-white/35" aria-hidden="true">·</span>
-            <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Akce</a>
-          </nav>
-          <p class="mt-2 text-xs text-white/55">Poslední aktualizace webu proběhla 27. 6. 2026 <span class="whitespace-nowrap text-white/75">· verze 0.0.001PI</span></p>
-        </div>
+        <p class="foot-label mt-8">Ostatní informace</p>
+        <nav class="flex flex-col items-start gap-2 text-sm" aria-label="Ostatní informace">
+          <a class="text-white/75 no-underline transition hover:text-rose" href="struktura-webu.html">Struktura webu</a>
+          <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Ostatní kontakty</a>
+          <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Pracovní pozice</a>
+          <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Partneři projektu</a>
+          <a class="text-white/75 no-underline transition hover:text-rose" href="investori.html">Pro investory</a>
+        </nav>
       </div>
 
-      <div class="flex flex-col gap-3">
-        <p class="m-0">
-          <a class="inline-flex items-center gap-1 border-b border-rose pb-px text-sm font-medium text-rose no-underline transition hover:border-white hover:text-white" href="https://www.google.com/maps?q=Dolní+Kasárna+798,+250+67+Klecany" target="_blank" rel="noopener">Otevřít v Mapách <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </p>
-        <div class="relative min-h-[260px] flex-1 overflow-hidden rounded-[7px] border border-accent-rule bg-bg-muted">
-          <iframe title="Mapa Hubu Klecany" src="https://maps.google.com/maps?q=Doln%C3%AD+Kas%C3%A1rna+798,+250+67+Klecany&amp;z=16&amp;output=embed" class="absolute inset-0 h-full w-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <!-- pravý sloupec: Adresa + mapa + odkazy do map -->
+      <div class="flex flex-col">
+        <p class="foot-label">Adresa</p>
+        <p class="mb-1 text-sm leading-[1.5] text-white/85">Kampus projektu Startovací Hub</p>
+        <p class="mb-3 text-sm leading-[1.5] text-white/85"><strong class="font-semibold text-white">Dolní Kasárna 798, 250 67 Klecany (Praha-sever)</strong></p>
+        <div class="overflow-hidden rounded-[7px] border border-accent-rule bg-bg-muted">
+          <img src="../assets/images/hub/masterplan-kampus.jpg" alt="Masterplan kampusu Startovacího Hubu — rozmístění apartmánů (A1–A6), zázemí a komunitního parku; Dolní Kasárna, Klecany" class="block h-auto w-full" loading="lazy" decoding="async" />
+        </div>
+        <div class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          <a class="inline-flex items-center gap-1 border-b border-rose pb-px font-medium text-rose no-underline transition hover:border-white hover:text-white" href="https://www.google.com/maps?q=Dolní+Kasárna+798,+250+67+Klecany" target="_blank" rel="noopener">Otevřít Google maps <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="inline-flex items-center gap-1 border-b border-rose pb-px font-medium text-rose no-underline transition hover:border-white hover:text-white" href="https://mapy.cz/zakladni?q=Doln%C3%AD%20Kas%C3%A1rna%20798%2C%20250%2067%20Klecany" target="_blank" rel="noopener">Otevřít Mapy.cz <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
     </div>
 
-    <div class="wrap mt-12 grid gap-[clamp(10px,1.4vw,18px)] md:grid-cols-3">
+    <!-- Centrovaný spodní text: realizace + poslední aktualizace + autor -->
+    <div class="wrap mt-10 border-t border-white/10 pt-6 text-center">
+      <p class="mx-auto max-w-[78ch] text-xs leading-[1.6] text-white/55">Projekt Startovací Hub je realizován pod projektem Veřejně Prospěšný Developer a se záštitou Občanského sdružení Alternativa II a partnerských organizací. Poslední aktualizace webu proběhla 29. 6. 2026.</p>
+      <p class="mt-2 text-xs text-white/45">Developed by OSAdesign</p>
+    </div>
+
+    <!-- rezervační pruh pod oběma sloupci -->
+    <div class="wrap mt-10 grid gap-[clamp(10px,1.4vw,18px)] md:grid-cols-3">
       <a class="foot-act" href="pripravujeme.html"><span>Pronajmout apartmán</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="foot-act" href="pripravujeme.html"><span>Pronajmout lůžko</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="foot-act" href="pripravujeme.html"><span>Požádat o stipendium</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
