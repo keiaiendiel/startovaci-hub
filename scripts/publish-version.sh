@@ -78,8 +78,7 @@ echo "→ přehled verze.html"
       color:#fff;background:radial-gradient(circle at 50% -8%,hsl(calc(var(--hue) + 44) 34% 64% / .30) 0,transparent 58%),
       linear-gradient(160deg,hsl(var(--hue) 41% 13%) 0,hsl(var(--hue) 37% 19%) 100%)}
     .vrs__in{width:100%;max-width:640px}
-    .vrs__h{margin:0 0 6px;font-weight:600;font-size:clamp(1.9rem,3vw,2.4rem);letter-spacing:-.02em}
-    .vrs__sub{margin:0 0 36px;color:rgba(255,255,255,.66);font-size:1.05rem}
+    .vrs__h{margin:0 0 30px;font-weight:600;font-size:clamp(1.9rem,3vw,2.4rem);letter-spacing:-.02em}
     .vrs__list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
     .vrs__item{display:flex;align-items:center;justify-content:space-between;gap:16px;
       padding:18px 22px;border-radius:14px;text-decoration:none;color:#fff;
@@ -96,7 +95,6 @@ echo "→ přehled verze.html"
   <main class="vrs">
     <div class="vrs__in">
       <h1 class="vrs__h">Verze designu</h1>
-      <p class="vrs__sub">Archiv jednotlivých verzí webu Startovacího Hubu. Klikni a otevři.</p>
       <ul class="vrs__list">
         <li><a class="vrs__item vrs__item--root" href="./"><span><span class="vrs__label">Aktuální</span><span class="vrs__meta">živá verze (root) — vždy nejnovější</span></span><span class="vrs__go">Otevřít →</span></a></li>
 HTML_HEAD
