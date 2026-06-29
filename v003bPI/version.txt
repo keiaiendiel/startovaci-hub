@@ -1,1 +1,1 @@
-v003bPI|2026-06-29|obdelnikova tlacitka; lista llicuje s obsahem (OSA/burger na hrane), desktop OSA+burger niz nad herem + wordmark text na stred; telefon: mensi OSA i burger, hero CTA na 1 radek
+v003bPI|2026-06-29|Obdelnikova akcni tlacitka (zaoblene rohy).

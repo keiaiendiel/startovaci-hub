@@ -129,10 +129,10 @@
      (stuck lišta) se vykříží s textovým logem — OSA zmizí, .hdr-logo najede. OSA je
      samostatný overlay nad .hdr-logo (sourozenec, ne potomek), aby ho nepohltila
      opacity:0 textového loga; oba stackované v inline-grid na stejném místě. */
-  .hdr-brand { @apply relative inline-grid self-center; place-items: center start; }
+  .hdr-brand { @apply relative inline-grid self-center; place-items: center start; margin-left: 5px; } /* pár px doprava od hrany obsahu */
   .hdr-brand > * { grid-area: 1 / 1; }
   /* .hdr-osa JE přímo <img> → výšku dáváme na něj (ne na .hdr-osa img). */
-  .hdr-osa { @apply block self-center w-auto; height: 38px; opacity: 1; pointer-events: none; } /* větší (v003b); +5 % */
+  .hdr-osa { @apply block self-center w-auto; height: 42px; opacity: 1; pointer-events: none; } /* +10 % (v003) */
   /* Na telefonu OSA opticky stejně vysoké jako hamburger (38px je tam moc velké). */
   @media (max-width: 767px) { .hdr-osa { height: 24px; } }
   /* Tmavá varianta OSA glyphu — stuck (bílá) lišta: bílá OSA zmizí, tmavá naskočí.
