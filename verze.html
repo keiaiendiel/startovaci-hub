@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <style>html{background:#14142f}</style>
+  <title>Verze designu · Startovací Hub</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .vrs{min-height:100svh;display:grid;place-items:center;padding:clamp(64px,10vw,128px) var(--gutter);
+      color:#fff;background:radial-gradient(circle at 50% -8%,hsl(calc(var(--hue) + 44) 34% 64% / .30) 0,transparent 58%),
+      linear-gradient(160deg,hsl(var(--hue) 41% 13%) 0,hsl(var(--hue) 37% 19%) 100%)}
+    .vrs__in{width:100%;max-width:640px}
+    .vrs__h{margin:0 0 6px;font-weight:600;font-size:clamp(1.9rem,3vw,2.4rem);letter-spacing:-.02em}
+    .vrs__sub{margin:0 0 36px;color:rgba(255,255,255,.66);font-size:1.05rem}
+    .vrs__list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+    .vrs__item{display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:18px 22px;border-radius:14px;text-decoration:none;color:#fff;
+      border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);
+      transition:background .18s ease,border-color .18s ease,transform .18s ease}
+    .vrs__item:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);transform:translateY(-2px)}
+    .vrs__item--root{border-color:var(--rose)}
+    .vrs__label{font-weight:700;font-size:1.15rem}
+    .vrs__meta{display:block;margin-top:2px;color:rgba(255,255,255,.6);font-size:.92rem;font-weight:400}
+    .vrs__go{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;color:var(--rose);font-weight:700}
+  </style>
+</head>
+<body>
+  <main class="vrs">
+    <div class="vrs__in">
+      <h1 class="vrs__h">Verze designu</h1>
+      <p class="vrs__sub">Archiv jednotlivých verzí webu Startovacího Hubu. Klikni a otevři.</p>
+      <ul class="vrs__list">
+        <li><a class="vrs__item vrs__item--root" href="./"><span><span class="vrs__label">Aktuální</span><span class="vrs__meta">živá verze (root) — vždy nejnovější</span></span><span class="vrs__go">Otevřít →</span></a></li>
+        <li><a class="vrs__item" href="v001PI/"><span><span class="vrs__label">v001PI</span><span class="vrs__meta">2026-06-29 — 404/ve výrobě split, ořez menu, skleněná hero CTA + scroll šipka</span></span><span class="vrs__go">Otevřít →</span></a></li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>

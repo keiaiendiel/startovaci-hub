@@ -162,6 +162,35 @@ kopíruj z `sh-web/public/images/hub/...` do `assets/images/hub/...` se stejnou
 cestou. Velké obrázky pro web zmenši (např. `sips -s format jpeg -s formatOptions
 82 --resampleWidth 2400 vstup.png --out výstup.jpg`).
 
+## Hosting + verzování (publikace klientovi)
+
+Web běží na **GitHub Pages** z větve **`main` (root)**, repo `keiaiendiel/startovaci-hub`:
+
+- `https://keiaiendiel.github.io/startovaci-hub/` — **aktuální** (= obsah `main` root)
+- `https://keiaiendiel.github.io/startovaci-hub/vNNNPI/` — **zmrazené snapshoty** verzí
+- `https://keiaiendiel.github.io/startovaci-hub/verze.html` — **přehled** všech verzí
+
+⚠️ Pages servíruje **main**, ne pracovní větev. Aby šel aktuální design „živě",
+musí být na `main` (merge větve). `.nojekyll` v rootu vypíná Jekyll (servíruj as-is).
+
+**Verzovaný snapshot** dělá `scripts/publish-version.sh` (čistě statický, žádný Astro
+base): vytvoří složku `vNNNPI/` z aktuálního stavu = kopie všech HTML + **verzově
+specifické** `assets/styles.css` + fonty + loga. **Těžká média** (`assets/images` ~67 MB,
+`assets/videos` ~23 MB) se **nekopírují** — sdílí se z rootu přes `../assets` (skript
+přepíše `assets/images|videos` → `../assets/...`). Per verzi tak přibude jen ~0,6 MB.
+Skript zároveň přegeneruje `verze.html` ze všech `vNNNPI/version.txt` (datum se fixuje
+při vytvoření). Kompromis (jako sh-web): pozdější změna obrázku/videa v rootu se promítne
+i do starých verzí — pro design-iterace (mění se hlavně CSS/layout/copy) OK.
+
+```bash
+scripts/publish-version.sh 002PI "krátký popis"   # → složka v002PI/ + update verze.html
+# pak: zkontroluj, zacommituj, zmerguj do main (Pages se přebuildí ~1 min)
+```
+
+Označení verzí: `vNNNPI` (001PI, 002PI, …). `gh` token bývá neplatný (zápis přes API
+nejde), ale `git push` přes credential helper funguje — proto verze žijí na `main`,
+ne na samostatné `gh-pages` (nevyžaduje to ruční přepnutí Pages source).
+
 ## Sync z Astra , na co koukat
 
 - Hero copy/CTA: `sh-web/src/pages/index.astro` (`.lp-hero__quick`, lede).
