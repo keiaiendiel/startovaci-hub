@@ -109,7 +109,7 @@
   .sec-lede { @apply m-0 max-w-[54ch] text-base leading-[1.6] text-fg; }
 
   /* ---- Header + celoobrazovkové menu (toggle přes CSS checkbox, bez JS) ---- */
-  .hdr-bar { @apply relative z-[3] flex min-h-[68px] items-center py-3; }
+  .hdr-bar { @apply relative z-[3] flex min-h-[68px] items-center px-[clamp(8px,2vw,34px)] py-3; } /* extra odsazení loga/hamburgeru od okrajů */
 
   /* Po odscrollování pod hero (100svh) lišta zbělá (jako Astro is-stuck): bílé
      pozadí, tmavé logo/burger, vlasová linka dole a o něco nižší výška. Scroll-
@@ -258,7 +258,7 @@
       grid-template-columns: 1fr 1fr;
       align-items: start;
       row-gap: 0;
-      --rgap: clamp(16px, 3vw, 48px);
+      --rgap: clamp(40px, 6vw, 104px); /* tlačítka dál od středu */
     }
     .hero-ctas > * { width: auto; } /* desktop: šířka dle obsahu */
     .hero-ctas > :nth-child(1) { justify-self: end; margin-right: calc(var(--rgap) / 2); }
@@ -453,10 +453,19 @@
   .ucard__cta:hover > .arrow { transform: translateX(2px); }
 
   /* ---- Patička ------------------------------------------------------------ */
+  /* Tlačítka jako hero glass CTA na fialovém gradientu footeru: skleněný povrch +
+     blur + světelný okraj, bílý text; hover = bílá výplň + plum text + lift. */
   .foot-act {
-    @apply inline-flex items-center justify-between gap-3 rounded-[7px] bg-rose px-[clamp(18px,1.8vw,26px)] py-[clamp(15px,1.6vw,20px)]
-           text-base font-bold leading-[1.1] text-plum-deep transition hover:-translate-y-[2px] hover:bg-white;
+    @apply inline-flex items-center justify-center gap-3 rounded-full px-[clamp(20px,2vw,30px)] py-[clamp(15px,1.6vw,20px)]
+           text-base font-bold leading-[1.1] text-white transition hover:-translate-y-[2px];
+    isolation: isolate;
+    border: 1px solid rgba(255,255,255,0.30);
+    background: linear-gradient(150deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.10));
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.38), 0 12px 28px -14px rgba(0,0,0,0.5);
   }
+  .foot-act:hover { background: rgba(255,255,255,0.95); border-color: #fff; color: var(--plum-deep); }
   .foot-act > svg { @apply transition-transform; }
   .foot-act:hover > svg { transform: translateX(3px); }
   .foot-label { @apply mb-3 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-rose; }
@@ -489,6 +498,17 @@
       20%, 100% { opacity: 1; visibility: visible; }
     }
     .to-top { animation: to-top-reveal both linear; animation-timeline: scroll(root block); }
+  }
+  /* Landing: tlačítko „nahoru" zaparkuje NAD patičkou (sticky před footerem) místo
+     fixed přes patičku. Drží se u spodního kraje při scrollu a u konce contentu se
+     zastaví nad footerem. margin-top kompenzuje výšku, ať nevznikne mezera. */
+  .to-top--dock {
+    position: sticky;
+    right: auto;
+    margin-left: auto;
+    margin-right: clamp(16px, 3vw, 32px);
+    margin-top: -44px;
+    margin-bottom: 22px; /* zaparkuje o ~půl průměru výš nad patičkou */
   }
 
   /* ---- 404 / „ve výrobě" obrazovka (sdílená pro všechny necílové odkazy) -- */

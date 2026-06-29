@@ -186,11 +186,12 @@
   </main>
 
   <!-- ===== FOOTER (shodný s landingem) ===== -->
-  <footer class="border-t border-plum pb-8 pt-12 text-white"
+  <footer class="border-t border-plum pb-10 pt-12 text-white"
           style="background:radial-gradient(ellipse at 88% 105%, hsl(calc(var(--hue) + 44) 30% 70% / 0.16) 0%, transparent 50%), linear-gradient(135deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 36% 17%) 100%)">
-    <!-- Dva sloupce: Kontakty + Ostatní informace  |  Adresa + mapa -->
-    <div class="wrap grid items-start gap-8 md:grid-cols-2 md:gap-x-[clamp(24px,4vw,64px)] md:gap-y-0">
-      <!-- levý sloupec: Kontakty + Ostatní informace -->
+    <!-- Sloupce zarovnané se spodním 3-tlačítkovým pruhem: 1. sloupec Kontakty +
+         Ostatní informace | mapa (Adresa atd.) přes 2.–3. sloupec -->
+    <div class="wrap grid items-stretch gap-8 md:grid-cols-3 md:gap-x-[clamp(10px,1.4vw,18px)] md:gap-y-0">
+      <!-- 1. sloupec: Kontakty + Ostatní informace -->
       <div class="flex flex-col">
         <p class="foot-label">Kontakty</p>
         <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="mailto:vpd@osa2.cz">vpd@osa2.cz</a></p>
@@ -204,10 +205,13 @@
           <a class="text-white/75 no-underline transition hover:text-rose" href="pripravujeme.html">Partneři projektu</a>
           <a class="text-white/75 no-underline transition hover:text-rose" href="investori.html">Pro investory</a>
         </nav>
+
+        <p class="mt-auto max-w-[44ch] pt-8 text-xs leading-[1.6] text-white/55">Projekt Startovací Hub je realizován pod projektem Veřejně Prospěšný Developer a se záštitou Občanského sdružení Alternativa II a partnerských organizací. Poslední aktualizace webu proběhla 29. 6. 2026.</p>
+        <p class="mt-2 text-xs text-white/45">Developed by OSAdesign</p>
       </div>
 
-      <!-- pravý sloupec: Adresa + mapa + odkazy do map -->
-      <div class="flex flex-col">
+      <!-- 2.–3. sloupec: Adresa + mapa + odkazy do map (široké přes 2 sloupce) -->
+      <div class="flex flex-col md:col-span-2">
         <p class="foot-label">Adresa</p>
         <p class="mb-1 text-sm leading-[1.5] text-white/85">Kampus projektu Startovací Hub</p>
         <p class="mb-3 text-sm leading-[1.5] text-white/85"><strong class="font-semibold text-white">Dolní Kasárna 798, 250 67 Klecany (Praha-sever)</strong></p>
@@ -221,14 +225,8 @@
       </div>
     </div>
 
-    <!-- Centrovaný spodní text: realizace + poslední aktualizace + autor -->
-    <div class="wrap mt-10 border-t border-white/10 pt-6 text-center">
-      <p class="mx-auto max-w-[78ch] text-xs leading-[1.6] text-white/55">Projekt Startovací Hub je realizován pod projektem Veřejně Prospěšný Developer a se záštitou Občanského sdružení Alternativa II a partnerských organizací. Poslední aktualizace webu proběhla 29. 6. 2026.</p>
-      <p class="mt-2 text-xs text-white/45">Developed by OSAdesign</p>
-    </div>
-
-    <!-- rezervační pruh pod oběma sloupci -->
-    <div class="wrap mt-10 grid gap-[clamp(10px,1.4vw,18px)] md:grid-cols-3">
+    <!-- rezervační pruh — glass tlačítka (jako hero CTA) na fialovém gradientu footeru -->
+    <div class="wrap mt-12 grid gap-[clamp(10px,1.4vw,18px)] md:grid-cols-3">
       <a class="foot-act" href="pripravujeme.html"><span>Pronajmout apartmán</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="foot-act" href="pripravujeme.html"><span>Pronajmout lůžko</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="foot-act" href="pripravujeme.html"><span>Požádat o stipendium</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>

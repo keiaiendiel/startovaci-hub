@@ -1,1 +1,1 @@
-v002PI|2026-06-29|OSA logo + popisky pod hero tlačítky + reload na logu, „Omlouváme se" připravujeme, nová patička (Ostatní informace + masterplan mapa), větší logo/hamburger
+v002PI|2026-06-29|footer (mapa 2/3 + masterplan, glass tlačítka na střed, popis dole), hero (větší logo+podnadpis 'live & work', odsazené logo/hamburger, tlačítka dál od středu), to-top parkuje nad patičkou
