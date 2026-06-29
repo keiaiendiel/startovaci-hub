@@ -10,6 +10,11 @@
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin />
   <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    /* „Připravujeme" — větší apologetický headline (pripravujeme-specifické,
+       neovlivňuje sdílený .hub-404 / 404.html). */
+    .prep .hub-404__title { font-size: clamp(2.1rem, 4.4vw + 0.4rem, 3.2rem); }
+  </style>
 </head>
 <body>
 
@@ -53,7 +58,7 @@
   </header>
 
   <!-- ===== STRÁNKA VE VÝROBĚ (sdílí vizuál .hub-404, ale bez čísla) ===== -->
-  <main class="hub-404">
+  <main class="hub-404 prep">
     <span class="hub-404__bg" aria-hidden="true">
       <svg viewBox="0 0 2100 700" preserveAspectRatio="xMidYMid slice">
         <path d="M -80 392 C 320 232, 700 540, 1050 372 C 1400 204, 1780 520, 2180 348" />
@@ -61,8 +66,8 @@
     </span>
 
     <div class="hub-404__inner">
-      <h1 class="hub-404__title">Tahle stránka je ve výrobě</h1>
-      <p class="hub-404__lead">Pracujeme na ní, brzy bude hotová.</p>
+      <h1 class="hub-404__title">Omlouváme se,</h1>
+      <p class="hub-404__lead">na výrobě této stránky pracujeme.</p>
 
       <a class="hub-404__cta" href="index.html">
         Přejít na úvod

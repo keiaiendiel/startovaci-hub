@@ -17,7 +17,10 @@
     <input type="checkbox" id="navtoggle" class="sr-only" aria-label="Přepnout menu" />
 
     <div class="wrap hdr-bar">
-      <a href="#top" class="hdr-logo" aria-label="Startovací Hub, nahoru"><img src="assets/brand-logo-dark.svg" alt="Startovací Hub" /></a>
+      <span class="hdr-brand">
+        <img class="hdr-osa" src="assets/osa-logo-white.svg" alt="OSA" />
+        <a href="index.html" class="hdr-logo" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-dark.svg" alt="Startovací Hub" /></a>
+      </span>
       <div class="hdr-actions">
         <a href="pripravujeme.html" class="hdr-cta">Pronajmout</a>
         <label for="navtoggle" class="burger-btn" aria-label="Otevřít menu">
@@ -28,7 +31,7 @@
 
     <div class="menu">
       <div class="wrap menu__inner">
-        <a href="#top" class="self-center" aria-label="Startovací Hub, nahoru"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(22px,2.6vw,30px)] w-auto" /></a>
+        <a href="index.html" class="self-center" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(22px,2.6vw,30px)] w-auto" /></a>
 
         <a href="pripravujeme.html" class="inline-flex items-center justify-center gap-2 self-center rounded-[7px] bg-rose px-8 py-3 text-base font-bold leading-none text-plum-deep transition hover:-translate-y-[2px] hover:bg-white">
           <span>Pronajmout</span>
@@ -70,8 +73,14 @@
     </div>
 
     <div class="hero-ctas">
-      <a class="hero-cta" href="pripravujeme.html"><span>Pronajmout apartmán</span><span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a class="hero-cta" href="pripravujeme.html"><span>Pronajmout lůžko</span><span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <div class="hero-ctacol">
+        <a class="hero-cta" href="pripravujeme.html"><span>Pronajmout apartmán</span><span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <p class="hero-cta-note"><svg class="hero-cta-note__i" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Privátní apartmány 1+kk až 5+kk</span></p>
+      </div>
+      <div class="hero-ctacol">
+        <a class="hero-cta" href="pripravujeme.html"><span>Pronajmout lůžko</span><span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <p class="hero-cta-note"><svg class="hero-cta-note__i" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Sdílené pokoje od 2 do 8 lůžek</span></p>
+      </div>
     </div>
 
     <a href="#ubytovani" aria-label="Skrolovat na možnosti" class="scroll-cue">

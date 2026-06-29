@@ -53,7 +53,7 @@ done
 # Lehké lokální assety: verzově specifické CSS + fonty + loga (zůstávají v assets/).
 cp "$ROOT/assets/styles.css" "$DEST/assets/styles.css"
 cp -R "$ROOT/assets/fonts" "$DEST/assets/fonts"
-cp "$ROOT"/assets/brand-logo-*.svg "$DEST/assets/" 2>/dev/null || true
+cp "$ROOT"/assets/*.svg "$DEST/assets/" 2>/dev/null || true
 
 # Metadata verze (datum se zafixuje při vytvoření; popis volitelný).
 printf '%s|%s|%s\n' "$DIR" "$TODAY" "$NOTE" > "$DEST/version.txt"
