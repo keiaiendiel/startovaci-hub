@@ -109,7 +109,7 @@
   .sec-lede { @apply m-0 max-w-[54ch] text-base leading-[1.6] text-fg; }
 
   /* ---- Header + celoobrazovkové menu (toggle přes CSS checkbox, bez JS) ---- */
-  .hdr-bar { @apply relative z-[3] flex min-h-[68px] items-center px-[clamp(8px,2vw,34px)] py-3; } /* extra odsazení loga/hamburgeru od okrajů */
+  .hdr-bar { @apply relative z-[3] flex min-h-[68px] items-center py-3; } /* bez extra boč. paddingu → OSA/burger lícují s obsahem stránky (.wrap gutter) */
 
   /* Po odscrollování pod hero (100svh) lišta zbělá (jako Astro is-stuck): bílé
      pozadí, tmavé logo/burger, vlasová linka dole a o něco nižší výška. Scroll-
@@ -209,6 +209,9 @@
   .burger > span { @apply block h-[4.9px] origin-center bg-current; }
   .burger > span:nth-child(1), .burger > span:nth-child(3) { transition: transform 300ms var(--ease-quart); }
   .burger > span:nth-child(2) { transition: opacity 150ms linear; }
+  /* Na telefonu burger ~o 20 % užší (32→26px) → zmenší se spolu se zmenšeným OSA
+     logem (jinak burger zůstával velký, zatímco logo se na mobilu zdrobnilo). */
+  @media (max-width: 767px) { .burger { width: 26px; } }
   /* Checkbox je sr-only → viditelný focus prsten ukaž na ikoně burgeru (klávesnice). */
   #navtoggle:focus-visible ~ .hdr-bar .burger-btn { outline: 2px solid #fff; outline-offset: 3px; border-radius: 6px; }
 
@@ -280,7 +283,7 @@
   /* Přímý potomek .hero-ctas = buď tlačítko (starší struktura), nebo sloupec
      tlačítko + popisek (.hero-ctacol). Centrování řešíme na přímém potomkovi, ať
      to platí pro obě varianty. */
-  .hero-ctas > * { width: 60%; min-width: 220px; } /* mobil: ~60 %, ne full-width; min kvůli „Pronajmout apartmán" */
+  .hero-ctas > * { width: min(86%, 250px); } /* mobil: mírně širší, ne full-width; 250px = aby „Pronajmout apartmán ›" bylo na 1 řádek; obě stejně */
   .hero-ctacol { display: flex; flex-direction: column; align-items: center; gap: 9px; }
   .hero-ctacol > .hero-cta { width: 100%; }
   @media (min-width: 768px) {
@@ -302,7 +305,7 @@
      = plné bílé pozadí + plum text + lehký lift. Krytí povrchu o malilinko vyšší
      než v Astru (uživatelské přání). */
   .hero-cta {
-    @apply relative inline-flex items-center justify-center gap-2.5 rounded-[12px] px-5 py-[14px]
+    @apply relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-[12px] px-5 py-[14px]
            text-[0.95rem] font-bold leading-none tracking-[-0.02em] text-white
            md:gap-3 md:px-10 md:py-5 md:text-[clamp(1.1rem,1.3vw,1.35rem)];
     isolation: isolate;

@@ -1,1 +1,1 @@
-v003aPI|2026-06-29|plne pilulky (oble tlacitka); nad herem OSA+burger niz (desktop), wordmark jako text na stred (desktop), mobilni CTA ~60% a dal od sebe, mensi OSA na mobilu
+v003aPI|2026-06-29|plne pilulky; lista llicuje s obsahem (OSA/burger na hrane), desktop OSA+burger niz nad herem + wordmark text na stred; telefon: mensi OSA i burger, hero CTA na 1 radek
