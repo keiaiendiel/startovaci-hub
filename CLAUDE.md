@@ -20,7 +20,7 @@ promítni změny sem; když klient chce úpravu tady, drž to konzistentní s As
 | | |
 |---|---|
 | Styly | Tailwind CSS 3.4.17, zdroj `src/input.css` → build do `assets/styles.css` |
-| Tailwind config | `tailwind.config.js`, `content` = `index.html`, `404.html`, `investori.html`, `investori-zamer.html`, `investori-zaklad.html`, `struktura-webu.html`, `galerie.html`; brand barvy mapované na CSS proměnné (`bg-plum-deep`, `text-rose`, …) |
+| Tailwind config | `tailwind.config.js`, `content` = `index.html`, `404.html`, `pripravujeme.html`, `investori.html`, `investori-zamer.html`, `investori-zaklad.html`, `struktura-webu.html`, `galerie.html`; brand barvy mapované na CSS proměnné (`bg-plum-deep`, `text-rose`, …) |
 | Tokeny + komponenty | `src/input.css`: `:root` tokeny + `@layer components` (`.hero-ctas`, `.hero-cta`, `.sec-title/.sec-lede/.sec-cta`, `.ucards/.ucard*`, `.gal/.gallery*`, `.foot-act/.foot-label`, `.hub-404*`, `.menu/.burger`, `.to-top`, `.inv-topbar*/.inv-login*/.inv-btn`, `.inv-seg` přepínač). Pozn.: `.vz*` styly „Základních údajů" (`.vz-matrix/.vz-map/.vz-summary/.vz-zonehead/.vz-greenband/.vz-quote/.vz-figrow/.sec--shade` aj.) žijí **inline** v `investori-zaklad.html`, ne v Tailwindu. |
 | Fonty | self-hosted Atyp Special (woff2) v `assets/fonts/`, `@font-face` v `input.css` |
 | JS | Landing ŽÁDNÝ: menu = CSS checkbox (`#navtoggle`), galerie = scroll-snap + kotvy + scroll-driven aktivní tečka (`view-timeline`) + `::scroll-button` šipky, hero = `<video autoplay muted loop playsinline>`, „nahoru" = scroll-driven animace. Plynulé přechody = `@view-transition` (cross-document, bez JS). **Výjimka:** investorský pod-web má pár řádků JS (měkká brána heslem). |
@@ -30,7 +30,8 @@ promítni změny sem; když klient chce úpravu tady, drž to konzistentní s As
 
 ```
 index.html              # landing
-404.html                # „stránka ve výrobě" , cíl všech necílových odkazů
+404.html                # skutečná 404 „stránka neexistuje" (servíruje hosting pro neznámé URL; neodkazuje se na ni)
+pripravujeme.html       # „stránka ve výrobě" (bez čísla), cíl všech necílových odkazů; sdílí vizuál .hub-404 s 404.html
 investori.html          # přihlášení do podkladů (login heslem, měkká brána)
 investori-zamer.html    # podklady „Investiční záměr" = věrný port „Záměr VPD1_5 - web.html" (gated)
 investori-zaklad.html   # podklady „Základní údaje & výpočty" = generovaný 1:1 port listu z xlsx (gated)
@@ -64,10 +65,13 @@ dokud to nepřibude i v Astru.
 
 Landing je samostatný. **Každý odkaz, který by v plném webu mířil na podstránku**
 (menu, „Zjistit více", Pronajmout, Struktura webu, footer akce, Ceník, Novinky…)
-vede na **`404.html`** (sdílená „ve výrobě" obrazovka; z ní vede „Přejít na úvod"
-→ `index.html`). **Výjimky:** footer **„Pro investory" → `investori.html`** a
+vede na **`pripravujeme.html`** („ve výrobě" obrazovka bez čísla; z ní vede „Přejít
+na úvod" → `index.html`). ⚠️ **Ne na `404.html`** — ta je vyhrazená pro skutečně
+neexistující stránky („Tahle stránka neexistuje", velké „404"); servíruje ji hosting
+pro neznámé URL a schválně se na ni odnikud neodkazuje. Obě sdílí vizuál `.hub-404`.
+**Výjimky:** footer **„Pro investory" → `investori.html`** a
 **„Struktura webu" → `struktura-webu.html`** (reálné stránky; struktura je mapa
-webu, kde necílové podstránky nesou status „ve výrobě" a vedou na `404.html`).
+webu, kde necílové podstránky nesou status „ve výrobě" a vedou na `pripravujeme.html`).
 **On-page** mechanismy zůstávají funkční: scroll šipka (`#ubytovani`), tečky
 galerií (`#upa-1`/`#usp-1`/`#zaz-1`/…), „nahoru" (`#top`); `mailto:`/`tel:`/Google
 Mapy vedou ven.
@@ -132,7 +136,7 @@ Mapy vedou ven.
 - **`investori-scenare.html`** = podklady „Základní scénáře". Ruční port listu
   `Základní scénáře` z `Záměr VPD1_5.xlsx` (5 scénářů S1/S2/S3/Sk/Sx; barevné řádky
   dle Excel fillů: S1 žlutá, S2 tan, S3 oranžová). Vodorovně posuvná tabulka
-  (`.scn-table`, sticky 1. sloupec se scénářem). „Detail (zde)" zatím → `404.html`.
+  (`.scn-table`, sticky 1. sloupec se scénářem). „Detail (zde)" zatím → `pripravujeme.html`.
   Měkká brána + top bar + Atyp Special jako ostatní podklady. Statická (ne z generátoru).
 - Když se mění podklady, edituj přímo příslušné HTML (žádné není v Astru);
   „Základní údaje" lze i regenerovat z xlsx přes `tools/zaklad/`.

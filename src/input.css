@@ -441,6 +441,7 @@
   }
 
   /* ---- 404 / „ve výrobě" obrazovka (sdílená pro všechny necílové odkazy) -- */
+  /* sdílený vizuál „chybové" obrazovky: 404.html (s číslem) i pripravujeme.html (bez čísla, vynechá .hub-404__code) */
   .hub-404 {
     position: relative;
     overflow: hidden;

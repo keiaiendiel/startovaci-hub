@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './404.html', './investori.html', './investori-zamer.html', './investori-zaklad.html', './investori-scenare.html', './struktura-webu.html', './galerie.html'],
+  content: ['./index.html', './404.html', './pripravujeme.html', './investori.html', './investori-zamer.html', './investori-zaklad.html', './investori-scenare.html', './struktura-webu.html', './galerie.html'],
   theme: {
     extend: {
       colors: {
