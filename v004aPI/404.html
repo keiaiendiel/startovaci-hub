@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <style>html{background:#14142f}</style><!-- první paint = brand tmavá, ať navigace neproblikne bíle -->
+  <title>Stránka nenalezena · Startovací Hub Klecany</title>
+  <meta name="description" content="Tahle stránka neexistuje, možná byla přesunutá, nebo tu nikdy nebyla." />
+  <meta name="robots" content="noindex" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER (stejný jako landing) ===== -->
+  <header class="fixed inset-x-0 top-0 z-30 text-white">
+    <input type="checkbox" id="navtoggle" class="sr-only" aria-label="Přepnout menu" />
+
+    <div class="wrap hdr-bar">
+      <a href="index.html" class="self-center" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(18px,2.2vw,24px)] w-auto" /></a>
+      <div class="hdr-actions">
+        <a href="pripravujeme.html" class="hdr-cta">Pronajmout</a>
+        <label for="navtoggle" class="burger-btn" aria-label="Otevřít menu">
+          <span class="burger"><span></span><span></span><span></span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="menu">
+      <div class="wrap menu__inner">
+        <a href="index.html" class="self-center" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(22px,2.6vw,30px)] w-auto" /></a>
+
+        <a href="pripravujeme.html" class="inline-flex items-center justify-center gap-2 self-center rounded-[7px] bg-rose px-8 py-3 text-base font-bold leading-none text-plum-deep transition hover:-translate-y-[2px] hover:bg-white">
+          <span>Pronajmout</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+
+        <nav class="flex flex-1 flex-col items-center justify-center gap-2" aria-label="Hlavní navigace">
+          <a class="menu-link" href="pripravujeme.html">Ubytování</a>
+          <a class="menu-link" href="pripravujeme.html">Zázemí</a>
+          <a class="menu-link" href="pripravujeme.html">Doprava</a>
+          <a class="menu-link" href="pripravujeme.html">Ceník</a>
+          <a class="menu-link" href="pripravujeme.html">Stipendia</a>
+          <a class="menu-link" href="pripravujeme.html">Novinky</a>
+        </nav>
+
+        <div class="menu__foot">
+          <a class="menu-acct" href="pripravujeme.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Přihlásit se</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== 404 / STRÁNKA NEEXISTUJE ===== -->
+  <main class="hub-404">
+    <span class="hub-404__bg" aria-hidden="true">
+      <svg viewBox="0 0 2100 700" preserveAspectRatio="xMidYMid slice">
+        <path d="M -80 392 C 320 232, 700 540, 1050 372 C 1400 204, 1780 520, 2180 348" />
+      </svg>
+    </span>
+
+    <div class="hub-404__inner">
+      <p class="hub-404__code">404</p>
+      <h1 class="hub-404__title">Tahle stránka neexistuje</h1>
+      <p class="hub-404__lead">Možná byla přesunutá, nebo tu nikdy nebyla.</p>
+
+      <a class="hub-404__cta" href="index.html">
+        Přejít na úvod
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </main>
+
+</body>
+</html>

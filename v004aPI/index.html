@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <style>html{background:#14142f}</style><!-- první paint = brand tmavá, ať navigace neproblikne bíle -->
+  <title>Startovací Hub Klecany · Bydlení a coworking 15 min od Prahy</title>
+  <meta name="description" content="Jedenáct formátů bydlení od sdíleného lůžka po byt 5+kk, coworking, dílny, sauna a kavárna. Horní kasárna Klecany, patnáct minut autobusem od metra Kobylisy. Od 3 000 Kč měsíčně, energie a internet v ceně." />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Medium.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/AtypText-Special-Bold.woff2" crossorigin />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header fixed inset-x-0 top-0 z-30 text-white">
+    <input type="checkbox" id="navtoggle" class="sr-only" aria-label="Přepnout menu" />
+
+    <div class="wrap hdr-bar">
+      <span class="hdr-brand">
+        <img class="hdr-osa" src="assets/osa-logo-white.svg" alt="OSA" />
+        <img class="hdr-osa hdr-osa--dark" src="assets/osa-logo-dark.svg" alt="" aria-hidden="true" />
+      </span>
+      <a href="index.html" class="hdr-logo" aria-label="Startovací Hub, na úvod">Startovací Hub</a>
+      <div class="hdr-actions">
+        <a href="pripravujeme.html" class="hdr-cta">Pronajmout</a>
+        <label for="navtoggle" class="burger-btn" aria-label="Otevřít menu">
+          <span class="burger"><span></span><span></span><span></span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="menu">
+      <div class="wrap menu__inner">
+        <a href="index.html" class="self-center" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(22px,2.6vw,30px)] w-auto" /></a>
+
+        <a href="pripravujeme.html" class="inline-flex items-center justify-center gap-2 self-center rounded-[7px] bg-rose px-8 py-3 text-base font-bold leading-none text-plum-deep transition hover:-translate-y-[2px] hover:bg-white">
+          <span>Pronajmout</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+
+        <nav class="flex flex-1 flex-col items-center justify-center gap-2" aria-label="Hlavní navigace">
+          <a class="menu-link" href="pripravujeme.html">Ubytování</a>
+          <a class="menu-link" href="pripravujeme.html">Zázemí</a>
+          <a class="menu-link" href="pripravujeme.html">Doprava</a>
+          <a class="menu-link" href="pripravujeme.html">Ceník</a>
+          <a class="menu-link" href="pripravujeme.html">Stipendia</a>
+          <a class="menu-link" href="pripravujeme.html">Novinky</a>
+        </nav>
+
+        <div class="menu__foot">
+          <a class="menu-acct" href="pripravujeme.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Přihlásit se</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="top" class="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden bg-plum-deep py-24 text-white"
+           style="background-image:url('../assets/images/hub/hero/h00.jpg');background-size:cover;background-position:center" aria-label="Startovací Hub Klecany">
+    <video class="absolute inset-0 z-0 hidden h-full w-full object-cover md:block" autoplay muted loop playsinline preload="metadata" poster="../assets/images/hub/hero/h00.jpg" style="filter:brightness(.87)" aria-hidden="true">
+      <source src="../assets/videos/hero-reel-1.mp4" type="video/mp4" />
+    </video>
+    <video class="absolute inset-0 z-0 block h-full w-full object-cover md:hidden" autoplay muted loop playsinline preload="metadata" poster="../assets/images/hub/hero/h00-phone.jpg" style="filter:brightness(.87)" aria-hidden="true">
+      <source src="../assets/videos/hero-reel-1-phone.mp4" type="video/mp4" />
+    </video>
+
+    <div class="absolute inset-0 z-[1]" aria-hidden="true"
+         style="background:linear-gradient(rgba(0,0,0,.13),rgba(0,0,0,.13)),linear-gradient(to bottom,rgba(0,0,0,.4) 0%,rgba(0,0,0,.18) 18%,rgba(0,0,0,0) 35%),linear-gradient(to top,rgba(0,0,0,.80) 0%,rgba(0,0,0,.58) 22%,rgba(0,0,0,.28) 48%,rgba(0,0,0,0) 78%)"></div>
+
+    <div class="wrap relative z-[2] text-center md:-translate-y-[2vh]">
+      <h1 class="mb-3 text-balance text-[clamp(2.25rem,4.4vw,3.6rem)] font-bold leading-[1.0] tracking-[-0.02em] text-white [text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">Startovací hub</h1>
+      <p class="mx-auto my-0 max-w-[44ch] text-[clamp(1.05rem,1.5vw,1.5rem)] font-medium leading-[1.4] tracking-[0.02em] text-white/90">your perfect live &amp; work space</p>
+    </div>
+
+    <div class="hero-ctas">
+      <div class="hero-ctacol">
+        <a class="hero-cta" href="pripravujeme.html"><span>Pronajmout apartmán</span><span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <p class="hero-cta-note"><svg class="hero-cta-note__i" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Privátní apartmány 1+kk až 5+kk</span></p>
+      </div>
+      <div class="hero-ctacol">
+        <a class="hero-cta" href="pripravujeme.html"><span>Pronajmout lůžko</span><span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <p class="hero-cta-note"><svg class="hero-cta-note__i" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Sdílené pokoje od 2 do 8 lůžek</span></p>
+      </div>
+    </div>
+
+    <a href="#ubytovani" aria-label="Skrolovat na možnosti" class="scroll-cue">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ===== ZIG-ZAG SEKCE (shodné s Astro landingem) ===== -->
+
+  <!-- 1 · Ubytování — úvod na celou šířku + dvě karty (Privátní apartmány / Sdílené pokoje) -->
+  <section id="ubytovani" class="relative overflow-hidden border-b border-border-muted bg-bg py-12 md:py-16">
+    <span class="ribbon opacity-[0.32]" aria-hidden="true"><svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid slice"><path d="M -80 480 C 120 320, 320 240, 540 360 S 940 520, 1120 380 S 1400 280, 1560 360" style="stroke:var(--accent);stroke-width:36" vector-effect="non-scaling-stroke"/></svg></span>
+    <div class="wrap relative z-[2]">
+      <div class="flex max-w-[64ch] flex-col gap-4">
+        <h2 class="sec-title">Privátní apartmán, nebo sdílený pokoj?</h2>
+        <p class="sec-lede">Šest formátů sdílených pokojů od otevřeného lůžka po uzamykatelnou kapsli a pět privátních apartmánů 1+kk až 5+kk. V ceně energie, internet, coworkingový sál a pět jízd kyvadlové dopravy MyShelter k metru měsíčně.</p>
+        <div class="mt-2 flex flex-wrap gap-3">
+          <a class="sec-cta" href="pripravujeme.html"><span>Zjistit více</span><span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </div>
+
+      <div class="ucards">
+        <article class="ucard">
+          <div class="ucard__media gal">
+            <div class="gallery">
+              <img id="upa-0" src="../assets/images/hub/ubytovani/privatni/apartman-01.jpg" alt="Privátní apartmán: sklápěcí postel, kuchyňský kout, pracovní stůl a TV stěna." loading="lazy" />
+              <img id="upa-1" src="../assets/images/hub/ubytovani/02-1kk.jpg" alt="Privátní apartmán 1+kk, sklápěcí postel, kuchyňský kout a pracovní stůl." loading="lazy" />
+              <img id="upa-2" src="../assets/images/hub/ubytovani/privatni/2kk-01.jpg" alt="Privátní apartmán 2+kk, obývací pokoj s otevřenou kuchyní." loading="lazy" />
+              <img id="upa-3" src="../assets/images/hub/ubytovani/privatni/3kk-01.jpg" alt="Privátní apartmán 3+kk, prostorný obytný prostor pro skupinu." loading="lazy" />
+              <img id="upa-4" src="../assets/images/hub/ubytovani/05-4kk-family.jpg" alt="Privátní apartmán 4+kk: rodina v obývacím pokoji, dlouhý jídelní stůl." loading="lazy" />
+              <img id="upa-5" src="../assets/images/hub/ubytovani/privatni/5kk-01.jpg" alt="Privátní apartmán 5+kk pro větší skupinu." loading="lazy" />
+            </div>
+            <div class="gallery__dots">
+              <a class="gallery__dot" href="#upa-0" aria-label="Snímek 1"></a>
+              <a class="gallery__dot" href="#upa-1" aria-label="Snímek 2"></a>
+              <a class="gallery__dot" href="#upa-2" aria-label="Snímek 3"></a>
+              <a class="gallery__dot" href="#upa-3" aria-label="Snímek 4"></a>
+              <a class="gallery__dot" href="#upa-4" aria-label="Snímek 5"></a>
+              <a class="gallery__dot" href="#upa-5" aria-label="Snímek 6"></a>
+            </div>
+          </div>
+          <h3 class="ucard__title"><a href="pripravujeme.html">Privátní apartmány</a></h3>
+          <p class="ucard__text">Celý byt jen pro vás, od 1+kk po 5+kk pro skupinu až patnácti. Vlastní koupelna, kuchyň i vchod.</p>
+          <a class="ucard__cta" href="pripravujeme.html"><span>Zjistit více</span><span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </article>
+
+        <article class="ucard">
+          <div class="ucard__media gal">
+            <div class="gallery">
+              <img id="usp-0" src="../assets/images/hub/ubytovani/coliving/sdilene-01.jpg" alt="Sdílený pokoj se dvěma lůžky, dvěma pracovními stoly a dřevěným obkladem." loading="lazy" />
+              <img id="usp-1" src="../assets/images/hub/ubytovani/coliving/pokoj-basic-01.jpg" alt="Sdílený pokoj se dvěma lůžky, pracovními stoly a světlým dubovým nábytkem." loading="lazy" />
+              <img id="usp-2" src="../assets/images/hub/ubytovani/coliving/pokoj-privacy-01.jpg" alt="Lůžkové boxy s posuvnými dveřmi, zvýšená míra soukromí." loading="lazy" />
+              <img id="usp-3" src="../assets/images/hub/ubytovani/coliving/dvouluzko-01.jpg" alt="Dvojlůžko ve sdíleném pokoji se zvýšenou mírou soukromí." loading="lazy" />
+              <img id="usp-4" src="../assets/images/hub/ubytovani/coliving/kapsle-wide.jpg" alt="Lůžkové kapsle s dřevěným obložením a tlumeným světlem, sdílené posezení u oken." loading="lazy" />
+            </div>
+            <div class="gallery__dots">
+              <a class="gallery__dot" href="#usp-0" aria-label="Snímek 1"></a>
+              <a class="gallery__dot" href="#usp-1" aria-label="Snímek 2"></a>
+              <a class="gallery__dot" href="#usp-2" aria-label="Snímek 3"></a>
+              <a class="gallery__dot" href="#usp-3" aria-label="Snímek 4"></a>
+              <a class="gallery__dot" href="#usp-4" aria-label="Snímek 5"></a>
+            </div>
+          </div>
+          <h3 class="ucard__title"><a href="pripravujeme.html">Sdílené pokoje</a></h3>
+          <p class="ucard__text">Lůžko nebo kapsle, ne celý byt. Šest formátů ve třech stupních soukromí, koupelnu a kuchyň sdílíte.</p>
+          <a class="ucard__cta" href="pripravujeme.html"><span>Zjistit více</span><span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Zázemí (foto vlevo, text vpravo) — bg-muted -->
+  <section id="zazemi" class="relative overflow-hidden border-b border-border-muted bg-bg-muted py-12 md:py-16">
+    <span class="ribbon opacity-[0.32] [transform:scaleX(-1)]" aria-hidden="true"><svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid slice"><path d="M -60 380 C 180 460, 360 220, 580 380 S 960 540, 1140 360 S 1380 220, 1560 360" style="stroke:var(--accent);stroke-width:36" vector-effect="non-scaling-stroke"/></svg></span>
+    <div class="wrap relative z-[2]">
+      <div class="flex max-w-[64ch] flex-col gap-4">
+        <h2 class="sec-title">Coworking, restaurace, wellness, bazén.</h2>
+        <p class="sec-lede">Coworkingový sál s dílnami a zasedačkami, kantýna, pekárna a restaurace, venkovní bazén a sauny. Většina zázemí je pro ubytované v ceně nebo za zvýhodněnou sazbu, část otevřená i návštěvníkům.</p>
+        <div class="mt-2 flex flex-wrap gap-3">
+          <a class="sec-cta" href="pripravujeme.html"><span>Zjistit více</span><span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </div>
+
+      <!-- Čtyři podsekce zázemí: Coworking / Gastronomie / Wellness / Ostatní (karty jako Ubytování, jen 1 obrázek + nadpis) -->
+      <div class="ucards md:grid-cols-2">
+        <article class="ucard">
+          <div class="ucard__media">
+            <div class="gallery"><img src="../assets/images/hub/zazemi/coworking.jpg" alt="Coworkingový sál s pódiem, sdílenými pracovními stoly na kolečkách, kuchyňkou s kávovarem a posezením." loading="lazy" /></div>
+          </div>
+          <h3 class="ucard__title">Coworking</h3>
+        </article>
+        <article class="ucard">
+          <div class="ucard__media">
+            <div class="gallery"><img src="../assets/images/hub/zazemi/gastronomie.jpg" alt="Předzahrádka s grilovacími místy před budovou B — restaurací, minipivovarem a pekárnou — navečer." loading="lazy" /></div>
+          </div>
+          <h3 class="ucard__title">Gastronomie</h3>
+        </article>
+        <article class="ucard">
+          <div class="ucard__media">
+            <div class="gallery"><img src="../assets/images/hub/zazemi/wellness.jpg" alt="Venkovní bazén s letním barem; k pronájmu i na privátní bazénovou párty." loading="lazy" /></div>
+          </div>
+          <h3 class="ucard__title">Wellness</h3>
+        </article>
+        <article class="ucard">
+          <div class="ucard__media">
+            <div class="gallery"><img src="../assets/images/hub/zazemi/ostatni.jpg" alt="Život v kampusu navečer — lidé na procházce mezi domy, komunitní atmosféra." loading="lazy" /></div>
+          </div>
+          <h3 class="ucard__title">Ostatní zázemí</h3>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Doprava (text vlevo, foto vpravo) -->
+  <section id="doprava" class="relative overflow-hidden border-b border-border-muted bg-bg py-12 md:py-16">
+    <span class="ribbon opacity-[0.32]" aria-hidden="true"><svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid slice"><path d="M -80 460 C 180 300, 380 460, 600 340 S 980 460, 1160 380 S 1380 280, 1560 380" style="stroke:var(--accent);stroke-width:36" vector-effect="non-scaling-stroke"/></svg></span>
+    <div class="wrap relative z-[2] grid items-center gap-[clamp(32px,5vw,80px)] md:grid-cols-2">
+      <div class="flex min-w-0 flex-col gap-4">
+        <h2 class="sec-title">15 minut na metro.</h2>
+        <p class="sec-lede">Kyvadlová doprava MyShelter k metru Kobylisy a k přívozu Klecánky, MHD linka 374 minutu od areálu, půjčovna elektrovozidel a sdílené taxi. Pět jízd kyvadlovky a jednu jízdu taxi máte měsíčně v ceně.</p>
+        <div class="mt-2 flex flex-wrap gap-3">
+          <a class="sec-cta" href="pripravujeme.html"><span>Zjistit více</span><span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </div>
+      <div class="min-w-0 gal">
+        <div class="gallery">
+          <img id="dop-1" src="../assets/images/hub/doprava/hub-shuttle-zastavka.jpg" alt="Zastávka kyvadlové dopravy MyShelter k metru Kobylisy." loading="lazy" />
+          <img id="dop-2" src="../assets/images/hub/okoli/01-areal-dostupnost.jpg" alt="Mapa dostupnosti areálu, vzdálenosti na metro a do centra Prahy." loading="lazy" />
+          <img id="dop-3" src="../assets/images/hub/doprava/cyklostezka.jpg" alt="Cyklostezka EuroVelo 7 podél Vltavy z Prahy do Klecan." loading="lazy" />
+          <img id="dop-4" src="../assets/images/hub/okoli/04-topview-update.jpg" alt="Letecký pohled na areál Horních kasáren a obec Klecany." loading="lazy" />
+        </div>
+        <div class="gallery__dots">
+          <a class="gallery__dot" href="#dop-1" aria-label="Snímek 1"></a>
+          <a class="gallery__dot" href="#dop-2" aria-label="Snímek 2"></a>
+          <a class="gallery__dot" href="#dop-3" aria-label="Snímek 3"></a>
+          <a class="gallery__dot" href="#dop-4" aria-label="Snímek 4"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Stipendia (foto vlevo, text vpravo) — bg-muted -->
+  <section id="stipendia" class="relative overflow-hidden bg-bg-muted py-12 md:py-16">
+    <span class="ribbon opacity-[0.32] [transform:scaleX(-1)]" aria-hidden="true"><svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid slice"><path d="M -60 420 C 160 540, 380 260, 600 400 S 960 520, 1140 380 S 1380 240, 1560 380" style="stroke:var(--accent);stroke-width:36" vector-effect="non-scaling-stroke"/></svg></span>
+    <div class="wrap relative z-[2] grid items-center gap-[clamp(32px,5vw,80px)] md:grid-cols-2">
+      <div class="flex min-w-0 flex-col gap-4 md:order-2">
+        <h2 class="sec-title">Bydlení a tvorba za přínos komunitě.</h2>
+        <p class="sec-lede">Pobytové stipendium pro lidi s projektem a projektové stipendium na materiál a dílenský čas. Bydlení nebo zvýhodněná cena za konkrétní vstup do života Hubu. Při registraci zaškrtnete zájem a ozveme se s podmínkami.</p>
+        <div class="mt-2 flex flex-wrap gap-3">
+          <a class="sec-cta" href="pripravujeme.html"><span>Zjistit více</span><span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        </div>
+      </div>
+      <div class="min-w-0 md:order-1 gal">
+        <div class="gallery">
+          <img id="sti-1" src="../assets/images/hub/stipendia/01-atelier.jpg" alt="Ateliér s rezidentem-tvůrcem v práci, denní světlo, velký stůl." loading="lazy" />
+          <img id="sti-2" src="../assets/images/hub/stipendia/03-rezidenti.jpg" alt="Skupina rezidentů u společného stolu, plánování nebo večeře." loading="lazy" />
+        </div>
+        <div class="gallery__dots">
+          <a class="gallery__dot" href="#sti-1" aria-label="Snímek 1"></a>
+          <a class="gallery__dot" href="#sti-2" aria-label="Snímek 2"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zpět nahoru — sticky, zaparkuje nad patičkou (nepřekrývá ji) -->
+  <a href="#top" class="to-top to-top--dock" aria-label="Nahoru">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="m6 15 6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
+  <!-- ===== FOOTER (shodný s Astro patičkou) ===== -->
+  <footer class="border-t border-plum pb-10 pt-12 text-white"
+          style="background:radial-gradient(ellipse at 88% 105%, hsl(calc(var(--hue) + 44) 30% 70% / 0.16) 0%, transparent 50%), linear-gradient(135deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 36% 17%) 100%)">
+
+    <!-- Sloupce zarovnané se spodním 3-tlačítkovým pruhem: 1. sloupec Kontakty +
+         Ostatní informace | mapa (Adresa atd.) přes 2.–3. sloupec -->
+    <div class="wrap grid items-stretch gap-8 md:grid-cols-3 md:gap-x-[clamp(10px,1.4vw,18px)] md:gap-y-0">
+      <!-- 1. sloupec: Kontakty + Ostatní informace (užší než cela 1/3 → větší mezera
+           k mapě; mapa zůstává na 1/3, protože grid drží grid-cols-3 + col-span-2) -->
+      <div class="flex flex-col md:max-w-[340px]">
+        <p class="foot-label">Kontakty</p>
+        <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="mailto:vpd@osa2.cz">vpd@osa2.cz</a></p>
+        <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="tel:+420602849342">+420 602 849 342</a></p>
+
+        <p class="foot-label mt-8">Ostatní informace</p>
+        <nav class="flex flex-col items-stretch gap-2.5" aria-label="Ostatní informace">
+          <a class="foot-link" href="struktura-webu.html"><span>Struktura webu</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="foot-link" href="pripravujeme.html"><span>Ostatní kontakty</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="foot-link" href="pripravujeme.html"><span>Pracovní pozice</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="foot-link" href="pripravujeme.html"><span>Partneři projektu</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="foot-link" href="investori.html"><span>Pro investory</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </nav>
+
+        <p class="mt-auto pt-8 text-xs leading-[1.6] text-white/55">Projekt Startovací Hub je realizován projektem Veřejně Prospěšný Developer pod záštitou Občanského sdružení Alternativa II a partnerských organizací. Poslední aktualizace webu proběhla 29. 6. 2026.</p>
+        <p class="mt-2 text-xs text-white/45">Developed by OSAdesign</p>
+      </div>
+
+      <!-- 2.–3. sloupec: Adresa + mapa + odkazy do map (široké přes 2 sloupce) -->
+      <div class="flex flex-col md:col-span-2">
+        <p class="foot-label">Adresa</p>
+        <p class="mb-1 text-sm leading-[1.5] text-white/85">Kampus projektu Startovací Hub</p>
+        <p class="mb-3 text-sm leading-[1.5] text-white/85"><strong class="font-semibold text-white">Dolní Kasárna 798, 250 67 Klecany (Praha-sever)</strong></p>
+        <div class="overflow-hidden rounded-[7px] border border-accent-rule bg-bg-muted">
+          <img src="../assets/images/hub/masterplan-kampus.jpg" alt="Masterplan kampusu Startovacího Hubu — rozmístění apartmánů (A1–A6), zázemí a komunitního parku; Dolní Kasárna, Klecany" class="block h-auto w-full" loading="lazy" decoding="async" />
+        </div>
+        <div class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          <a class="inline-flex items-center gap-1 border-b border-rose pb-px font-medium text-rose no-underline transition hover:border-white hover:text-white" href="https://www.google.com/maps?q=Dolní+Kasárna+798,+250+67+Klecany" target="_blank" rel="noopener">Otevřít Google maps <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="inline-flex items-center gap-1 border-b border-rose pb-px font-medium text-rose no-underline transition hover:border-white hover:text-white" href="https://mapy.cz/zakladni?q=Doln%C3%AD%20Kas%C3%A1rna%20798%2C%20250%2067%20Klecany" target="_blank" rel="noopener">Otevřít Mapy.cz <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- rezervační pruh — glass tlačítka (jako hero CTA) na fialovém gradientu footeru -->
+    <div class="wrap mt-12 grid gap-[clamp(10px,1.4vw,18px)] md:grid-cols-3">
+      <a class="foot-act" href="pripravujeme.html"><span>Pronajmout apartmán</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="foot-act" href="pripravujeme.html"><span>Pronajmout lůžko</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="foot-act" href="pripravujeme.html"><span>Požádat o stipendium</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </footer>
+
+</body>
+</html>
