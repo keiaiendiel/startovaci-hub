@@ -40,3 +40,16 @@ body:has(#footmap:checked) .foot-lbx{visibility:visible;opacity:1;transition:opa
 .menu-acts{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 .menu-acts>.foot-act{width:min(92%,460px);white-space:nowrap}
 @media (max-width:520px){.menu-acts>.foot-act{padding-left:24px;padding-right:24px;font-size:1.05rem}}
+
+/* === v004cPI sync s rootem: hlavička/hero opravy (burger na pod-stránkách + OSA logo + stuck barva + hero pod horní lištu) === */
+/* Stuck (bílá) lišta: barva = OSA glyph #2a2a60 místo skoro černého plum-deep (poslední @keyframes hdr-stick vyhrává). */
+@keyframes hdr-stick{0%{background-color:transparent;color:#fff;box-shadow:none}to{background-color:#fff;color:#2a2a60;box-shadow:0 1px 0 0 var(--border-muted)}}
+/* Pod-stránky: brand = jen bílý OSA glyph (34/26px) místo wordmarku. */
+.subpage-osa{display:block;width:auto;height:34px;margin-left:5px}
+@media (max-width:767px){.subpage-osa{height:26px}}
+/* struktura: subhdr-logo = OSA glyph crossfade → větší než původní 18px wordmark. */
+.subhdr-logo{margin-left:5px}
+.subhdr-logo img{height:26px}
+@media (min-width:768px){.subhdr-logo img{height:34px}}
+/* iOS hero: vyplň pruh za horní stavovou lištou videem (env=0 na desktopu → bez efektu). */
+#top{margin-top:calc(env(safe-area-inset-top, 0px)*-1);min-height:calc(100svh + env(safe-area-inset-top, 0px))}
