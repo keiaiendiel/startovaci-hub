@@ -25,12 +25,12 @@ body:has(#footmap:checked) .foot-lbx{visibility:visible;opacity:1;transition:opa
 .foot-lbx__panel:has(.fzbtns label:hover) .fzone{opacity:0!important}
 .foot-lbx__panel:has(label[for=fz-jadro]:hover) .fzone--jadro,.foot-lbx__panel:has(label[for=fz-zazemi]:hover) .fzone--zazemi,.foot-lbx__panel:has(label[for=fz-ctvrt]:hover) .fzone--ctvrt{opacity:1!important}
 .fzbtns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.fzbtn{display:inline-flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;padding:11px 12px;border-radius:9px;font-weight:700;font-size:.88rem;line-height:1.15;color:#14142f;border:2px solid transparent;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
-.fzbtn--jadro{background:#E4DF99}
-.fzbtn--zazemi{background:#A8CE9F}
-.fzbtn--ctvrt{background:#8BB9E4}
-.fzbtn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.32)}
-.foot-lbx__panel:has(#fz-jadro:checked) label[for=fz-jadro],.foot-lbx__panel:has(#fz-zazemi:checked) label[for=fz-zazemi],.foot-lbx__panel:has(#fz-ctvrt:checked) label[for=fz-ctvrt]{border-color:#14142f;box-shadow:0 7px 18px rgba(0,0,0,.35)}
+.fzbtn{display:inline-flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;padding:12px 16px;border-radius:9999px;font-weight:700;font-size:.9rem;line-height:1.15;background:transparent;color:var(--zc);border:1.5px solid var(--zc);transition:background .2s ease,color .2s ease,border-color .2s ease,transform .15s ease,box-shadow .2s ease}
+.fzbtn--jadro{--zc:#E4DF99}
+.fzbtn--zazemi{--zc:#A8CE9F}
+.fzbtn--ctvrt{--zc:#8BB9E4}
+.fzbtn:hover{background:color-mix(in srgb,var(--zc) 15%,transparent);transform:translateY(-1px)}
+.foot-lbx__panel:has(#fz-jadro:checked) label[for=fz-jadro],.foot-lbx__panel:has(#fz-zazemi:checked) label[for=fz-zazemi],.foot-lbx__panel:has(#fz-ctvrt:checked) label[for=fz-ctvrt]{background:var(--zc);color:#14142f;border-color:var(--zc);box-shadow:0 8px 20px -8px color-mix(in srgb,var(--zc) 55%,transparent)}
 @media (max-width:560px){.fzbtns{grid-template-columns:1fr}}
 
 /* menu: Pronajmout = vetsi akcni tlacitko */
