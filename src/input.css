@@ -50,6 +50,7 @@
     --accent: var(--c-plum);
     --accent-rule: hsl(var(--hue) 39% 27% / 0.22);
     --plum-deep: hsl(var(--hue) 41% 13%);
+    --osa-ink: #2a2a60;     /* barva tmavého OSA glyphu — sjednocená barva loga i burgeru na bílé „stuck" liště (plum-deep je skoro černý) */
     --rose: hsl(calc(var(--hue) + 44) 30% 70%);
     --cream: #f7f4ef;
 
@@ -163,7 +164,7 @@
   @supports (animation-timeline: scroll()) {
     @keyframes hdr-stick {
       from { background-color: transparent; color: #fff; box-shadow: none; }
-      to   { background-color: #fff; color: var(--plum-deep); box-shadow: 0 1px 0 0 var(--border-muted); }
+      to   { background-color: #fff; color: var(--osa-ink); box-shadow: 0 1px 0 0 var(--border-muted); }
     }
     @keyframes hdr-shrink {
       from { min-height: 68px; padding-top: 12px; padding-bottom: 12px; }
@@ -248,7 +249,9 @@
      loga = velikost stuck loga na landingu. Bez JS; fallback bez podpory =
      trvale průhledná lišta + bílé logo (stejně jako landing bez animation-timeline). */
   .subhdr-logo { @apply inline-grid self-center; }
-  .subhdr-logo img { @apply block h-[18px] w-auto; grid-area: 1 / 1; }
+  /* Brand pod-stránek = OSA glyph (ne wordmark) → vyšší než původní 18px wordmark. */
+  .subhdr-logo { margin-left: 5px; }
+  .subhdr-logo img { @apply block h-[26px] w-auto md:h-[34px]; grid-area: 1 / 1; }
   .subhdr-logo .is-dark { opacity: 0; }
   #navtoggle:checked ~ .hdr-bar .subhdr-logo { opacity: 0; } /* menu má vlastní brand */
   @supports (animation-timeline: view()) {
@@ -972,3 +975,10 @@ body:has(#footmap:checked) .foot-lbx{visibility:visible;opacity:1;transition:opa
 
 /* menu: Pronajmout = vetsi akcni tlacitko */
 .menu__inner .foot-act{padding:17px 44px;font-size:1.2rem}
+
+/* === Pod-stránky (pripravujeme/404): brand = jen bílý OSA glyph vlevo (ne wordmark "Startovací Hub"); velikost shodná s landing OSA (34/26px) === */
+.subpage-osa{display:block;width:auto;height:34px;margin-left:5px}
+@media (max-width:767px){.subpage-osa{height:26px}}
+
+/* === iOS hero: vyplň i pruh za horní stavovou lištou (notch / safe-area) videem, ne plum pozadím. env=0 (desktop) → bez efektu. Mimo @layer → přebije Tailwind min-h-[100svh]. === */
+#top{margin-top:calc(-1 * env(safe-area-inset-top, 0px));min-height:calc(100svh + env(safe-area-inset-top, 0px))}
