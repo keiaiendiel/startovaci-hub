@@ -53,3 +53,5 @@ body:has(#footmap:checked) .foot-lbx{visibility:visible;opacity:1;transition:opa
 @media (min-width:768px){.subhdr-logo img{height:34px}}
 /* iOS hero: vyplň pruh za horní stavovou lištou videem (env=0 na desktopu → bez efektu). */
 #top{margin-top:calc(env(safe-area-inset-top, 0px)*-1);min-height:calc(100svh + env(safe-area-inset-top, 0px))}
+/* v004cPI: položky menu trošku menší (bylo clamp(1.75rem,5.2vw,3.5rem)) */
+.menu-link{font-size:clamp(1.5rem,4.4vw,2.75rem)}
