@@ -936,7 +936,7 @@
 }
 
 
-/* === Landing v004b delty (burger SVG = logo, kompaktni menu) — drzet v syncu se styles.css === */
-/* === v004aPI overrides: hlavicka mobil (OSA=burger=titul ~26px) + kompaktni menu === */
+/* === Landing v004b delty (burger SVG = logo) — drzet v syncu se styles.css === */
+/* === v004aPI overrides: hlavicka mobil (OSA=burger=titul ~26px) === */
 .hdr-osa{height:34px}.burger{display:none}.burger-svg{display:block;width:34px;height:34px;background-color:currentColor;-webkit-mask:var(--bico) center/contain no-repeat;mask:var(--bico) center/contain no-repeat}.burger-svg--bars{--bico:url('hamburger-white.svg')}.burger-svg--x{--bico:url('cross-white.svg');display:none}#navtoggle:checked~.hdr-bar .burger-svg--bars{display:none}#navtoggle:checked~.hdr-bar .burger-svg--x{display:block}@media (max-width:767px){.hdr-osa{height:26px}.burger-svg{width:26px;height:26px}}
-.menu__inner{min-height:0;gap:1rem}.menu__foot{margin-top:0;padding-top:.85rem}
+
