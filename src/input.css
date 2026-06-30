@@ -940,3 +940,32 @@
 /* === v004aPI overrides: hlavicka mobil (OSA=burger=titul ~26px) === */
 .hdr-osa{height:34px}.burger{display:none}.burger-svg{display:block;width:34px;height:34px;background-color:currentColor;-webkit-mask:var(--bico) center/contain no-repeat;mask:var(--bico) center/contain no-repeat}.burger-svg--bars{--bico:url('hamburger-white.svg')}.burger-svg--x{--bico:url('cross-white.svg');display:none}#navtoggle:checked~.hdr-bar .burger-svg--bars{display:none}#navtoggle:checked~.hdr-bar .burger-svg--x{display:block}@media (max-width:767px){.hdr-osa{height:26px}.burger-svg{width:26px;height:26px}}
 
+
+
+/* === Footer mapa: lightbox + 3 zóny (pure-CSS, jako investorská ortofotomapa) === */
+.foot-map{display:block;position:relative;cursor:zoom-in}
+.foot-map>img{transition:transform .4s var(--ease-quart,ease)}
+.foot-map:hover>img{transform:scale(1.03)}
+.foot-map__zoom{position:absolute;right:10px;bottom:10px;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9999px;color:#14142f;background:hsla(0,0%,100%,.92);box-shadow:0 4px 14px rgba(0,0,0,.3);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:transform .2s ease}
+.foot-map:hover .foot-map__zoom{transform:scale(1.08)}
+.foot-lbx{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:clamp(12px,3vw,44px);overflow-y:auto;visibility:hidden;opacity:0;background:rgba(8,5,11,.85);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:opacity .25s ease,visibility 0s .25s}
+html:has(#footmap:checked){overflow:hidden}
+body:has(#footmap:checked) .foot-lbx{visibility:visible;opacity:1;transition:opacity .25s ease}
+.foot-lbx__bg{position:absolute;inset:0;cursor:zoom-out}
+.foot-lbx__panel{position:relative;z-index:1;width:min(1100px,96vw);display:flex;flex-direction:column;gap:14px}
+.foot-lbx__x{position:absolute;top:8px;right:8px;z-index:2;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:9999px;color:#fff;cursor:pointer;border:1px solid hsla(0,0%,100%,.45);background:hsla(0,0%,0%,.4);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:background .15s ease,color .15s ease}
+.foot-lbx__x:hover{background:hsla(0,0%,100%,.95);color:#14142f}
+.fzstage{position:relative;aspect-ratio:1920/1007;width:100%;border-radius:10px;overflow:hidden;border:1px solid hsla(0,0%,100%,.18);background:#0c0a14}
+.fzstage img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
+.fzone{opacity:0;transition:opacity .28s var(--ease-quart,ease)}
+.foot-lbx__panel:has(#fz-jadro:checked) .fzone--jadro,.foot-lbx__panel:has(#fz-zazemi:checked) .fzone--zazemi,.foot-lbx__panel:has(#fz-ctvrt:checked) .fzone--ctvrt{opacity:1}
+.foot-lbx__panel:has(.fzbtns label:hover) .fzone{opacity:0!important}
+.foot-lbx__panel:has(label[for=fz-jadro]:hover) .fzone--jadro,.foot-lbx__panel:has(label[for=fz-zazemi]:hover) .fzone--zazemi,.foot-lbx__panel:has(label[for=fz-ctvrt]:hover) .fzone--ctvrt{opacity:1!important}
+.fzbtns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.fzbtn{display:inline-flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;padding:11px 12px;border-radius:9px;font-weight:700;font-size:.88rem;line-height:1.15;color:#14142f;border:2px solid transparent;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.fzbtn--jadro{background:#E4DF99}
+.fzbtn--zazemi{background:#A8CE9F}
+.fzbtn--ctvrt{background:#8BB9E4}
+.fzbtn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.32)}
+.foot-lbx__panel:has(#fz-jadro:checked) label[for=fz-jadro],.foot-lbx__panel:has(#fz-zazemi:checked) label[for=fz-zazemi],.foot-lbx__panel:has(#fz-ctvrt:checked) label[for=fz-ctvrt]{border-color:#14142f;box-shadow:0 7px 18px rgba(0,0,0,.35)}
+@media (max-width:560px){.fzbtns{grid-template-columns:1fr}}
