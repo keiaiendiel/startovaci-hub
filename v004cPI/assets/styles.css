@@ -37,7 +37,7 @@ body:has(#footmap:checked) .foot-lbx{visibility:visible;opacity:1;transition:opa
 .menu__inner .foot-act{padding:17px 44px;font-size:1.2rem}
 
 /* v004cPI: tri akcni tlacitka v otevrenem menu (misto nav odkazu) — vycentrovana, stejne siroka */
-.menu-acts{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.menu-acts{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 .menu-acts>.foot-act{width:min(92%,460px);white-space:nowrap}
 @media (max-width:520px){.menu-acts>.foot-act{padding-left:24px;padding-right:24px;font-size:1.05rem}}
 
