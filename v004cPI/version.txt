@@ -1,0 +1,1 @@
+v004cPI|2026-06-30|Hamburger menu = jen 3 akční tlačítka (Pronajmout apartmán/lůžko, Ostatní služby) + logo nahoře a Přihlásit dole (nav odkazy pryč); stejná 3 tlačítka v patičce místo apartmán/lůžko/stipendium; tlačítka mapy v lightboxu plně vybarvená už při hoveru
