@@ -140,26 +140,8 @@
      OSA tak zůstane vlevo v obou stavech (jen překříží barvu). */
   .hdr-osa--dark { opacity: 0; }
 
-  /* Akční skupina vpravo: CTA „Pronajmout" + hamburger (jako sh-web Astro lišta).
-     CTA je obrysová pilulka, barvu i obrys bere z currentColor → bílá nad tmavým
-     herem/bannerem, tmavá (plum) na bílé „stuck" liště. */
+  /* Akční skupina vpravo: jen hamburger (CTA „Pronajmout" v liště odstraněno — v005PI). */
   .hdr-actions { @apply ml-auto flex items-center gap-2; }
-  .hdr-cta {
-    @apply relative inline-flex items-center justify-center self-center whitespace-nowrap rounded-[7px] border px-[18px] py-2 text-sm font-bold leading-none no-underline;
-    border-color: currentColor; color: inherit;
-    /* Pozn.: `opacity` ZÁMĚRNĚ není v transition. Reveal CTA po odscrollování pod
-       hero řídí scroll-driven animace `hdr-cta-in` (níže). Když byla opacity i v
-       transition, obě věci si o stejnou vlastnost „konkurovaly" a tlačítko při
-       najetí 2–3× probliklo (hlavně Safari). Hover používá jen background/transform. */
-    transition: color 160ms var(--ease-quart), background-color 160ms var(--ease-quart), transform 120ms ease;
-  }
-  .hdr-cta:hover { background: color-mix(in srgb, currentColor 14%, transparent); transform: translateY(-1px); }
-  .hdr-cta:active { transform: scale(.97); }
-  .hdr-cta:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-  /* Landing (home, ne .page-sub): CTA skrytá nad herem, najede se stuck lištou
-     (níže ve scroll-driven bloku). Podstránky (struktura/404) ji ukazují hned. */
-  body:not(.page-sub) .site-header .hdr-cta { opacity: 0; pointer-events: none; } /* skryté = i mimo tab/klik, dokud nenajede (níže) */
-  #navtoggle:checked ~ .hdr-bar .hdr-cta { opacity: 0 !important; pointer-events: none; } /* menu má vlastní CTA */
 
   @supports (animation-timeline: scroll()) {
     @keyframes hdr-stick {
@@ -184,8 +166,6 @@
     /* Reveal řídí JEN opacity. (Transform tu dřív byl taky, ale „both" fill ho po
        odscrollování držel a přebíjel hover-lift; a dvojná vazba opacity+transform
        přes scroll-timeline + transition byla zdrojem probliknutí.) */
-    @keyframes hdr-cta-in { from { opacity: 0; pointer-events: none; } to { opacity: 1; pointer-events: auto; } }
-    body:not(.page-sub) .site-header .hdr-cta { animation: hdr-cta-in both linear; animation-timeline: scroll(root block); animation-range: 86svh 96svh; }
     /* Desktop: nad herem posuň OSA + burger níž (~o jejich výšku); po scrollnutí
        (stuck) zpět nahoru. Větší „from" padding-top rozhrne lištu dolů; timeline,
        range i fill dědí ze základu .hdr-bar — měníme jen jméno keyframe. */
@@ -224,8 +204,13 @@
     transition: opacity 320ms var(--ease-quart), transform 380ms var(--ease-quart), visibility 0s 380ms;
   }
   .menu__inner { @apply flex min-h-full flex-col gap-7 pb-16 pt-[88px]; }
-  .menu-link { @apply text-[clamp(1.75rem,5.2vw,3.5rem)] font-bold leading-[1.04] tracking-[-0.02em] text-white transition-colors; }
+  .menu-link { @apply text-[clamp(1.5rem,4.4vw,2.75rem)] font-bold leading-[1.04] tracking-[-0.02em] text-white transition-colors; }
   .menu-link:hover { color: var(--rose); }
+  /* Rychlé akce v menu (Pronajmout apartmán/lůžko, Ostatní služby) — vycentrované,
+     stejně široké, negrowoucí (na rozdíl od nav odkazů nad nimi). */
+  .menu-acts { @apply flex flex-none flex-col items-center justify-center gap-[14px]; }
+  .menu-acts > .foot-act { width: min(92%, 460px); white-space: nowrap; }
+  @media (max-width: 520px) { .menu-acts > .foot-act { padding-left: 24px; padding-right: 24px; font-size: 1.05rem; } }
   /* Účet v patě menu (Přihlásit / Přepnout účet) — zatím ve výrobě → 404. */
   .menu__foot { @apply mt-2 flex flex-col items-center gap-3 border-t pt-6; border-color: hsl(0 0% 100% / 0.14); }
   .menu-acct { @apply inline-flex items-center gap-2 text-base font-semibold no-underline transition-colors; color: hsl(0 0% 100% / 0.78); }
@@ -531,6 +516,31 @@
   }
   .foot-link > svg { flex-shrink: 0; opacity: 0.65; transition: transform 200ms var(--ease-quart), opacity 200ms var(--ease-quart); }
   .foot-link:hover > svg { transform: translateX(3px); opacity: 1; }
+
+  /* „Ostatní informace" — dva sloupce (byla plná šířka pod sebou), ať vizuálně
+     nesplývají s hlavními CTA tlačítky (foot-act/hero-cta). Poslední liché
+     tlačítko (Pro investory) přes celou šířku. */
+  .foot-links { @apply grid grid-cols-2 gap-[10px]; }
+  .foot-links > .foot-link:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  /* Sdílený grid patičky (info/mapa/akce/dev) — pořadí lze na mobilu přehodit jen
+     přes CSS `order` beze změny DOM pořadí (a tedy tab-orderu na desktopu):
+     mobil = mapa → info → akce → „Developed by" úplně na konci; desktop =
+     info+dev vlevo, mapa vpravo, akce dole přes celou šířku (beze změny). */
+  .foot-grid { @apply grid grid-cols-1 gap-8; }
+  .foot-grid__info { order: 2; }
+  .foot-grid__map { order: 1; }
+  .foot-grid__acts { @apply order-3 mt-4 grid gap-[clamp(10px,1.4vw,18px)]; }
+  .foot-grid__dev--mobile { order: 4; margin: 0; }
+  .foot-grid__dev--desktop { display: none; }
+  @media (min-width: 768px) {
+    .foot-grid { grid-template-columns: minmax(0, 340px) 1fr; gap: 0 clamp(10px, 1.4vw, 18px); align-items: stretch; }
+    .foot-grid__info { @apply order-1 flex flex-col; }
+    .foot-grid__map { order: 2; }
+    .foot-grid__acts { order: 3; grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); margin-top: 3rem; }
+    .foot-grid__dev--mobile { display: none; }
+    .foot-grid__dev--desktop { display: block; margin-top: 0.5rem; }
+  }
 
   /* ---- Plovoucí „nahoru" (kotva #top, plynulý scroll, bez JS) ------------- */
   .to-top {
@@ -969,7 +979,7 @@ body:has(#footmap:checked) .foot-lbx{visibility:visible;opacity:1;transition:opa
 .fzbtn--jadro{--zc:#E4DF99}
 .fzbtn--zazemi{--zc:#A8CE9F}
 .fzbtn--ctvrt{--zc:#8BB9E4}
-.fzbtn:hover{background:color-mix(in srgb,var(--zc) 15%,transparent);transform:translateY(-1px)}
+.fzbtn:hover{background:var(--zc);color:#14142f;border-color:var(--zc);box-shadow:0 8px 20px -8px color-mix(in srgb,var(--zc) 55%,transparent);transform:translateY(-1px)}
 .foot-lbx__panel:has(#fz-jadro:checked) label[for=fz-jadro],.foot-lbx__panel:has(#fz-zazemi:checked) label[for=fz-zazemi],.foot-lbx__panel:has(#fz-ctvrt:checked) label[for=fz-ctvrt]{background:var(--zc);color:#14142f;border-color:var(--zc);box-shadow:0 8px 20px -8px color-mix(in srgb,var(--zc) 55%,transparent)}
 @media (max-width:560px){.fzbtns{grid-template-columns:1fr}}
 

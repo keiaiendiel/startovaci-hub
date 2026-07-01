@@ -23,7 +23,6 @@
       </span>
       <a href="index.html" class="hdr-logo" aria-label="Startovací Hub, na úvod">Startovací Hub</a>
       <div class="hdr-actions">
-        <a href="pripravujeme.html" class="hdr-cta">Pronajmout</a>
         <label for="navtoggle" class="burger-btn" aria-label="Otevřít menu">
           <span class="burger"><span></span><span></span><span></span></span>
           <span class="burger-svg burger-svg--bars" aria-hidden="true"></span>
@@ -36,11 +35,6 @@
       <div class="wrap menu__inner">
         <a href="index.html" class="self-center" aria-label="Startovací Hub, na úvod"><img src="assets/brand-logo-white.svg" alt="Startovací Hub" class="block h-[clamp(22px,2.6vw,30px)] w-auto" /></a>
 
-        <a href="pripravujeme.html" class="foot-act self-center">
-          <span>Pronajmout</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-
         <nav class="flex flex-1 flex-col items-center justify-center gap-2" aria-label="Hlavní navigace">
           <a class="menu-link" href="pripravujeme.html">Ubytování</a>
           <a class="menu-link" href="pripravujeme.html">Zázemí</a>
@@ -48,6 +42,12 @@
           <a class="menu-link" href="pripravujeme.html">Ceník</a>
           <a class="menu-link" href="pripravujeme.html">Stipendia</a>
           <a class="menu-link" href="pripravujeme.html">Novinky</a>
+        </nav>
+
+        <nav class="menu-acts" aria-label="Rychlé akce">
+          <a class="foot-act" href="pripravujeme.html"><span>Pronajmout apartmán</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="foot-act" href="pripravujeme.html"><span>Pronajmout lůžko</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="foot-act" href="pripravujeme.html"><span>Ostatní služby</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </nav>
 
         <div class="menu__foot">
@@ -246,19 +246,21 @@
   <footer class="border-t border-plum pb-10 pt-12 text-white"
           style="background:radial-gradient(ellipse at 88% 105%, hsl(calc(var(--hue) + 44) 30% 70% / 0.16) 0%, transparent 50%), linear-gradient(135deg, hsl(var(--hue) 41% 13%) 0%, hsl(var(--hue) 36% 17%) 100%)">
 
-    <!-- Sloupce zarovnané se spodním 3-tlačítkovým pruhem: 1. sloupec Kontakty +
-         Ostatní informace | mapa (Adresa atd.) přes 2.–3. sloupec -->
-    <div class="wrap grid items-stretch gap-8 md:grid-cols-3 md:gap-x-[clamp(10px,1.4vw,18px)] md:gap-y-0">
-      <!-- 1. sloupec: Kontakty + Ostatní informace (užší než cela 1/3 → větší mezera
-           k mapě; mapa zůstává na 1/3, protože grid drží grid-cols-3 + col-span-2) -->
-      <div class="flex flex-col md:max-w-[340px]">
+    <!-- Sdílený grid (foot-grid, viz assets/styles.css): na mobilu pořadí
+         mapa → info (kontakty/ostatní informace/text) → akce → "Developed by"
+         úplně na konci; na desktopu beze změny (info+dev vlevo, mapa vpravo,
+         akce dole přes celou šířku). -->
+    <div class="wrap foot-grid">
+      <!-- info: Kontakty + Ostatní informace (na desktopu užší než 1/3 → větší
+           mezera k mapě) -->
+      <div class="foot-grid__info flex flex-col">
         <p class="foot-label">Kontakty</p>
         <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="mailto:vpd@osa2.cz">vpd@osa2.cz</a></p>
         <p class="mb-[6px] text-sm"><a class="text-cream underline decoration-white/30 underline-offset-[3px] transition hover:text-rose" href="tel:+420602849342">+420 602 849 342</a></p>
         <p class="mb-[6px] text-sm leading-[1.5] text-white/80">Dolní Kasárna 798, 250 67 Klecany (Praha-sever)</p>
 
         <p class="foot-label mt-8">Ostatní informace</p>
-        <nav class="flex flex-col items-stretch gap-2.5" aria-label="Ostatní informace">
+        <nav class="foot-links" aria-label="Ostatní informace">
           <a class="foot-link" href="struktura-webu.html"><span>Struktura webu</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a class="foot-link" href="pripravujeme.html"><span>Ostatní kontakty</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a class="foot-link" href="pripravujeme.html"><span>Pracovní pozice</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -266,12 +268,12 @@
           <a class="foot-link" href="investori.html"><span>Pro investory</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </nav>
 
-        <p class="mt-auto pt-8 text-xs leading-[1.6] text-white/55">Projekt Startovací Hub je realizován projektem Veřejně Prospěšný Developer pod záštitou Občanského sdružení Alternativa II a partnerských organizací. Poslední aktualizace webu proběhla 29. 6. 2026.</p>
-        <p class="mt-2 text-xs text-white/45">Developed by OSAdesign</p>
+        <p class="mt-auto pt-8 text-xs leading-[1.6] text-white/55">Projekt Startovací Hub je realizován projektem Veřejně Prospěšný Developer pod záštitou Občanského sdružení Alternativa II a partnerských organizací. Poslední aktualizace webu proběhla 1. 7. 2026.</p>
+        <p class="foot-grid__dev--desktop text-xs text-white/45">Developed by OSAdesign</p>
       </div>
 
-      <!-- 2.–3. sloupec: Adresa + mapa + odkazy do map (široké přes 2 sloupce) -->
-      <div class="flex flex-col md:col-span-2">
+      <!-- mapa: Adresa + mapa + odkazy do map -->
+      <div class="foot-grid__map flex flex-col">
         <p class="foot-label">Kampus projektu Startovací Hub</p>
         <!-- Mapa: klik = lightbox se 3 zónami (pure-CSS, jako investorská ortofotomapa) -->
         <input type="checkbox" id="footmap" class="sr-only" aria-label="Zvětšit mapu kampusu" />
@@ -304,13 +306,17 @@
           <a class="inline-flex items-center gap-1 border-b border-rose pb-px font-medium text-rose no-underline transition hover:border-white hover:text-white" href="https://mapy.cz/zakladni?q=Doln%C3%AD%20Kas%C3%A1rna%20798%2C%20250%2067%20Klecany" target="_blank" rel="noopener">Otevřít Mapy.cz <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
-    </div>
 
-    <!-- rezervační pruh — glass tlačítka (jako hero CTA) na fialovém gradientu footeru -->
-    <div class="wrap mt-12 grid gap-[clamp(10px,1.4vw,18px)] md:grid-cols-3">
-      <a class="foot-act" href="pripravujeme.html"><span>Pronajmout apartmán</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="foot-act" href="pripravujeme.html"><span>Pronajmout lůžko</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="foot-act" href="pripravujeme.html"><span>Požádat o stipendium</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <!-- akce: rezervační pruh — glass tlačítka (jako hero CTA) na fialovém gradientu footeru -->
+      <div class="foot-grid__acts">
+        <a class="foot-act" href="pripravujeme.html"><span>Pronajmout apartmán</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="foot-act" href="pripravujeme.html"><span>Pronajmout lůžko</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="foot-act" href="pripravujeme.html"><span>Ostatní služby</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+      <!-- "Developed by" na mobilu úplně na konci (za akcemi); na desktopu se zobrazuje
+           desktopová kopie v info sloupci (foot-grid__dev--desktop výše) -->
+      <p class="foot-grid__dev--mobile text-xs text-white/45">Developed by OSAdesign</p>
     </div>
   </footer>
 
