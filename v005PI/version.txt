@@ -1,1 +1,1 @@
-v005PI|2026-07-01|Bez CTA v hlavičce; patička: mapa přes sloupce 2–3 (lícuje s tlačítky dole), textové odkazy pod sebou, Pro investory výrazně + užší sloupec, mobil mapa první a Developed by na konci; akční tlačítka zpět na pilulku
+v005PI|2026-07-01|Bez CTA v hlavičce; patička: mapa přes sloupce 2–3, Ostatní informace = textové odkazy (mobil 2 sloupce, desktop pod sebou), Pro investory na ideální šířku (desktop) / celou šířku (mobil); akční tlačítka pilulka
