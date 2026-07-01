@@ -522,7 +522,9 @@
   /* Sdílený grid patičky (info/mapa/akce/dev) — pořadí lze na mobilu přehodit jen
      přes CSS `order` beze změny DOM pořadí (a tedy tab-orderu na desktopu):
      mobil = mapa → info → akce → „Developed by" úplně na konci; desktop =
-     info+dev vlevo, mapa vpravo, akce dole přes celou šířku (beze změny). */
+     info vlevo (užší, viz md:max-w na .foot-grid__info v HTML) + mapa přes
+     sloupce 2–3, akce dole taky přes 3 sloupce se stejnou mezerou → mapa i
+     tlačítka dole na sebe vždy lícují, ať je šířka obrazovky jakákoli. */
   .foot-grid { @apply grid grid-cols-1 gap-8; }
   .foot-grid__info { order: 2; }
   .foot-grid__map { order: 1; }
@@ -530,9 +532,9 @@
   .foot-grid__dev--mobile { order: 4; margin: 0; }
   .foot-grid__dev--desktop { display: none; }
   @media (min-width: 768px) {
-    .foot-grid { grid-template-columns: minmax(0, 340px) 1fr; gap: 0 clamp(10px, 1.4vw, 18px); align-items: stretch; }
+    .foot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(10px, 1.4vw, 18px); align-items: stretch; }
     .foot-grid__info { @apply order-1 flex flex-col; }
-    .foot-grid__map { order: 2; }
+    .foot-grid__map { order: 2; grid-column: 2 / -1; }
     .foot-grid__acts { order: 3; grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); margin-top: 3rem; }
     .foot-grid__dev--mobile { display: none; }
     .foot-grid__dev--desktop { display: block; margin-top: 0.5rem; }

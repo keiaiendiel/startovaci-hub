@@ -1,1 +1,1 @@
-v005PI|2026-07-01|Bez CTA v hlavičce; patička přeskládaná pro mobil (mapa první, Developed by na konci); text patičky; Ostatní informace = textové odkazy (jen Pro investory zůstává výrazné tlačítko); akční tlačítka (Pronajmout…) zpět na plnou pilulku
+v005PI|2026-07-01|Bez CTA v hlavičce; patička: mapa přes sloupce 2–3 (lícuje s tlačítky dole), textové odkazy pod sebou, Pro investory výrazně + užší sloupec, mobil mapa první a Developed by na konci; akční tlačítka zpět na pilulku
