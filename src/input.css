@@ -288,12 +288,11 @@
     .hero-ctacol > .hero-cta { width: auto; }
   }
   /* HERO CTA — „liquid glass" tlačítko dle Astro originálu (.lp-hero__quick-btn):
-     skleněný gradient + backdrop blur/saturate + světelný okraj a stín; od v003b
-     zaoblený obdélník (rounded-[12px]) místo plné pilulky (víc sedí k webu). Hover
-     = plné bílé pozadí + plum text + lehký lift. Krytí povrchu o malilinko vyšší
-     než v Astru (uživatelské přání). */
+     skleněný gradient + backdrop blur/saturate + světelný okraj a stín; plná pilulka
+     (rounded-full, jako v003a — v005PI). Hover = plné bílé pozadí + plum text +
+     lehký lift. Krytí povrchu o malilinko vyšší než v Astru (uživatelské přání). */
   .hero-cta {
-    @apply relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-[12px] px-5 py-[14px]
+    @apply relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-5 py-[14px]
            text-[0.95rem] font-bold leading-none tracking-[-0.02em] text-white
            md:gap-3 md:px-10 md:py-5 md:text-[clamp(1.1rem,1.3vw,1.35rem)];
     isolation: isolate;
@@ -479,7 +478,7 @@
   /* Tlačítka jako hero glass CTA na fialovém gradientu footeru: skleněný povrch +
      blur + světelný okraj, bílý text; hover = bílá výplň + plum text + lift. */
   .foot-act {
-    @apply inline-flex items-center justify-center gap-3 rounded-[12px] px-[clamp(20px,2vw,30px)] py-[clamp(15px,1.6vw,20px)]
+    @apply inline-flex items-center justify-center gap-3 rounded-full px-[clamp(20px,2vw,30px)] py-[clamp(15px,1.6vw,20px)]
            text-base font-bold leading-[1.1] text-white transition hover:-translate-y-[2px];
     isolation: isolate;
     border: 1px solid rgba(255,255,255,0.30);
@@ -493,9 +492,12 @@
   .foot-act:hover > svg { transform: translateX(3px); }
   .foot-label { @apply mb-3 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-rose; }
 
-  /* Odkazy „Ostatní informace" jako jemná skleněná bloková tlačítka (liquid glass
-     feel jako hero/.foot-act, jen lehčí): plný blok přes šířku sloupce, šipka vpravo,
-     hover = projasnění skla + zvednutí + posun šipky. */
+  /* „Pro investory" — jediný zvýrazněný odkaz v „Ostatní informace" (jemné skleněné
+     blokové tlačítko, liquid glass feel jako hero/.foot-act, jen lehčí): plný blok,
+     šipka vpravo, hover = projasnění skla + zvednutí + posun šipky. Ostatní položky
+     (Struktura webu, Ostatní kontakty, Pracovní pozice, Partneři projektu) jsou
+     obyčejné textové odkazy (stejný styl jako „Otevřít Google maps" níž), ať
+     vizuálně nesplývají s hlavními CTA tlačítky. */
   .foot-link {
     @apply inline-flex w-full items-center justify-between gap-3 rounded-[11px] px-[18px] py-[12px]
            text-sm font-semibold leading-tight text-cream no-underline;
@@ -516,12 +518,6 @@
   }
   .foot-link > svg { flex-shrink: 0; opacity: 0.65; transition: transform 200ms var(--ease-quart), opacity 200ms var(--ease-quart); }
   .foot-link:hover > svg { transform: translateX(3px); opacity: 1; }
-
-  /* „Ostatní informace" — dva sloupce (byla plná šířka pod sebou), ať vizuálně
-     nesplývají s hlavními CTA tlačítky (foot-act/hero-cta). Poslední liché
-     tlačítko (Pro investory) přes celou šířku. */
-  .foot-links { @apply grid grid-cols-2 gap-[10px]; }
-  .foot-links > .foot-link:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
   /* Sdílený grid patičky (info/mapa/akce/dev) — pořadí lze na mobilu přehodit jen
      přes CSS `order` beze změny DOM pořadí (a tedy tab-orderu na desktopu):
